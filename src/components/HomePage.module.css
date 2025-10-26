@@ -1,0 +1,87 @@
+.homepageHeader {
+  --icon-size: 1.5rem;
+  font-size: 1rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+
+  display: flex;
+  flex-direction: row;
+
+  align-items: center; 
+  gap: 0.5rem;
+
+  border-bottom : 1px solid #e0e0e0;
+  padding : 1rem;
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.06), 0 2px 6px rgba(15, 23, 42, 0.04);
+}
+
+.Icon{
+  background-color: #4F39F6;
+  border-radius: 10px;
+
+  width: var(--icon-size);
+  height: var(--icon-size);
+  padding: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: #fff;
+  flex: 0 0 auto;
+}
+.homepageTitle {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: var(--icon-size);
+  padding-left : 0.5rem;
+}
+
+.homepageTitle p,
+.homepageTitle h1 {
+  margin: 0;
+}
+
+.homepageTitle p {
+  margin-top: 0.125rem;
+  font-size: 0.875rem;
+  color: #666;
+}
+/* 컨텐츠 영역 */
+.homepageContent{
+    display: flex;
+    flex-direction : column;
+    align-items: center;
+    text-align:center;
+
+}
+.homepageContent h1{
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}   
+.homepageDiscription button{
+    font-size: 1rem;
+    width : 10rem;
+    height : 3rem;
+    padding : 0.5rem 0.25rem;
+}
+.addBtn{
+    background-color : black;
+    color : white;
+    border : none;
+    border-radius : 8px;
+    margin-right : 1rem;
+    cursor : pointer;
+}
+
+.addBtn:hover, .editBtn:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}   
+
+.editBtn{
+    background-color : white;
+    color : black;
+    border : 1px solid #e0e0e0;
+    border-radius : 8px;
+    cursor : pointer;
+}
