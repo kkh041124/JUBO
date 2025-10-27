@@ -1,16 +1,23 @@
-# React + Vite
+# JUBO
+공군 예천교회를 다니다가 주일예배 때 항상 종이로 된 주보를 받았다. 이것을 보니 항상 똑같은 디자인과 비슷한 내용이 적혀 있었고 주일 예배 이후 버려진다는 것을 알게 되었다. 불필요한 자원의 소비를 줄이고 온라인을 통해 쉽게 주보를 받기 위해 개발을 시작하게 되었다. 
+***
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+목표 기간 : 25.12까지
 
-Currently, two official plugins are available:
+***
+일단 이 프로젝트에서 가장 중요하게 생각하는 것은 다음과 같다.
+1. 프론트엔드의 실력 강화
+> 항상 GPT를 통해 실력을 의존하고, 스스로의 성장을 억제했다. 하지만, 이번 프로젝트에서는 CSS 또는 단순 반복과 관련된 코드를 제외한 나머지는 생각으로만 코드를 짤 예정이며, AI의 힘을 빌리는 것을 최소화할 예정이다. 이런 이유는 AI를 사용할 때의 문법의 리터리시를 기르기 위함이다.
+2. 종이를 줄이고, 디지털 주보의 이용
+> 프로젝트의 목적과 같다. 불필요한 자원을 줄이고, 디지털로 된 주보로 종이를 줄이고 언제 어디서든 쉽게 주보를 보기 위함이다. 
+3. 사용자 친화적
+> 주보를 제작 시에 분명 워드, ppt 등 각 다양한 디자인 템플릿들이 있을 것이다. 그것들보다 더 나은 점을 위해서는 누구나 쉽게 만들 수 있고, 이용할 수 있게 해야 된다.
+>> 이 문제는 가장 덜 신경쓸 것이다. JUBO의 주된 목적은 *실력강화*이기 때문이다.
+***
+## 추후 해보고 싶은 것들
+1. NFC 태그를 통해 pdf 다운
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+***
+TIL
+## 10.27
+별거 안 했는데 시간이 ㅈㄴ걸렸다...일단 퍼블링싱 같은 느낌이니까 빨리 홈 끝내고 editor를 만들어야겠다. 그리고 HOME의 card는 아직 이미지를 뭘 해야할지 몰라서 패스하고 후딱후딱 만들어 보겠음
