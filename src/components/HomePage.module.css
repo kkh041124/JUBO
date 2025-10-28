@@ -1,39 +1,40 @@
-.homepageContainer{
-  background-color:#E3EBFE;
+.homepageContainer {
+  background: #E3EBFE;
+  min-height: 100vh;
 }
+
 .homepageHeader {
   --icon-size: 1.5rem;
   font-size: 1rem;
   font-weight: bold;
-  margin-bottom: 1rem;
+  
+  position: sticky;
+  top: 0;
+  z-index: 10;
 
   display: flex;
   flex-direction: row;
-
   align-items: center; 
   gap: 0.5rem;
-
   border-bottom : 1px solid #e0e0e0;
   padding : 1rem;
   box-shadow: 0 6px 18px rgba(15, 23, 42, 0.06), 0 2px 6px rgba(15, 23, 42, 0.04);
-
   background-color : white;
 }
 
-.Icon{
+.Icon {
   background-color: #4F39F6;
   border-radius: 10px;
-
   width: var(--icon-size);
   height: var(--icon-size);
   padding: 0.5rem;
   display: flex;
   align-items: center;
   justify-content: center;
-
   color: #fff;
   flex: 0 0 auto;
 }
+
 .homepageTitle {
   display: flex;
   flex-direction: column;
@@ -52,59 +53,89 @@
   font-size: 0.875rem;
   color: #666;
 }
-/* 컨텐츠 영역 */
-.homepageContent{
-    display: flex;
-    flex-direction : column;
-    align-items: center;
-    text-align:center;
 
+.homepageContent {
+  display: flex;
+  flex-direction : column;
+  align-items: center;
+  text-align:center;
+  
+  width: 100%;
+  padding: 2rem 1rem;
+  box-sizing: border-box;
 }
-.homepageContent h1{
-    font-size: 2.5rem;
-    margin-bottom: 1rem;
-}   
-.homepageDiscription button{
-    font-size: 1rem;
-    width : 10rem;
-    height : 3rem;
-    padding : 0.5rem 0.25rem;
+
+.homepageContent h1 {
+  font-size: 2.2rem;
+  margin-bottom: 1rem;
+  font-weight: bold;
+  color: #222;
 }
-.addBtn{
-    background-color : black;
-    color : white;
-    border : none;
-    border-radius : 8px;
-    margin-right : 1rem;
-    cursor : pointer;
+
+.homepageContent p {
+  font-size: 1rem;
+  color: #555;
+  line-height: 1.6;
+}
+
+.homepageDiscription {
+  max-width: 1200px;
+  width: 100%;
+  margin: 2rem auto 4rem auto;
+}
+
+.buttonRow {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.homepageDiscription button {
+  font-size: 1rem;
+  width : 10rem;
+  height : 3rem;
+  padding : 0.5rem 0.25rem;
+  font-weight: bold;
+  transition: all 0.2s ease;
+}
+
+.addBtn {
+  background-color : #4F39F6;
+  color : white;
+  border : none;
+  border-radius : 8px;
+  cursor : pointer;
 }
 
 .addBtn:hover, .editBtn:hover {
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-}   
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transform: translateY(-2px);
+} 
 
-.editBtn{
-    background-color : white;
-    color : black;
-    border : 1px solid #e0e0e0;
-    border-radius : 8px;
-    cursor : pointer;
+.editBtn {
+  background-color : white;
+  color : black;
+  border : 1px solid #e0e0e0;
+  border-radius : 8px;
+  cursor : pointer;
 }
 
-/*주요 기능 섹션*/
 .homepageFeatures {
   margin: 6rem auto;
-  padding: 2rem;
-  max-width: 1400px;
+  padding: 3rem 2rem;
+  max-width: 1200px;
+  width: 100%;
   text-align: center;
+  box-sizing: border-box;
 }
 
 .featuresGrid {
   margin-top: 3rem;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 2.5rem;
-  padding: 1rem;
+  gap: 2rem;
+  padding: 0.5rem;
 }
 
 .featureItem {
@@ -112,8 +143,8 @@
   flex-direction: column;
   align-items: center;
   gap: 1.2rem;
-  padding: 2.5rem 2rem;
-  min-height: 240px;
+  padding: 1.5rem 1rem;
+  height: auto;
   border-radius: 16px;
   background-color: white;
   box-shadow: 
@@ -125,6 +156,19 @@
     background-color 0.3s ease;
 }
 
+.featureItem h2, .featureItem p {
+  margin: 0;
+}
+.featureItem h2 {
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+.featureItem p {
+  font-size: 0.9rem;
+  color: #555;
+  line-height: 1.5;
+}
+
 .featureItem:hover {
   transform: translateY(-5px);
   background-color: #FAFBFF;
@@ -133,34 +177,114 @@
     0 8px 16px rgba(0, 0, 0, 0.04);
 }
 
-.featureIcon{
-    --feature-icon-size: 1.5rem;
-    width: var(--feature-icon-size);
-    height: var(--feature-icon-size);
-    padding: 0.75rem;
-    border-radius: 12px;
-    background-color: #E3EBFE;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #4F39F6;
+.featureIcon {
+  --feature-icon-size: 1.5rem;
+  width: var(--feature-icon-size);
+  height: var(--feature-icon-size);
+  padding: 0.75rem;
+  border-radius: 12px;
+  background-color: #E3EBFE;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #4F39F6;
 }
 
-@media (max-width: 768px) {
+.homepageGetStarted {
+  margin: 4rem auto;
+  background-color: #4F39F6;
+  color: white;
+  padding:  2rem 1rem;
+  border-radius: 16px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 1200px;
+  width: calc(100% - 4rem); /* 양쪽 마진 고려 */
+  box-sizing: border-box; 
+}
+
+.homepageGetStarted p {
+  color: #E3EBFE;
+}
+
+.homepageGetStarted .startBtn {
+  background-color: white;
+  color: #4F39F6;
+  padding: 0.5rem 0.5rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: bold;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.homepageGetStarted .startBtn:hover {
+  transform: scale(1.03);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+@media (max-width: 992px) {
   .homepageFeatures {
     margin: 3rem auto;
-    padding: 1rem;
+    padding: 1.5rem;
+    width: 100%;
   }
-
   .featuresGrid {
     margin-top: 2rem;
     gap: 1.5rem;
     grid-template-columns: repeat(2, 1fr);
+    padding: 0;  /* 패딩 제거 */
   }
-
   .featureItem {
+    padding: 1.5rem 1rem;
+    height: auto; 
+  }
+  .homepageGetStarted {
+    width: calc(100% - 3rem); /* 태블릿에서 양쪽 마진 조정 */
+    margin: 3rem auto;
     padding: 2rem 1.5rem;
-    min-height: 200px;
   }
 }
 
+@media (max-width: 600px) {
+  .buttonRow {
+    flex-direction: column;
+  }
+  .homepageDiscription button {
+    width: 100%;
+    max-width: 300px;
+    margin: 0 auto;
+  }
+
+  .featuresGrid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .featureItem {
+    height: auto;
+  }
+  .homepageGetStarted {
+    width: calc(100% - 2rem); 
+    margin: 2rem auto;
+    padding: 2rem 1rem;
+    border-radius: 12px;   }
+  .homepageGetStarted h1 {
+    font-size: 1.8rem;
+  }
+  .homepageGetStarted p {
+    font-size: 0.9rem;
+    margin: 1rem 0;
+  }
+  .homepageGetStarted .startBtn {
+    width: 100%;
+    justify-content: center;
+    padding: 0.75rem;
+  }
+}
