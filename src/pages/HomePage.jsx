@@ -1,6 +1,6 @@
 import { FileText, Palette, Download, Share2 } from "lucide-react";
 import styles from "./HomePage.module.css";
-
+import { useNavigate } from "react-router-dom";
 const features = [
   {
     icon: FileText,
@@ -25,7 +25,7 @@ const features = [
 ];
 
 const HomePage = () => {
-  
+  const navigate= useNavigate()
 
   return (
     <div className={styles.homepageContainer} >
@@ -45,7 +45,7 @@ const HomePage = () => {
           <p>템플릿 선택부터 공유까지 모든 과정이 간단합니다.</p>
           
           <div className={styles.buttonRow}>
-            <button className={styles.addBtn}>새 주보 만들기</button>
+            <button className={styles.addBtn} onClick={()=>navigate("/editor")}>새 주보 만들기</button>
             <button className={styles.editBtn}>이어서 편집하기</button>
           </div>
         </div>
@@ -54,7 +54,7 @@ const HomePage = () => {
           <h1>주요 기능</h1>
           <div className={styles.featuresGrid}>
             {features.map((feature, index) => (
-              <div key={index} className={styles.featureItem}>
+              <div key={index} className={styledidis.featureItem}>
                 <feature.icon className={styles.featureIcon} />
                 <h2>{feature.title}</h2>
                 <p>{feature.description}</p>
