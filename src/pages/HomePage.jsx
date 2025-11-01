@@ -54,7 +54,7 @@ const HomePage = () => {
           <h1>주요 기능</h1>
           <div className={styles.featuresGrid}>
             {features.map((feature, index) => (
-              <div key={index} className={styledidis.featureItem}>
+              <div key={index} className={styles.featureItem}>
                 <feature.icon className={styles.featureIcon} />
                 <h2>{feature.title}</h2>
                 <p>{feature.description}</p>
