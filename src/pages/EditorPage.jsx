@@ -90,7 +90,64 @@ const EditorPage = () => {
               <span>교회소식</span>
             </button>
           </div>
-          
+            {activeTab === "info" ? (
+            <div className={styles.infoContent}>
+              <div className={styles.section}>
+                <h3>교회 정보</h3>
+                <div className={styles.inputRow}>
+                  <div className={styles.inputGroup}>
+                    <p>교회명</p>
+                    <input type="text" placeholder="예: 새소망교회" />
+                  </div>
+                  <div className={styles.inputGroup}>
+                    <p>담임목사</p>
+                    <input type="text" placeholder="예: 김철수 목사" />
+                  </div>
+                </div>
+              </div>
+
+              <div className={styles.section}>
+                <h3>예배 정보</h3>
+                <div className={styles.inputRow}>
+                  <div className={styles.inputGroup}>
+                    <p>예배명</p>
+                    <input type="text" placeholder="예: 주일 대예배" />
+                  </div>
+                  <div className={styles.inputGroup}>
+                    <p>예배시간</p>
+                    <input type="text" placeholder="예: 오전 11:00" />
+                  </div>
+                </div>
+                <div className={styles.inputGroup}>
+                  <p>예배일</p>
+                  <input type="date" />
+                </div>
+              </div>
+
+              <div className={styles.section}>
+                <h3>주요 성경 구절</h3>
+                <div className={styles.inputGroup}>
+                  <p>성경 구절</p>
+                  <input type="text" placeholder="예: 시편 23:1" />
+                </div>
+              </div>
+            </div>
+          ) : null}
+          {activeTab === "header" ? (
+            <div className={styles.headerContent}>
+              <p>헤더설정 탭 내용</p>
+            </div>
+          ) : null}
+          {activeTab === "order" ? (
+            <div className={styles.orderContent}>
+              <p>예배순서 탭 내용</p>
+            </div>
+          ) : null}
+          {activeTab === "news" ? (
+            <div className={styles.newsContent}>
+              <p>교회소식 탭 내용</p>
+            </div>
+          ) : null}
         </div>
 
         <div className={styles.previewContainer}>
