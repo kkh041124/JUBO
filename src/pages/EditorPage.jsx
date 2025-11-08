@@ -13,8 +13,10 @@ import {
 import styles from '../pages/EditorPage.module.css';
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-
+import useJuboStore from "../stores/useJuboStore";
 const EditorPage = () => {
+  const { churchName,ministerName,worshipName,serviceDate,bibleVerse,setChurchName,setMinisterName,setWorshipName,setServiceDate,setBibleVerse } = useJuboStore();
+
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("info");
 
@@ -97,11 +99,11 @@ const EditorPage = () => {
                 <div className={styles.inputRow}>
                   <div className={styles.inputGroup}>
                     <p>교회명</p>
-                    <input type="text" placeholder="예: 새소망교회" />
+                    <input type="text" placeholder="예: 새소망교회" value={churchName} onChange={(e)=>setChurchName(e.target.value)} />
                   </div>
                   <div className={styles.inputGroup}>
                     <p>담임목사</p>
-                    <input type="text" placeholder="예: 김철수 목사" />
+                    <input type="text" placeholder="예: 김철수 목사" value={ministerName} onChange={(e)=>setMinisterName(e.target.value)}/>
                   </div>
                 </div>
               </div>
@@ -111,7 +113,7 @@ const EditorPage = () => {
                 <div className={styles.inputRow}>
                   <div className={styles.inputGroup}>
                     <p>예배명</p>
-                    <input type="text" placeholder="예: 주일 대예배" />
+                    <input type="text" placeholder="예: 주일 대예배" value={worshipName} onChange={(e)=>setWorshipName(e.target.value)} />
                   </div>
                   <div className={styles.inputGroup}>
                     <p>예배시간</p>
@@ -156,6 +158,7 @@ const EditorPage = () => {
             <h2>실시간 미리보기</h2>
           </div>
           <div className={styles.previewContent}>
+            <p>{churchName}</p>
           </div>
         </div>
       </div>
