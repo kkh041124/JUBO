@@ -1,0 +1,158 @@
+.modalContainer {
+  background-color: white;
+  border-radius: 12px;
+  padding: 1.5rem 2rem 2rem 2rem;
+  width: 100%;
+  max-width: 500px; /* 모달 최대 너비 */
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem; /* 섹션 간 간격 */
+}
+
+/* 1. 헤더 (제목 + 닫기 버튼) */
+.modalContent {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.modalContent h2 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.modalContent button {
+  background: #f5f5f5;
+  border: none;
+  border-radius: 50%; /* 원형 버튼 */
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.modalContent button:hover {
+  background-color: #e0e0e0;
+}
+
+.smallIcon {
+  width: 1.2rem;
+  height: 1.2rem;
+  color: #555;
+}
+
+/* 2. 폼 컨테이너 (가로 2열) */
+.formContainer {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+}
+
+/* 3. 폼 그룹 (레이블 + 입력창) */
+.inputGroup,
+.inputContainer,
+.textareaContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem; /* 레이블과 입력창 사이 간격 */
+  width: 100%; /* 부모 너비에 맞춤 */
+}
+
+.inputGroup {
+  flex: 1; /* .formContainer 안에서 1:1 비율 차지 */
+}
+
+/* 폼 레이블 공통 스타일 (h3) */
+.inputGroup h3,
+.inputContainer h3,
+.textareaContainer h3 {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #333;
+  margin: 0;
+}
+
+/* 폼 입력창 공통 스타일 */
+.inputGroup select,
+.inputGroup input,
+.inputContainer input,
+.textareaContainer textarea {
+  background-color: #f7f9fc;
+  border: 1px solid #eef0f4;
+  border-radius: 8px;
+  padding: 0.85rem 1rem;
+  font-size: 0.95rem;
+  width: 100%;
+  box-sizing: border-box; /* 패딩이 너비에 포함되도록 */
+  color: #333;
+}
+
+.inputGroup select::placeholder,
+.inputGroup input::placeholder,
+.inputContainer input::placeholder,
+.textareaContainer textarea::placeholder {
+  color: #aaa;
+}
+
+/* 4. Select (드롭다운) 화살표 커스텀 */
+.inputGroup select {
+  appearance: none;
+  background-image: url('data:image/svg+xml;utf8,<svg fill="%23555" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  background-size: 1.5rem;
+  padding-right: 2.5rem;
+  cursor: pointer;
+}
+
+/* 5. Textarea (내용) */
+.textareaContainer textarea {
+  min-height: 120px;
+  resize: vertical; /* 세로로만 크기 조절 */
+}
+
+/* 6. 하단 버튼 그룹 */
+.buttonGroup {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.buttonGroup button {
+  flex: 1; /* 버튼이 1:1 비율로 */
+  padding: 0.85rem 1rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+/* '추가' 버튼 (Primary) */
+.buttonGroup button:first-child {
+  background-color: #1a1a1a;
+  color: white;
+  border-color: #1a1a1a;
+}
+.buttonGroup button:first-child:hover {
+  background-color: #333;
+}
+
+/* '취소' 버튼 (Secondary) */
+.buttonGroup button:last-child {
+  background-color: white;
+  color: #333;
+  border-color: #e0e0e0;
+}
+.buttonGroup button:last-child:hover {
+  background-color: #f9f9f9;
+  border-color: #ccc;
+}

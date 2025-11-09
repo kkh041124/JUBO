@@ -9,13 +9,31 @@ import {
   Settings,
   Users,
   MessageSquare,
+  Plus,
 } from "lucide-react";
 import styles from '../pages/EditorPage.module.css';
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import useJuboStore from "../stores/useJuboStore";
+import AModal from "../components/AModal/AModal.jsx";
+
 const EditorPage = () => {
-  const { churchName,ministerName,worshipName,serviceDate,bibleVerse,setChurchName,setMinisterName,setWorshipName,setServiceDate,setBibleVerse } = useJuboStore();
+  const { 
+    churchName,
+    ministerName,
+    worshipName,
+    serviceDate,
+    bibleVerse,
+    setChurchName,
+    setMinisterName,
+    setWorshipName,
+    setServiceDate,
+    setBibleVerse,
+    isModalOpen,
+    openModal,
+    closeModal,
+    closeNews
+  } = useJuboStore();
 
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("info");
@@ -147,7 +165,13 @@ const EditorPage = () => {
           ) : null}
           {activeTab === "news" ? (
             <div className={styles.newsContent}>
-              <p>교회소식 탭 내용</p>
+              <div className={styles.section}>
+                <h3>교회 소식</h3>
+                <button onClick={() => openModal()} className={styles.addNewsButton}>
+                  <Plus className={styles.iconSmall} />
+                  <p>소식 추가</p>
+                </button>
+              </div>
             </div>
           ) : null}
         </div>
@@ -162,6 +186,18 @@ const EditorPage = () => {
           </div>
         </div>
       </div>
+          {isModalOpen && (
+      <div
+        className={styles.overlay}
+        onClick={() => closeNews()}
+      >
+        <div
+          className={styles.modalWrapper}
+          onClick={(e) => e.stopPropagation()}>
+          <AModal />
+        </div>
+      </div>
+    )}
     </div>
   );
 };
