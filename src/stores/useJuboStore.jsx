@@ -1,45 +1,43 @@
 // /src/stores/useJuboStore.jsx
-import { create } from 'zustand';
+import { create } from "zustand";
 
-const worshipInfoSlice = ((set) => ({
+const worshipInfoSlice = (set) => ({
   juboList: [],
   setJuboList: (newList) => set({ juboList: newList }),
 
-  churchName: '',
+  churchName: "",
   setChurchName: (newName) => set({ churchName: newName }),
 
-  ministerName: '',
+  ministerName: "",
   setMinisterName: (newName) => set({ ministerName: newName }),
 
-  worshipName: '',
+  worshipName: "",
   setWorshipName: (newName) => set({ worshipName: newName }),
 
-  serviceDate: '',
+  serviceDate: "",
   setServiceDate: (newDate) => set({ serviceDate: newDate }),
 
-  bibleVerse: '',
+  bibleVerse: "",
   setBibleVerse: (newVerse) => set({ bibleVerse: newVerse }),
-}));
+});
 
-
-const newsModal = (set,get) => ({
+const newsModal = (set, get) => ({
   isModalOpen: false,
   openModal: () => set({ isModalOpen: true }),
   closeModal: () => set({ isModalOpen: false }),
 
-  category: '일반',
+  category: "일반",
   setCategory: (newCategory) => set({ category: newCategory }),
-  date: '',
+  date: "",
   setDate: (newDate) => set({ date: newDate }),
-  title: '',
+  title: "",
   setTitle: (newTitle) => set({ title: newTitle }),
-  content: '',
+  content: "",
   setContent: (newContent) => set({ content: newContent }),
 
   addNews: () => {
     const { category, date, title, content, juboList } = get();
     if (!title.trim()) return alert("제목을 입력해주세요!");
-
     const newNews = {
       id: Date.now(),
       category,
@@ -59,7 +57,7 @@ const newsModal = (set,get) => ({
 
     get().closeModal();
   },
-  closeNews:() => {
+  closeNews: () => {
     set({
       category: "일반",
       date: "",
@@ -68,10 +66,24 @@ const newsModal = (set,get) => ({
     });
     get().closeModal();
   },
+  deleteNews: (it) => {
+    const { juboList } = get();
+    const updatedList = juboList.filter((news) => news.id !== it.id);
+    set({ juboList: updatedList });
+  },
+  editNews: (it) => {
+    set({
+      category: it.category,
+      date: it.date,
+      title: it.title,
+      content: it.content,
+    });
+    get().openModal();
+  },
 });
-const useJuboStore = create((set,get) => ({
+const useJuboStore = create((set, get) => ({
   ...worshipInfoSlice(set),
-  ...newsModal(set,get),
+  ...newsModal(set, get),
 }));
 
 export default useJuboStore;

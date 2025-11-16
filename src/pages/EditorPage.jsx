@@ -10,15 +10,23 @@ import {
   Users,
   MessageSquare,
   Plus,
+  Megaphone,
+  HeartHandshake,
+  CalendarDays,
+  HandHelping,
+  NotebookPen,
+  Trash2,
+  SquarePen,
 } from "lucide-react";
-import styles from '../pages/EditorPage.module.css';
+import styles from "../pages/EditorPage.module.css";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import useJuboStore from "../stores/useJuboStore";
 import AModal from "../components/AModal/AModal.jsx";
 
 const EditorPage = () => {
-  const { 
+  const {
+    juboList,
     churchName,
     ministerName,
     worshipName,
@@ -32,7 +40,13 @@ const EditorPage = () => {
     isModalOpen,
     openModal,
     closeModal,
-    closeNews
+    closeNews,
+    category,
+    date,
+    title,
+    content,
+    deleteNews,
+    editNews,
   } = useJuboStore();
 
   const navigate = useNavigate();
@@ -42,7 +56,10 @@ const EditorPage = () => {
     <div className={styles.editorpageContainer}>
       <div className={styles.editorpageHeader}>
         <div className={styles.headerSection}>
-          <button className={`${styles.iconButton} ${styles.ghostButton}`} onClick={() => navigate(-1)}>
+          <button
+            className={`${styles.iconButton} ${styles.ghostButton}`}
+            onClick={() => navigate(-1)}
+          >
             <ArrowLeft className={styles.icon} />
             <span>돌아가기</span>
           </button>
@@ -50,7 +67,7 @@ const EditorPage = () => {
 
         <div className={`${styles.headerSection} ${styles.titleContainer}`}>
           <FileText className={styles.pageIcon} />
-          <span className={styles.title}>공군예천교회</span>
+          <span className={styles.title}>{churchName}</span>
         </div>
 
         <div className={`${styles.headerSection} ${styles.buttonGroup}`}>
@@ -110,18 +127,28 @@ const EditorPage = () => {
               <span>교회소식</span>
             </button>
           </div>
-            {activeTab === "info" ? (
+          {activeTab === "info" ? (
             <div className={styles.infoContent}>
               <div className={styles.section}>
                 <h3>교회 정보</h3>
                 <div className={styles.inputRow}>
                   <div className={styles.inputGroup}>
                     <p>교회명</p>
-                    <input type="text" placeholder="예: 새소망교회" value={churchName} onChange={(e)=>setChurchName(e.target.value)} />
+                    <input
+                      type="text"
+                      placeholder="예: 새소망교회"
+                      value={churchName}
+                      onChange={(e) => setChurchName(e.target.value)}
+                    />
                   </div>
                   <div className={styles.inputGroup}>
                     <p>담임목사</p>
-                    <input type="text" placeholder="예: 김철수 목사" value={ministerName} onChange={(e)=>setMinisterName(e.target.value)}/>
+                    <input
+                      type="text"
+                      placeholder="예: 김철수 목사"
+                      value={ministerName}
+                      onChange={(e) => setMinisterName(e.target.value)}
+                    />
                   </div>
                 </div>
               </div>
@@ -131,7 +158,12 @@ const EditorPage = () => {
                 <div className={styles.inputRow}>
                   <div className={styles.inputGroup}>
                     <p>예배명</p>
-                    <input type="text" placeholder="예: 주일 대예배" value={worshipName} onChange={(e)=>setWorshipName(e.target.value)} />
+                    <input
+                      type="text"
+                      placeholder="예: 주일 대예배"
+                      value={worshipName}
+                      onChange={(e) => setWorshipName(e.target.value)}
+                    />
                   </div>
                   <div className={styles.inputGroup}>
                     <p>예배시간</p>
@@ -167,10 +199,88 @@ const EditorPage = () => {
             <div className={styles.newsContent}>
               <div className={styles.section}>
                 <h3>교회 소식</h3>
-                <button onClick={() => openModal()} className={styles.addNewsButton}>
+                <button
+                  onClick={() => openModal()}
+                  className={styles.addNewsButton}
+                >
                   <Plus className={styles.iconSmall} />
                   <p>소식 추가</p>
                 </button>
+              </div>
+              <div className={styles.newsWrapper}>
+                <div className={styles.newsListContainer}>
+                  {juboList.length === 0 ? (
+                    <p>추가된 소식이 없습니다.</p>
+                  ) : (
+                    juboList.map((news) => {
+                      const categoryClass =
+                        news.category === "일반"
+                          ? "normal"
+                          : news.category === "공지사항"
+                          ? "notice"
+                          : news.category === "기도제목"
+                          ? "prayer"
+                          : news.category === "행사"
+                          ? "event"
+                          : news.category === "봉사/모집"
+                          ? "volunteer"
+                          : news.category === "교제/가족 소식"
+                          ? "family"
+                          : news.category === "교육/훈련"
+                          ? "education"
+                          : "";
+
+                      const CategoryIcon =
+                        news.category === "일반"
+                          ? MessageSquare
+                          : news.category === "공지사항"
+                          ? Megaphone
+                          : news.category === "기도제목"
+                          ? HeartHandshake
+                          : news.category === "행사"
+                          ? Calendar
+                          : news.category === "봉사/모집"
+                          ? HandHelping
+                          : news.category === "교제/가족 소식"
+                          ? Users
+                          : news.category === "교육/훈련"
+                          ? NotebookPen
+                          : null;
+
+                      return (
+                        <div key={news.id} className={styles.newsItem}>
+                          {CategoryIcon && (
+                            <CategoryIcon className={styles.icon} />
+                          )}
+                          <div className={styles.newsDetails}>
+                            <div className={styles.newsHeader}>
+                              <p className={styles[categoryClass]}>
+                                {news.category}
+                              </p>
+                              {news.date && <p>{news.date}</p>}
+                            </div>
+                            <h3>{news.title}</h3>
+                            <span>{news.content}</span>
+                          </div>
+                          <div className={styles.newsActions}>
+                            <button
+                              className={styles.editBtn}
+                              onClick={() => editNews(news)}
+                            >
+                              <SquarePen className={styles.Actionicon} />
+                            </button>
+                            <button
+                              className={styles.deleteBtn}
+                              onClick={() => deleteNews(news)}
+                            >
+                              <Trash2 className={styles.Actionicon} />
+                            </button>
+                          </div>
+                        </div>
+                      );
+                    })
+                  )}
+                </div>
               </div>
             </div>
           ) : null}
@@ -186,18 +296,16 @@ const EditorPage = () => {
           </div>
         </div>
       </div>
-          {isModalOpen && (
-      <div
-        className={styles.overlay}
-        onClick={() => closeNews()}
-      >
-        <div
-          className={styles.modalWrapper}
-          onClick={(e) => e.stopPropagation()}>
-          <AModal />
+      {isModalOpen && (
+        <div className={styles.overlay} onClick={() => closeNews()}>
+          <div
+            className={styles.modalWrapper}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <AModal />
+          </div>
         </div>
-      </div>
-    )}
+      )}
     </div>
   );
 };

@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { X } from "lucide-react";
 import styles from "./AModal.module.css";
 import useJuboStore from "../../stores/useJuboStore";
@@ -14,8 +15,24 @@ const AModal = () => {
     setContent,
     addNews,
     closeModal,
-    closeNews
+    closeNews,
   } = useJuboStore();
+
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === "Escape") {
+        closeModal();
+      } else if (e.key === "Enter") {
+        addNews();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [addNews, closeModal]);
 
   return (
     <div className={styles.modalContainer}>
@@ -29,7 +46,10 @@ const AModal = () => {
       <div className={styles.formContainer}>
         <div className={styles.inputGroup}>
           <h3>카테고리</h3>
-          <select value={category} onChange={(e) => setCategory(e.target.value)}>
+          <select
+            value={category}
+            onChange={(e) => setCategory(e.target.value)}
+          >
             <option>일반</option>
             <option>공지사항</option>
             <option>기도제목</option>
@@ -42,7 +62,11 @@ const AModal = () => {
 
         <div className={styles.inputGroup}>
           <h3>날짜(선택)</h3>
-          <input type="date" value={date} onChange={(e) => setDate(e.target.value)} />
+          <input
+            type="date"
+            value={date}
+            onChange={(e) => setDate(e.target.value)}
+          />
         </div>
       </div>
 
