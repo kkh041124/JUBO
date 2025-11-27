@@ -15,7 +15,10 @@ import {
   useSortable,
 } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import { restrictToVerticalAxis } from "@dnd-kit/modifiers";
+import { 
+  restrictToVerticalAxis, 
+  restrictToParentElement 
+} from "@dnd-kit/modifiers";
 
 function SortableItem(props) {
   const { attributes, listeners, setNodeRef, transform, transition } =
@@ -80,25 +83,29 @@ export default function Test() {
         maxWidth: "400px",
         margin: "0 auto",
         fontFamily: "sans-serif",
+        border: "1px solid #eee" // 영역 확인을 위해 테두리 추가함 (선택사항)
       }}
     >
       <h2 style={{ textAlign: "center", marginBottom: "24px", color: "#333" }}>
-        Vertical Drag Only
+        Vertical Drag Only (Bounded)
       </h2>
+      
       <DndContext
         sensors={sensors}
         collisionDetection={closestCenter}
         onDragEnd={handleDragEnd}
-        modifiers={[restrictToVerticalAxis]}
+        modifiers={[restrictToVerticalAxis, restrictToParentElement]}
       >
-        <SortableContext items={items} strategy={verticalListSortingStrategy}>
-          {items.map((id) => (
-            <SortableItem key={id} id={id}>
-              <span style={{ fontWeight: "600", color: "#333" }}>{id}</span>
-              <span style={{ color: "#bbb", fontSize: "20px" }}>:::</span>
-            </SortableItem>
-          ))}
-        </SortableContext>
+        <div style={{ padding: "10px", border: "1px dashed #ccc" }}>
+          <SortableContext items={items} strategy={verticalListSortingStrategy}>
+            {items.map((id) => (
+              <SortableItem key={id} id={id}>
+                <span style={{ fontWeight: "600", color: "#333" }}>{id}</span>
+                <span style={{ color: "#bbb", fontSize: "20px" }}>:::</span>
+              </SortableItem>
+            ))}
+          </SortableContext>
+        </div>
       </DndContext>
     </div>
   );

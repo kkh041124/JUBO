@@ -1,89 +1,118 @@
-// /src/stores/useJuboStore.jsx
 import { create } from "zustand";
 
-const worshipInfoSlice = (set) => ({
-  juboList: [],
-  setJuboList: (newList) => set({ juboList: newList }),
+const useJuboStore = create((set, get) => ({
+  // 데이터 구조
+  jubo: {
+    churchInfo: {
+      churchName: "",
+      ministerName: "",
+    },
+    worshipInfo: {
+      worshipName: "",
+      worshipTime:"",
+      serviceDate: "",
+      bibleVerse: "",
+    },
+    news: [],
+    order:[],
+  },
 
-  churchName: "",
-  setChurchName: (newName) => set({ churchName: newName }),
+  // 공통 업데이트 함수
+  updateField: (section, key, value) =>
+    set((state) => ({
+      jubo: {
+        ...state.jubo,
+        [section]: {
+          ...state.jubo[section],
+          [key]: value,
+        },
+      },
+    })),
 
-  ministerName: "",
-  setMinisterName: (newName) => set({ ministerName: newName }),
-
-  worshipName: "",
-  setWorshipName: (newName) => set({ worshipName: newName }),
-
-  serviceDate: "",
-  setServiceDate: (newDate) => set({ serviceDate: newDate }),
-
-  bibleVerse: "",
-  setBibleVerse: (newVerse) => set({ bibleVerse: newVerse }),
-});
-
-const newsModal = (set, get) => ({
+  // 모달 UI 상태
   isModalOpen: false,
-  openModal: () => set({ isModalOpen: true }),
-  closeModal: () => set({ isModalOpen: false }),
+  editingId: null, // 수정 모드인지 확인하기 위한 ID 상태 추가
+  modalTab : "", // "news" 또는 "order"
 
+  // 입력 필드 상태
   category: "일반",
-  setCategory: (newCategory) => set({ category: newCategory }),
   date: "",
-  setDate: (newDate) => set({ date: newDate }),
   title: "",
-  setTitle: (newTitle) => set({ title: newTitle }),
   content: "",
-  setContent: (newContent) => set({ content: newContent }),
+  
 
-  addNews: () => {
-    const { category, date, title, content, juboList } = get();
+  setCategory: (v) => set({ category: v }),
+  setDate: (v) => set({ date: v }),
+  setTitle: (v) => set({ title: v }),
+  setContent: (v) => set({ content: v }),
+
+  openModal: (tabType) => set({ isModalOpen: true, editingId: null, modalTab : tabType}), // 열 때는 수정 모드 초기화
+  closeModal: () => set({
+      isModalOpen: false,
+      editingId: null,
+      category: "일반",
+      date: "",
+      title: "",
+      content: ""
+  }),
+
+  // 뉴스 저장 (추가 + 수정 통합 로직)
+  saveNews: () => {
+    const { category, date, title, content, editingId, jubo } = get();
+
     if (!title.trim()) return alert("제목을 입력해주세요!");
-    const newNews = {
-      id: Date.now(),
-      category,
-      date,
-      title,
-      content,
-    };
 
-    set({ juboList: [...juboList, newNews] });
+    let newNewsList;
+
+    if (editingId) {
+      // 수정 모드: 기존 ID를 찾아 교체
+      newNewsList = jubo.news.map((item) =>
+        item.id === editingId
+          ? { ...item, category, date, title, content }
+          : item
+      );
+    } else {
+      // 생성 모드: 새 아이템 추가
+      const newNews = {
+        id: Date.now(),
+        category,
+        date,
+        title,
+        content,
+      };
+      newNewsList = [...jubo.news, newNews];
+    }
 
     set({
-      category: "일반",
-      date: "",
-      title: "",
-      content: "",
+      jubo: {
+        ...jubo,
+        news: newNewsList,
+      },
     });
 
     get().closeModal();
   },
-  closeNews: () => {
-    set({
-      category: "일반",
-      date: "",
-      title: "",
-      content: "",
-    });
-    get().closeModal();
-  },
+
   deleteNews: (it) => {
-    const { juboList } = get();
-    const updatedList = juboList.filter((news) => news.id !== it.id);
-    set({ juboList: updatedList });
+    const { jubo } = get();
+    set({
+      jubo: {
+        ...jubo,
+        news: jubo.news.filter((news) => news.id !== it.id),
+      },
+    });
   },
+
   editNews: (it) => {
     set({
+      editingId: it.id, // 수정할 ID 저장
       category: it.category,
       date: it.date,
       title: it.title,
       content: it.content,
+      isModalOpen: true,
     });
-    get().openModal();
   },
-});
-const useJuboStore = create((set, get) => ({
-  ...worshipInfoSlice(set),
-  ...newsModal(set, get),
 }));
 
 export default useJuboStore;
