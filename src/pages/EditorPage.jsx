@@ -1,7 +1,7 @@
 import {
   ArrowLeft, FileText, Eye, Download, Share2, Save, Calendar, Settings,
   Users, MessageSquare, Plus, Megaphone, HeartHandshake, HandHelping,
-  NotebookPen, Trash2, SquarePen, CalendarDays
+  NotebookPen, Trash2, SquarePen, CalendarDays,User,Music,BookHeart,Heart,BookOpen,Music4,Mic,Gift,Sparkles,MoreHorizontal
 } from "lucide-react";
 import styles from "../pages/EditorPage.module.css";
 import { useNavigate } from "react-router-dom";
@@ -16,6 +16,8 @@ const EditorPage = () => {
     updateField,
     deleteNews,
     editNews,
+    deleteOrder,
+    editOrder,
     
     isModalOpen,
     openModal,
@@ -188,66 +190,80 @@ const EditorPage = () => {
           ) : null}
 
           {/* 3. 예배 순서 탭 */}
-          {activeTab === "order" ? (
-            <div className={styles.orderContent}>
-              <div className={styles.section}>
-                <h3>예배 순서</h3>
-                <button onClick={() => openModal("order")} className={styles.addNewsButton}>
-                  <Plus className={styles.iconSmall} />
-                  <p>예배 추가</p>
-                </button>
-              </div>
-              <div className={styles.newsWrapper}>
-                <div className={styles.newsListContainer}>
-                  {jubo.news.length === 0 ? (
-                    <p>추가된 소식이 없습니다.</p>
-                  ) : (
-                    jubo.news.map((news) => {
-                      const categoryClass =
-                        news.category === "일반" ? "normal" :
-                        news.category === "공지사항" ? "notice" :
-                        news.category === "기도제목" ? "prayer" :
-                        news.category === "행사" ? "event" :
-                        news.category === "봉사/모집" ? "volunteer" :
-                        news.category === "교제/가족 소식" ? "family" :
-                        news.category === "교육/훈련" ? "education" : "";
+     {activeTab === "order" ? (
+  <div className={styles.orderContent}>
+    <div className={styles.section}>
+      <h3>예배 순서</h3>
+      <button onClick={() => openModal("order")} className={styles.addNewsButton}>
+        <Plus className={styles.iconSmall} />
+        <p>예배 추가</p>
+      </button>
+    </div>
+    <div className={styles.orderWrapper}>
+      <div className={styles.orderListContainer}>
+        {jubo.order.length === 0 ? (
+          <p>추가된 예배 순서가 없습니다.</p>
+        ) : (
+          jubo.order.map((order) => {
+            const categoryClass =
+              order.ordercategory === "예배로 부름 / 인도" ? "call" :
+              order.ordercategory === "찬송" ? "hymn" :
+              order.ordercategory === "신앙고백" ? "creed" :
+              order.ordercategory === "기도" ? "prayer" :
+              order.ordercategory === "성경봉독" ? "scripture" :
+              order.ordercategory === "찬양대 / 특송" ? "choir" :
+              order.ordercategory === "설교" ? "sermon" :
+              order.ordercategory === "헌금 / 봉헌" ? "offering" :
+              order.ordercategory === "광고" ? "notice" :
+              order.ordercategory === "축도" ? "benediction" :
+              order.ordercategory === "직접 입력" ? "custom" : "";
 
-                      const CategoryIcon =
-                        news.category === "일반" ? MessageSquare :
-                        news.category === "공지사항" ? Megaphone :
-                        news.category === "기도제목" ? HeartHandshake :
-                        news.category === "행사" ? Calendar :
-                        news.category === "봉사/모집" ? HandHelping :
-                        news.category === "교제/가족 소식" ? Users :
-                        news.category === "교육/훈련" ? NotebookPen : null;
+            const CategoryIcon =
+              order.ordercategory === "예배로 부름 / 인도" ? User :
+              order.ordercategory === "찬송" ? Music :
+              order.ordercategory === "신앙고백" ? BookHeart :
+              order.ordercategory === "기도" ? Heart :
+              order.ordercategory === "성경봉독" ? BookOpen :
+              order.ordercategory === "찬양대 / 특송" ? Music4 :
+              order.ordercategory === "설교" ? Mic :
+              order.ordercategory === "헌금 / 봉헌" ? Gift :
+              order.ordercategory === "광고" ? Megaphone :
+              order.ordercategory === "축도" ? Sparkles :
+              order.ordercategory === "직접 입력" ? MoreHorizontal :
+              null;
 
-                      return (
-                        <div key={news.id} className={styles.newsItem}>
-                          {CategoryIcon && <CategoryIcon className={styles.icon} />}
-                          <div className={styles.newsDetails}>
-                            <div className={styles.newsHeader}>
-                              <p className={styles[categoryClass]}>{news.category}</p>
-                              {news.date && <p>{news.date}</p>}
-                            </div>
-                            <h3>{news.title}</h3>
-                            <span>{news.content}</span>
-                          </div>
-                          <div className={styles.newsActions}>
-                            <button className={styles.editBtn} onClick={() => editNews(news)}>
-                              <SquarePen className={styles.Actionicon} />
-                            </button>
-                            <button className={styles.deleteBtn} onClick={() => deleteNews(news)}>
-                              <Trash2 className={styles.Actionicon} />
-                            </button>
-                          </div>
-                        </div>
-                      );
-                    })
-                  )}
+            return (
+              <div key={order.id} className={styles.orderItem}>
+                <div>
+                  ::
+                  <div>
+                  </div>
+                </div>
+                {CategoryIcon && <CategoryIcon className={styles.icon} />}
+                <div className={styles.orderDetails}>
+                  <div className={styles.orderHeader}>
+                    <p className={styles[categoryClass]}>{order.ordercategory}</p>
+                  </div>
+                  <h3>{order.orderTitle}</h3>
+                  <span>{order.orderContent}</span>
+                </div>
+                <div className={styles.orderActions}>
+                  <button className={styles.editBtn} onClick={() => editOrder(order)}>
+                    <SquarePen className={styles.Actionicon} />
+                  </button>
+                  <button className={styles.deleteBtn} onClick={() => deleteOrder(order)}>
+                    <Trash2 className={styles.Actionicon} />
+                  </button>
                 </div>
               </div>
-            </div>
-          ) : null}
+            );
+          })
+        )}
+      </div>
+    </div>
+  </div>
+) : null}
+
 
           {/* 4. 교회 소식 탭 */}
           {activeTab === "news" ? (
