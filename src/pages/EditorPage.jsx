@@ -1,7 +1,7 @@
 import {
   ArrowLeft, FileText, Eye, Download, Share2, Save, Calendar, Settings,
   Users, MessageSquare, Plus, Megaphone, HeartHandshake, HandHelping,
-  NotebookPen, Trash2, SquarePen, CalendarDays,User,Music,BookHeart,Heart,BookOpen,Music4,Mic,Gift,Sparkles,MoreHorizontal
+  NotebookPen, Trash2, SquarePen, CalendarDays,User,Music,BookHeart,Heart,BookOpen,Music4,Mic,Gift,Sparkles,MoreHorizontal,GripVertical,
 } from "lucide-react";
 import styles from "../pages/EditorPage.module.css";
 import { useNavigate } from "react-router-dom";
@@ -189,22 +189,23 @@ const EditorPage = () => {
             </div>
           ) : null}
 
-          {/* 3. 예배 순서 탭 */}
-     {activeTab === "order" ? (
-  <div className={styles.orderContent}>
-    <div className={styles.section}>
-      <h3>예배 순서</h3>
-      <button onClick={() => openModal("order")} className={styles.addNewsButton}>
-        <Plus className={styles.iconSmall} />
-        <p>예배 추가</p>
-      </button>
-    </div>
-    <div className={styles.orderWrapper}>
-      <div className={styles.orderListContainer}>
-        {jubo.order.length === 0 ? (
-          <p>추가된 예배 순서가 없습니다.</p>
-        ) : (
-          jubo.order.map((order) => {
+  {/* 3. 예배 순서 탭 */}
+  {activeTab === "order" ? (
+    <div className={styles.orderContent}>
+      <div className={styles.section}>
+        <h3>예배 순서</h3>
+        <button onClick={() => openModal("order")} className={styles.addNewsButton}>
+          <Plus className={styles.iconSmall} />
+          <p>예배 추가</p>
+        </button>
+      </div>
+
+      <div className={styles.orderWrapper}>
+        <div className={styles.orderListContainer}>
+          {jubo.order.length === 0 ? (
+            <p>추가된 예배 순서가 없습니다.</p>
+          ) : (
+            jubo.order.map((order, index) => {
             const categoryClass =
               order.ordercategory === "예배로 부름 / 인도" ? "call" :
               order.ordercategory === "찬송" ? "hymn" :
@@ -232,14 +233,19 @@ const EditorPage = () => {
               order.ordercategory === "직접 입력" ? MoreHorizontal :
               null;
 
+
             return (
               <div key={order.id} className={styles.orderItem}>
-                <div>
-                  ::
-                  <div>
-                  </div>
+                <div className={styles.leftGroup}>
+                  <GripVertical className={styles.dragHandle} />
                 </div>
+
+                {/* 중앙: 아이콘 */}
                 {CategoryIcon && <CategoryIcon className={styles.icon} />}
+                  <div className={styles.indexBadge}>
+                    {index + 1}
+                  </div>
+                {/* 우측: 텍스트 정보 */}
                 <div className={styles.orderDetails}>
                   <div className={styles.orderHeader}>
                     <p className={styles[categoryClass]}>{order.ordercategory}</p>
@@ -247,6 +253,8 @@ const EditorPage = () => {
                   <h3>{order.orderTitle}</h3>
                   <span>{order.orderContent}</span>
                 </div>
+
+                {/* 액션 버튼 */}
                 <div className={styles.orderActions}>
                   <button className={styles.editBtn} onClick={() => editOrder(order)}>
                     <SquarePen className={styles.Actionicon} />
