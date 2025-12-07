@@ -1,7 +1,7 @@
 import { create } from "zustand";
+import { arrayMove } from "@dnd-kit/sortable";
 
 const useJuboStore = create((set, get) => ({
-  // 데이터 구조
   jubo: {
     churchInfo: {
       churchName: "",
@@ -9,15 +9,14 @@ const useJuboStore = create((set, get) => ({
     },
     worshipInfo: {
       worshipName: "",
-      worshipTime:"",
+      worshipTime: "",
       serviceDate: "",
       bibleVerse: "",
     },
     news: [],
-    order:[],
+    order: [],
   },
 
-  // 공통 업데이트 함수
   updateField: (section, key, value) =>
     set((state) => ({
       jubo: {
@@ -29,12 +28,10 @@ const useJuboStore = create((set, get) => ({
       },
     })),
 
-  // 모달 UI 상태
   isModalOpen: false,
-  editingId: null, // 수정 모드인지 확인하기 위한 ID 상태 추가
-  modalTab : "", // "news" 또는 "order"
+  editingId: null,
+  modalTab: "",
 
-  //뉴스 data
   category: "일반",
   date: "",
   title: "",
@@ -44,42 +41,36 @@ const useJuboStore = create((set, get) => ({
   setDate: (v) => set({ date: v }),
   setTitle: (v) => set({ title: v }),
   setContent: (v) => set({ content: v }),
-  //예배순서 data
-  ordercategory : "예배로 부름 / 인도",
+
+  ordercategory: "예배로 부름 / 인도",
   orderTitle: "",
   orderContent: "",
   setOrderCategory: (v) => set({ ordercategory: v }),
   setOrderTitle: (v) => set({ orderTitle: v }),
   setOrderContent: (v) => set({ orderContent: v }),
 
-
-  openModal: (tabType) => set({ isModalOpen: true, editingId: null, modalTab : tabType}), // 열 때는 수정 모드 초기화
+  openModal: (tabType) => set({ isModalOpen: true, editingId: null, modalTab: tabType }),
   closeModal: () => set({
-      isModalOpen: false,
-      editingId: null,
-      category: "일반",
-      date: "",
-      title: "",
-      content: ""
+    isModalOpen: false,
+    editingId: null,
+    category: "일반",
+    date: "",
+    title: "",
+    content: ""
   }),
 
-  // 뉴스 저장 (추가 + 수정 통합 로직)
   saveNews: () => {
     const { category, date, title, content, editingId, jubo } = get();
-
     if (!title.trim()) return alert("제목을 입력해주세요!");
 
     let newNewsList;
-
     if (editingId) {
-      // 수정 모드: 기존 ID를 찾아 교체
       newNewsList = jubo.news.map((item) =>
         item.id === editingId
           ? { ...item, category, date, title, content }
           : item
       );
     } else {
-      // 생성 모드: 새 아이템 추가
       const newNews = {
         id: Date.now(),
         category,
@@ -89,14 +80,12 @@ const useJuboStore = create((set, get) => ({
       };
       newNewsList = [...jubo.news, newNews];
     }
-
     set({
       jubo: {
         ...jubo,
         news: newNewsList,
       },
     });
-
     get().closeModal();
   },
 
@@ -112,7 +101,7 @@ const useJuboStore = create((set, get) => ({
 
   editNews: (it) => {
     set({
-      editingId: it.id, // 수정할 ID 저장
+      editingId: it.id,
       category: it.category,
       date: it.date,
       title: it.title,
@@ -120,22 +109,19 @@ const useJuboStore = create((set, get) => ({
       isModalOpen: true,
     });
   },
+
   saveOrder: () => {
-    const {ordercategory, orderTitle, orderContent, jubo, editingId } = get();
-    
+    const { ordercategory, orderTitle, orderContent, jubo, editingId } = get();
     if (!orderTitle.trim()) return alert("순서명을 입력해주세요!");
 
     let newOrderList;
-
     if (editingId) {
-      // 수정 모드: 기존 ID를 찾아 교체
       newOrderList = jubo.order.map((item) =>
         item.id === editingId
-          ? { ...item, ordercategory,orderTitle, orderContent }
+          ? { ...item, ordercategory, orderTitle, orderContent }
           : item
       );
     } else {
-      // 생성 모드: 새 아이템 추가
       const newOrder = {
         id: Date.now(),
         ordercategory,
@@ -144,17 +130,16 @@ const useJuboStore = create((set, get) => ({
       };
       newOrderList = [...jubo.order, newOrder];
     }
-
     set({
       jubo: {
         ...jubo,
         order: newOrderList,
       },
     });
-
     get().closeModal();
   },
-  deleteOrder:(it)=>{
+
+  deleteOrder: (it) => {
     const { jubo } = get();
     set({
       jubo: {
@@ -163,14 +148,29 @@ const useJuboStore = create((set, get) => ({
       },
     });
   },
-  editOrder:(it)=>{
+
+  editOrder: (it) => {
     set({
-      editingId: it.id, // 수정할 ID 저장
+      editingId: it.id,
       ordercategory: it.ordercategory,
       orderTitle: it.orderTitle,
       orderContent: it.orderContent,
       isModalOpen: true,
     });
+  },
+
+  reOrder: (activeId, overId) => {
+    set((it) => {
+      const oldIndex = it.jubo.order.findIndex((item) => item.id === activeId);
+      const newIndex = it.jubo.order.findIndex((item) => item.id === overId);
+      
+      return {
+        jubo: {
+          ...it.jubo,
+          order: arrayMove(it.jubo.order, oldIndex, newIndex)
+        }
+      }
+    })
   },
 }));
 

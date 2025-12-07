@@ -1,35 +1,136 @@
 import {
   ArrowLeft, FileText, Eye, Download, Share2, Save, Calendar, Settings,
   Users, MessageSquare, Plus, Megaphone, HeartHandshake, HandHelping,
-  NotebookPen, Trash2, SquarePen, CalendarDays,User,Music,BookHeart,Heart,BookOpen,Music4,Mic,Gift,Sparkles,MoreHorizontal,GripVertical,
+  NotebookPen, Trash2, SquarePen, User, Music, BookHeart, Heart, BookOpen, Music4, Mic, Gift, Sparkles, MoreHorizontal, GripVertical,
 } from "lucide-react";
+import {
+  DndContext,
+  closestCenter,
+  KeyboardSensor,
+  PointerSensor,
+  useSensor,
+  useSensors,
+} from "@dnd-kit/core";
+import {
+  useSortable,
+  SortableContext,
+  sortableKeyboardCoordinates,
+  verticalListSortingStrategy
+} from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
 import styles from "../pages/EditorPage.module.css";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import useJuboStore from "../stores/useJuboStore";
 import AModal from "../components/AModal/AModal.jsx";
 
+const SortableOrderItem = ({ order, index, editOrder, deleteOrder }) => {
+  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: order.id });
+  
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+    zIndex: isDragging ? 999 : "auto", 
+    opacity: isDragging ? 0.5 : 1,
+    touchAction: 'none', 
+    position: 'relative', 
+  };
+
+  const categoryClass =
+    order.ordercategory === "예배로 부름 / 인도" ? "call" :
+    order.ordercategory === "찬송" ? "hymn" :
+    order.ordercategory === "신앙고백" ? "creed" :
+    order.ordercategory === "기도" ? "prayer" :
+    order.ordercategory === "성경봉독" ? "scripture" :
+    order.ordercategory === "찬양대 / 특송" ? "choir" :
+    order.ordercategory === "설교" ? "sermon" :
+    order.ordercategory === "헌금 / 봉헌" ? "offering" :
+    order.ordercategory === "광고" ? "notice" :
+    order.ordercategory === "축도" ? "benediction" :
+    order.ordercategory === "직접 입력" ? "custom" : "";
+
+  const CategoryIcon =
+    order.ordercategory === "예배로 부름 / 인도" ? User :
+    order.ordercategory === "찬송" ? Music :
+    order.ordercategory === "신앙고백" ? BookHeart :
+    order.ordercategory === "기도" ? Heart :
+    order.ordercategory === "성경봉독" ? BookOpen :
+    order.ordercategory === "찬양대 / 특송" ? Music4 :
+    order.ordercategory === "설교" ? Mic :
+    order.ordercategory === "헌금 / 봉헌" ? Gift :
+    order.ordercategory === "광고" ? Megaphone :
+    order.ordercategory === "축도" ? Sparkles :
+    order.ordercategory === "직접 입력" ? MoreHorizontal : null;
+
+  return (
+    <div ref={setNodeRef} style={style} className={styles.orderItem}>
+      <div className={styles.leftGroup} {...attributes} {...listeners}>
+        <GripVertical className={styles.dragHandle} />
+      </div>
+
+      {CategoryIcon && <CategoryIcon className={styles.icon} />}
+      
+      <div className={styles.indexBadge}>
+        {index + 1}
+      </div>
+
+      <div className={styles.orderDetails}>
+        <div className={styles.orderHeader}>
+          <p className={styles[categoryClass]}>{order.ordercategory}</p>
+        </div>
+        <h3>{order.orderTitle}</h3>
+        <span>{order.orderContent}</span>
+      </div>
+
+      <div className={styles.orderActions}>
+        <button className={styles.editBtn} onClick={() => editOrder(order)}>
+          <SquarePen className={styles.Actionicon} />
+        </button>
+        <button className={styles.deleteBtn} onClick={() => deleteOrder(order)}>
+          <Trash2 className={styles.Actionicon} />
+        </button>
+      </div>
+    </div>
+  );
+};
+
 const EditorPage = () => {
   const {
     jubo,
-    
     updateField,
     deleteNews,
     editNews,
     deleteOrder,
     editOrder,
-    
     isModalOpen,
     openModal,
     closeModal,
+    reOrder, 
   } = useJuboStore();
 
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("info");
 
+  const sensors = useSensors(
+    useSensor(PointerSensor, {
+      activationConstraint: {
+        distance: 8,
+      },
+    }),
+    useSensor(KeyboardSensor, {
+      coordinateGetter: sortableKeyboardCoordinates,
+    })
+  );
+  
+  const handleDragEnd = (event) => {
+    const { active, over } = event;
+    if (active.id !== over.id) {
+      reOrder(active.id, over.id); 
+    }
+  };
+
   return (
     <div className={styles.editorpageContainer}>
-      {/* 헤더 영역 */}
       <div className={styles.editorpageHeader}>
         <div className={styles.headerSection}>
           <button
@@ -75,7 +176,6 @@ const EditorPage = () => {
             <h1>주보 편집</h1>
           </div>
 
-          {/* 탭 메뉴 */}
           <div className={styles.headerBar}>
             <button
               className={activeTab === "info" ? styles.activeTab : ""}
@@ -107,7 +207,6 @@ const EditorPage = () => {
             </button>
           </div>
 
-          {/* 1. 기본정보 탭 */}
           {activeTab === "info" ? (
             <div className={styles.infoContent}>
               <div className={styles.section}>
@@ -151,8 +250,7 @@ const EditorPage = () => {
                     <input
                       type="text"
                       placeholder="예: 오전 11:00"
-                      // worshipTime 필드가 스토어 초기값에 없다면 추가 필요
-                      value={jubo.worshipInfo.worshipTime || ""} 
+                      value={jubo.worshipInfo.worshipTime || ""}
                       onChange={(e) => updateField("worshipInfo", "worshipTime", e.target.value)}
                     />
                   </div>
@@ -182,98 +280,52 @@ const EditorPage = () => {
             </div>
           ) : null}
 
-          {/* 2. 헤더 설정 탭 */}
           {activeTab === "header" ? (
             <div className={styles.headerContent}>
               <p>헤더설정 탭 내용</p>
             </div>
           ) : null}
 
-  {/* 3. 예배 순서 탭 */}
-  {activeTab === "order" ? (
-    <div className={styles.orderContent}>
-      <div className={styles.section}>
-        <h3>예배 순서</h3>
-        <button onClick={() => openModal("order")} className={styles.addNewsButton}>
-          <Plus className={styles.iconSmall} />
-          <p>예배 추가</p>
-        </button>
-      </div>
-
-      <div className={styles.orderWrapper}>
-        <div className={styles.orderListContainer}>
-          {jubo.order.length === 0 ? (
-            <p>추가된 예배 순서가 없습니다.</p>
-          ) : (
-            jubo.order.map((order, index) => {
-            const categoryClass =
-              order.ordercategory === "예배로 부름 / 인도" ? "call" :
-              order.ordercategory === "찬송" ? "hymn" :
-              order.ordercategory === "신앙고백" ? "creed" :
-              order.ordercategory === "기도" ? "prayer" :
-              order.ordercategory === "성경봉독" ? "scripture" :
-              order.ordercategory === "찬양대 / 특송" ? "choir" :
-              order.ordercategory === "설교" ? "sermon" :
-              order.ordercategory === "헌금 / 봉헌" ? "offering" :
-              order.ordercategory === "광고" ? "notice" :
-              order.ordercategory === "축도" ? "benediction" :
-              order.ordercategory === "직접 입력" ? "custom" : "";
-
-            const CategoryIcon =
-              order.ordercategory === "예배로 부름 / 인도" ? User :
-              order.ordercategory === "찬송" ? Music :
-              order.ordercategory === "신앙고백" ? BookHeart :
-              order.ordercategory === "기도" ? Heart :
-              order.ordercategory === "성경봉독" ? BookOpen :
-              order.ordercategory === "찬양대 / 특송" ? Music4 :
-              order.ordercategory === "설교" ? Mic :
-              order.ordercategory === "헌금 / 봉헌" ? Gift :
-              order.ordercategory === "광고" ? Megaphone :
-              order.ordercategory === "축도" ? Sparkles :
-              order.ordercategory === "직접 입력" ? MoreHorizontal :
-              null;
-
-
-            return (
-              <div key={order.id} className={styles.orderItem}>
-                <div className={styles.leftGroup}>
-                  <GripVertical className={styles.dragHandle} />
-                </div>
-
-                {/* 중앙: 아이콘 */}
-                {CategoryIcon && <CategoryIcon className={styles.icon} />}
-                  <div className={styles.indexBadge}>
-                    {index + 1}
-                  </div>
-                {/* 우측: 텍스트 정보 */}
-                <div className={styles.orderDetails}>
-                  <div className={styles.orderHeader}>
-                    <p className={styles[categoryClass]}>{order.ordercategory}</p>
-                  </div>
-                  <h3>{order.orderTitle}</h3>
-                  <span>{order.orderContent}</span>
-                </div>
-
-                {/* 액션 버튼 */}
-                <div className={styles.orderActions}>
-                  <button className={styles.editBtn} onClick={() => editOrder(order)}>
-                    <SquarePen className={styles.Actionicon} />
-                  </button>
-                  <button className={styles.deleteBtn} onClick={() => deleteOrder(order)}>
-                    <Trash2 className={styles.Actionicon} />
-                  </button>
+          {activeTab === "order" ? (
+            <div className={styles.orderContent}>
+              <div className={styles.section}>
+                <h3>예배 순서</h3>
+                <button onClick={() => openModal("order")} className={styles.addNewsButton}>
+                  <Plus className={styles.iconSmall} />
+                  <p>예배 추가</p>
+                </button>
+              </div>
+              <div className={styles.orderWrapper}>
+                <div className={styles.orderListContainer}>
+                  {jubo.order.length === 0 ? (
+                    <p>추가된 예배 순서가 없습니다.</p>
+                  ) : (
+                    <DndContext
+                      sensors={sensors}
+                      collisionDetection={closestCenter}
+                      onDragEnd={handleDragEnd}
+                    >
+                      <SortableContext
+                        items={jubo.order.map((order) => order.id)}
+                        strategy={verticalListSortingStrategy}
+                      >
+                        {jubo.order.map((order, index) => (
+                          <SortableOrderItem
+                            key={order.id}
+                            order={order}
+                            index={index}
+                            editOrder={editOrder}
+                            deleteOrder={deleteOrder}
+                          />
+                        ))}
+                      </SortableContext>
+                    </DndContext>
+                  )}
                 </div>
               </div>
-            );
-          })
-        )}
-      </div>
-    </div>
-  </div>
-) : null}
+            </div>
+          ) : null}
 
-
-          {/* 4. 교회 소식 탭 */}
           {activeTab === "news" ? (
             <div className={styles.newsContent}>
               <div className={styles.section}>
@@ -336,7 +388,6 @@ const EditorPage = () => {
           ) : null}
         </div>
 
-        {/* 미리보기 섹션 */}
         <div className={styles.previewContainer}>
           <div className={styles.previewTitle}>
             <Eye className={styles.icon} />
@@ -348,7 +399,6 @@ const EditorPage = () => {
         </div>
       </div>
 
-      {/* 모달 */}
       {isModalOpen && (
         <div className={styles.overlay} onClick={() => closeModal()}>
           <div className={styles.modalWrapper} onClick={(e) => e.stopPropagation()}>
