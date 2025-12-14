@@ -39,22 +39,11 @@
   gap: 0.5rem;
 }
 
-.saveStatus {
+.iconGroup {
   display: flex;
   align-items: center;
-  gap: 0.25rem;
-  font-size: 0.8rem;
-  font-weight: 500;
-  color: #555;
-  background-color: #f0f0f0;
-  padding: 0.3rem 0.6rem;
-  border-radius: 6px;
-  margin-right: 0.5rem;
-}
-
-.iconSmall {
-  width: 0.9rem;
-  height: 0.9rem;
+  flex-wrap: wrap;
+  gap: 0.5rem;
 }
 
 .iconButton {
@@ -92,7 +81,7 @@
   border-color: #e0e0e0;
 }
 .lightButton:hover {
-  background-color: #f9f9f9;
+  background-color: #f0f0f0;
   border-color: #ccc;
 }
 

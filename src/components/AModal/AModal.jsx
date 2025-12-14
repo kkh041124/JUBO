@@ -1,7 +1,8 @@
 import { useEffect } from "react";
-import { X } from "lucide-react";
+import { X,Layers,Palette, Type } from "lucide-react";
 import styles from "./AModal.module.css";
 import useJuboStore from "../../stores/useJuboStore";
+import { useState } from "react";
 
 const AModal = () => {
   const {
@@ -19,7 +20,7 @@ const AModal = () => {
     orderTitle, setOrderTitle,
     orderContent, setOrderContent,saveOrder,
   } = useJuboStore();
-
+  const [activeTab, setActiveTab] = useState("info");
   useEffect(() => {
     if (modalTab === "order") {
        // '직접 입력'이 아닐 경우에만 자동 완성
@@ -173,6 +174,55 @@ const AModal = () => {
             <button onClick={closeModal}>취소</button>
           </div>
         </div>
+      )}
+      {/* ──────────────── 디자인 탭 ──────────────── */}
+      {modalTab === "design" && (
+      <div className={styles.modalContainer}>
+        <div className={styles.modalContent}>
+          <div className={styles.designHeader}>
+            <h2>디자인 설정</h2>
+            <button onClick={closeModal} className={styles.ghostButton}> 
+              <X className={styles.smallIcon} />
+            </button>
+          </div>
+          <span>주보의 템플릿, 색상, 폰트 등을 설정할 수 있습니다.</span>
+        </div>
+        <div className={styles.designContent}>
+          <div className={styles.tabList}>
+            <button
+              className={`${styles.tabButton} ${activeTab === "template" ? styles.activeTab : ""}`}
+              onClick={() => setActiveTab("template")}
+            >
+              <Layers className={styles.mediumIcon} />
+              템플릿
+            </button>
+
+            <button
+              className={`${styles.tabButton} ${activeTab === "design" ? styles.activeTab : ""}`}
+              onClick={() => setActiveTab("design")}
+            >
+              <Palette className={styles.mediumIcon} />
+              색상
+            </button>
+
+            <button
+              className={`${styles.tabButton} ${activeTab === "font" ? styles.activeTab : ""}`}
+              onClick={() => setActiveTab("font")}
+            >
+              <Type className={styles.mediumIcon} />
+              폰트
+            </button>
+          </div>
+          <div className={styles.tabPanel}>
+            {activeTab === "template" && (<div>템플릿 목록이 여기에 표시됩니다.</div>)}
+            {activeTab === "design" && (<div>색상 팔레트 설정 화면입니다.</div>)}
+            {activeTab === "font" && (<div>폰트 크기 및 서체 설정 화면입니다.</div>)}
+          </div>
+        </div>
+        <div className={styles.buttonGroup}>
+          <button onClick={closeModal}>닫기</button>
+        </div>
+      </div>
       )}
     </>
   );

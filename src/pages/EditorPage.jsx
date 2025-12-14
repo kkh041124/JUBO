@@ -2,6 +2,7 @@ import {
   ArrowLeft, FileText, Eye, Download, Share2, Save, Calendar, Settings,
   Users, MessageSquare, Plus, Megaphone, HeartHandshake, HandHelping,
   NotebookPen, Trash2, SquarePen, User, Music, BookHeart, Heart, BookOpen, Music4, Mic, Gift, Sparkles, MoreHorizontal, GripVertical,
+  FolderOpen,
 } from "lucide-react";
 import {
   DndContext,
@@ -149,11 +150,19 @@ const EditorPage = () => {
           </span>
         </div>
 
-        <div className={`${styles.headerSection} ${styles.buttonGroup}`}>
-          <div className={styles.saveStatus}>
-            <Save className={styles.iconSmall} />
-            <span>자동 저장됨</span>
-          </div>
+        <div className={styles.iconGroup}>
+          <button className={`${styles.iconButton} ${styles.lightButton}`}>
+            <FolderOpen className={styles.icon} />
+            <span>불러오기</span>
+          </button>
+          <button className={`${styles.iconButton} ${styles.lightButton}`}>
+            <Save className={styles.icon} />
+            <span>저장</span>
+          </button>
+          <button className={`${styles.iconButton} ${styles.lightButton}`} onClick={() => openModal("design")}>
+            <Settings className={styles.icon} />
+            <span>디자인</span>
+          </button>
           <button className={`${styles.iconButton} ${styles.lightButton}`}>
             <Eye className={styles.icon} />
             <span>미리보기</span>
