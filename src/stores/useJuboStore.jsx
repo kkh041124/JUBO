@@ -15,6 +15,8 @@ const useJuboStore = create((set, get) => ({
     },
     news: [],
     order: [],
+    selectedTemplate:"",
+
   },
 
   updateField: (section, key, value) =>
@@ -48,7 +50,7 @@ const useJuboStore = create((set, get) => ({
   setOrderCategory: (v) => set({ ordercategory: v }),
   setOrderTitle: (v) => set({ orderTitle: v }),
   setOrderContent: (v) => set({ orderContent: v }),
-
+  setSelectedTemplate: (v) => set({ selectedTemplate: v }),
   openModal: (tabType) => set({ isModalOpen: true, editingId: null, modalTab: tabType }),
   closeModal: () => set({
     isModalOpen: false,

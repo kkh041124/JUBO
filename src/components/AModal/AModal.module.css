@@ -1,16 +1,42 @@
+/* ──────────────── 모달 레이아웃 ──────────────── */
+
+/* 1. 기본 모달 (뉴스, 예배 순서용 - 좁은 폭) */
 .modalContainer {
   background-color: white;
   border-radius: 12px;
   padding: 1.5rem 2rem 2rem 2rem;
   width: 100%;
-  max-width: 500px; /* 모달 최대 너비 */
+  max-width: 500px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
-  gap: 1.25rem; /* 섹션 간 간격 */
+  gap: 1.25rem;
 }
 
-/* 1. 헤더 (제목 + 닫기 버튼) */
+/* 2. 디자인 설정 모달 (넓은 폭) */
+.wideModalContainer {
+  background-color: white;
+  border-radius: 12px;
+  padding: 0; /* 내부에서 구획을 나누므로 전체 패딩 0 */
+  width: 100%;
+  max-width: 800px; /* ★ 넓게 설정 */
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  height: auto;
+  max-height: 90vh; /* 화면 넘침 방지 */
+}
+
+/* 디자인 모달 내부 패딩 조정 */
+.wideModalContainer .modalHeader {
+  padding: 1.5rem 2rem 1rem 2rem;
+}
+.wideModalContainer .tabPanel {
+  min-height: 300px;
+}
+
+/* ──────────────── 헤더 영역 ──────────────── */
 .modalContent {
   display: flex;
   justify-content: space-between;
@@ -19,16 +45,33 @@
   border-bottom: 1px solid #f0f0f0;
 }
 
-.modalContent h2 {
+.modalContent h2,
+.designHeader h2 {
   font-size: 1.25rem;
-  font-weight: 600;
+  font-weight: 700;
+  color: #1a1a1a;
   margin: 0;
 }
 
-.modalContent button {
+.designHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.designHeader span {
+  font-size: 0.9rem;
+  color: #666;
+  display: block;
+}
+
+/* 닫기 버튼 공통 */
+.modalContent button,
+.ghostButton {
   background: #f5f5f5;
   border: none;
-  border-radius: 50%; /* 원형 버튼 */
+  border-radius: 50%;
   width: 2rem;
   height: 2rem;
   display: flex;
@@ -38,38 +81,43 @@
   transition: background-color 0.2s;
 }
 
-.modalContent button:hover {
+.modalContent button:hover,
+.ghostButton:hover {
   background-color: #e0e0e0;
 }
 
+/* 아이콘 */
 .smallIcon {
   width: 1.2rem;
   height: 1.2rem;
   color: #555;
 }
+.mediumIcon {
+  width: 1rem;
+  height: 1rem;
+  margin-right: 0.4rem;
+}
 
-/* 2. 폼 컨테이너 (가로 2열) */
+/* ──────────────── 폼 요소 (입력창 등) ──────────────── */
 .formContainer {
   display: flex;
   flex-direction: row;
   gap: 1rem;
 }
 
-/* 3. 폼 그룹 (레이블 + 입력창) */
 .inputGroup,
 .inputContainer,
 .textareaContainer {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem; /* 레이블과 입력창 사이 간격 */
-  width: 100%; /* 부모 너비에 맞춤 */
+  gap: 0.5rem;
+  width: 100%;
 }
 
 .inputGroup {
-  flex: 1; /* .formContainer 안에서 1:1 비율 차지 */
+  flex: 1;
 }
 
-/* 폼 레이블 공통 스타일 (h3) */
 .inputGroup h3,
 .inputContainer h3,
 .textareaContainer h3 {
@@ -79,7 +127,6 @@
   margin: 0;
 }
 
-/* 폼 입력창 공통 스타일 */
 .inputGroup select,
 .inputGroup input,
 .inputContainer input,
@@ -90,18 +137,10 @@
   padding: 0.85rem 1rem;
   font-size: 0.95rem;
   width: 100%;
-  box-sizing: border-box; /* 패딩이 너비에 포함되도록 */
+  box-sizing: border-box;
   color: #333;
 }
 
-.inputGroup select::placeholder,
-.inputGroup input::placeholder,
-.inputContainer input::placeholder,
-.textareaContainer textarea::placeholder {
-  color: #aaa;
-}
-
-/* 4. Select (드롭다운) 화살표 커스텀 */
 .inputGroup select {
   appearance: none;
   background-image: url('data:image/svg+xml;utf8,<svg fill="%23555" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
@@ -112,94 +151,12 @@
   cursor: pointer;
 }
 
-/* 5. Textarea (내용) */
 .textareaContainer textarea {
   min-height: 120px;
-  resize: vertical; /* 세로로만 크기 조절 */
+  resize: vertical;
 }
 
-/* 6. 하단 버튼 그룹 */
-.buttonGroup {
-  display: flex;
-  gap: 0.75rem;
-  margin-top: 1rem;
-}
-
-.buttonGroup button {
-  flex: 1; /* 버튼이 1:1 비율로 */
-  padding: 0.85rem 1rem;
-  font-size: 0.95rem;
-  font-weight: 600;
-  border-radius: 8px;
-  border: 1px solid transparent;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-/* '추가' 버튼 (Primary) */
-.buttonGroup button:first-child {
-  background-color: #1a1a1a;
-  color: white;
-  border-color: #1a1a1a;
-}
-.buttonGroup button:first-child:hover {
-  background-color: #333;
-}
-
-/* '취소' 버튼 (Secondary) */
-.buttonGroup button:last-child {
-  background-color: white;
-  color: #333;
-  border-color: #e0e0e0;
-}
-.buttonGroup button:last-child:hover {
-  background-color: #f9f9f9;
-  border-color: #ccc;
-}
-/* 디자인 모달 */
-
-.modalContent {
-  padding: 1.5rem 1.5rem 1rem;
-}
-
-.designHeader {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 0.5rem;
-}
-
-.designHeader h2 {
-  font-size: 1.25rem;
-  font-weight: 700;
-  color: #1a1a1a;
-  margin: 0;
-}
-
-.designHeader span {
-  font-size: 0.9rem;
-  color: #666;
-  display: block;
-}
-
-/* 아이콘 스타일 */
-.smallIcon {
-  width: 1.2rem;
-  height: 1.2rem;
-  color: #999;
-  cursor: pointer;
-}
-.smallIcon:hover {
-  color: #333;
-}
-
-.mediumIcon {
-  width: 1rem;
-  height: 1rem;
-  margin-right: 0.4rem;
-}
-
-/* 탭 버튼 영역 */
+/* ──────────────── 탭 (Tab) 영역 ──────────────── */
 .designContent {
   display: flex;
   flex-direction: column;
@@ -209,18 +166,21 @@
   display: flex;
   padding: 0 1.5rem;
   border-bottom: 1px solid #eee;
-  gap: 1.5rem; /* 탭 사이 간격 */
+  background-color: #fff;
+  gap: 0; /* 탭 사이 간격 제거 (flex로 꽉 채우기 위해) */
 }
 
 .tabButton {
+  flex: 1; /* ★ 핵심: 모든 탭이 동일한 너비(1:1:1)를 가짐 */
   background: none;
   border: none;
-  padding: 0.8rem 0.2rem;
+  padding: 1rem 0; /* 상하 패딩 */
   font-size: 0.95rem;
   color: #888;
   cursor: pointer;
   display: flex;
   align-items: center;
+  justify-content: center; /* 내용 가운데 정렬 */
   position: relative;
   transition: color 0.2s ease;
   font-weight: 500;
@@ -228,12 +188,15 @@
 
 .tabButton:hover {
   color: #333;
+  background-color: #fafafa; /* 호버 시 아주 연한 배경 */
 }
 
+/* 활성화된 탭 */
 .activeTab {
   color: #1a1a1a;
   font-weight: 700;
 }
+
 .activeTab::after {
   content: '';
   position: absolute;
@@ -244,32 +207,147 @@
   background-color: #1a1a1a;
 }
 
-/* 탭 내용 영역 */
 .tabPanel {
   padding: 1.5rem;
-  min-height: 200px;
+  min-height: 220px;
   background-color: #f9f9f9;
 }
 
+
+/* ──────────────── 템플릿 선택 카드 ──────────────── */
+.container {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  width: 100%;
+  margin-top: 10px;
+}
+
+@media (min-width: 768px) {
+  .container {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.templateButton {
+  all: unset;
+  display: block;
+  width: 100%;
+  cursor: pointer;
+  box-sizing: border-box;
+}
+
+.templateOption {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  
+  height: 100%;
+  min-height: 140px;
+  padding: 1.5rem;
+  
+  position: relative; /* 뱃지 기준점 */
+  
+  background-color: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  transition: all 0.2s ease;
+}
+
+.templateOption h3 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: #1f2937;
+}
+
+.templateOption p {
+  font-size: 0.85rem;
+  color: #6b7280;
+  line-height: 1.4;
+  margin: 0;
+  word-break: keep-all;
+}
+
+/* 선택된 템플릿 스타일 (통일됨) */
+.activeTemplate {
+  border: 2px solid #3b82f6;
+  background-color: #eff6ff;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.15);
+}
+
+.activeTemplate h3 {
+  color: #1d4ed8;
+}
+
+/* 선택 뱃지 */
+.selectedBadge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background-color: #3b82f6;
+  color: white;
+  font-size: 0.7rem;
+  font-weight: 800;
+  padding: 4px 8px;
+  border-radius: 12px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  animation: popIn 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes popIn {
+  from { transform: scale(0.5); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.templateButton:hover .templateOption:not(.activeTemplate) {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  background-color: #f9fafb;
+}
+
+/* ──────────────── 하단 버튼 그룹 ──────────────── */
 .buttonGroup {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 1rem;
+  justify-content: flex-end; /* 기본 우측 정렬 */
+}
+
+/* 디자인 모달용 하단 버튼 (보더 있음) */
+.wideModalContainer .buttonGroup {
   padding: 1rem 1.5rem;
   border-top: 1px solid #eee;
-  display: flex;
-  justify-content: flex-end;
   background-color: #fff;
+  margin-top: 0;
 }
 
 .buttonGroup button {
-  padding: 0.6rem 1.2rem;
-  border-radius: 8px;
-  border: 1px solid #e0e0e0;
-  background-color: white;
-  cursor: pointer;
+  padding: 0.8rem 1.2rem;
+  font-size: 0.95rem;
   font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
   transition: all 0.2s;
 }
 
-.buttonGroup button:hover {
-  background-color: #f5f5f5;
-  border-color: #ccc;
+/* 기본 버튼 스타일 */
+.buttonGroup button:first-child {
+  background-color: #1a1a1a;
+  color: white;
+  border: 1px solid #1a1a1a;
+}
+.buttonGroup button:first-child:hover {
+  background-color: #333;
+}
+
+.buttonGroup button:last-child {
+  background-color: white;
+  color: #333;
+  border: 1px solid #e0e0e0;
+}
+.buttonGroup button:last-child:hover {
+  background-color: #f9f9f9;
 }
