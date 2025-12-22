@@ -13,10 +13,21 @@ const useJuboStore = create((set, get) => ({
       serviceDate: "",
       bibleVerse: "",
     },
+    designInfo: {
+      headerInfo: {
+        slogan: "",
+        title: "",
+        subtitle: "",
+        fontsize: {
+          sloganfont: 24,
+          titlefont: 36,
+          subtitlefont: 18,
+        },
+      },
+    },
     news: [],
     order: [],
-    selectedTemplate:"",
-
+    selectedTemplate: "",
   },
 
   updateField: (section, key, value) =>
@@ -47,19 +58,51 @@ const useJuboStore = create((set, get) => ({
   ordercategory: "예배로 부름 / 인도",
   orderTitle: "",
   orderContent: "",
+
   setOrderCategory: (v) => set({ ordercategory: v }),
   setOrderTitle: (v) => set({ orderTitle: v }),
   setOrderContent: (v) => set({ orderContent: v }),
   setSelectedTemplate: (v) => set({ selectedTemplate: v }),
-  openModal: (tabType) => set({ isModalOpen: true, editingId: null, modalTab: tabType }),
-  closeModal: () => set({
-    isModalOpen: false,
-    editingId: null,
-    category: "일반",
-    date: "",
-    title: "",
-    content: ""
-  }),
+  setHeaderInfo: (type, content) =>
+    set((state) => ({
+      jubo: {
+        ...state.jubo,
+        designInfo: {
+          ...state.jubo.designInfo,
+          headerInfo: {
+            ...state.jubo.designInfo.headerInfo,
+            [type]: content,
+          },
+        },
+      },
+    })),
+  updateFontSize: (type, newSize) =>
+    set((state) => ({
+      jubo: {
+        ...state.jubo,
+        designInfo: {
+          ...state.jubo.designInfo,
+          headerInfo: {
+            ...state.jubo.designInfo.headerInfo,
+            fontsize: {
+              ...state.jubo.designInfo.headerInfo.fontsize,
+              [`${type}font`]: newSize,
+            },
+          },
+        },
+      },
+    })),
+  openModal: (tabType) =>
+    set({ isModalOpen: true, editingId: null, modalTab: tabType }),
+  closeModal: () =>
+    set({
+      isModalOpen: false,
+      editingId: null,
+      category: "일반",
+      date: "",
+      title: "",
+      content: "",
+    }),
 
   saveNews: () => {
     const { category, date, title, content, editingId, jubo } = get();
@@ -165,14 +208,14 @@ const useJuboStore = create((set, get) => ({
     set((it) => {
       const oldIndex = it.jubo.order.findIndex((item) => item.id === activeId);
       const newIndex = it.jubo.order.findIndex((item) => item.id === overId);
-      
+
       return {
         jubo: {
           ...it.jubo,
-          order: arrayMove(it.jubo.order, oldIndex, newIndex)
-        }
-      }
-    })
+          order: arrayMove(it.jubo.order, oldIndex, newIndex),
+        },
+      };
+    });
   },
 }));
 

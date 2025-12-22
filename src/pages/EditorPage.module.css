@@ -325,7 +325,187 @@
     transform: translateY(0);
   }
 }
+/* header 섹션 */
+.headerContent {
+  padding: 1.5rem 2rem;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
 
+.headerContent .section {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.headerContent .section h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin: 0;
+}
+
+.headerTab {
+  display: flex;
+  gap: 1.5rem;
+  padding: 0 0.5rem;
+  border-bottom: 1px solid #eef0f4;
+  margin-bottom: 0.5rem;
+}
+
+.headerTabButton {
+  background-color: transparent;
+  border: none;
+  padding: 0.8rem 0.2rem;
+  color: #888;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+  outline: none;
+}
+
+.headerTabButton:hover {
+  color: #333;
+}
+
+.headerTabButton.activeHeaderTab {
+  color: #4f39f6;
+  font-weight: 600;
+}
+
+.headerTabButton.activeHeaderTab::after {
+  content: "";
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background-color: #4f39f6;
+  border-radius: 2px 2px 0 0;
+}
+
+.headerTextSettings,
+.headerDesignSettings {
+  padding: 1rem 0;
+  min-height: 200px;
+  animation: fadeIn 0.3s ease-out;
+}
+
+.headerTextSettings {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding: 1rem 0;
+}
+
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.inputGroup h3 {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #4b5563;
+  margin: 0;
+}
+
+.controlRow {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.textInput {
+  flex: 1;
+  padding: 0.7rem 1rem;
+  border: 1px solid #eef0f4;
+  border-radius: 8px;
+  background-color: #f7f9fc;
+  font-size: 0.95rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.textInput:focus {
+  border-color: #4f39f6;
+  background-color: #fff;
+}
+
+.spacingControl {
+  display: flex;
+  align-items: center;
+  background-color: #f1f3f7;
+  border-radius: 8px;
+  padding: 0.2rem;
+}
+
+.spacingControl button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border: none;
+  background: transparent;
+  color: black;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: background 0.2s;
+}
+
+.spacingControl button:hover {
+  background-color: #fff;
+  color: #1a1a1a;
+}
+
+.spacingControl input {
+  width: 35px;
+  border: none;
+  background: transparent;
+  text-align: center;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  outline: none;
+}
+.spacingControl input::-webkit-outer-spin-button,
+.spacingControl input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.spacingControl span {
+  font-size: 0.75rem;
+  color: black;
+  margin-right: 0.25rem;
+  font-weight: 500;
+}
+
+.iconSmall {
+  width: 14px;
+  height: 14px;
+  stroke-width: 2.5px;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 /* --- 교회 소식 탭 스타일 (.newsContent) --- */
 
 .addNewsButton {
@@ -539,7 +719,7 @@ h3 {
   color: #1a1a1a;
 }
 .deleteBtn .Actionicon {
-  color: #dc2626; 
+  color: #dc2626;
 }
 .deleteBtn:hover {
   background-color: #f0f2f5;
@@ -598,7 +778,6 @@ h3 {
   flex-direction: column;
   gap: 0.2rem;
 }
-
 
 /* --- 예배 순서 리스트 스타일 (Order Section) --- */
 /* 개별 아이템 카드 */
@@ -669,8 +848,8 @@ h3 {
   padding: 0.7rem;
   border-radius: 14px;
   flex-shrink: 0;
-  background-color: #eff2ff; 
-  color: #5c4ce3; 
+  background-color: #eff2ff;
+  color: #5c4ce3;
 }
 
 /* 텍스트 정보 영역 */
@@ -735,27 +914,60 @@ h3 {
   transition: background-color 0.2s ease;
 }
 
-.orderActions .editBtn { color: #868e96; }
-.orderActions .editBtn:hover { background-color: #f1f3f5; color: #343a40; }
+.orderActions .editBtn {
+  color: #868e96;
+}
+.orderActions .editBtn:hover {
+  background-color: #f1f3f5;
+  color: #343a40;
+}
 
-.orderActions .deleteBtn { color: #adb5bd; }
-.orderActions .deleteBtn:hover { background-color: #fff5f5; color: #fa5252; }
+.orderActions .deleteBtn {
+  color: #adb5bd;
+}
+.orderActions .deleteBtn:hover {
+  background-color: #fff5f5;
+  color: #fa5252;
+}
 
-.orderActions .Actionicon { width: 1.1rem; height: 1.1rem; }
-
-
+.orderActions .Actionicon {
+  width: 1.1rem;
+  height: 1.1rem;
+}
 
 /* --- 카테고리별 텍스트 색상 (선택 사항) --- */
 /* JS 코드에서 styles[categoryClass]로 매핑된 클래스들 */
 
-.call { color: #4f46e5 !important; } /* 예배로 부름 - 인디고 */
-.hymn { color: #db2777 !important; } /* 찬송 - 핑크 */
-.creed { color: #059669 !important; } /* 신앙고백 - 초록 */
-.prayer { color: #7c3aed !important; } /* 기도 - 보라 */
-.scripture { color: #b45309 !important; } /* 성경봉독 - 주황 */
-.choir { color: #0891b2 !important; } /* 찬양대 - 청록 */
-.sermon { color: #dc2626 !important; } /* 설교 - 빨강 */
-.offering { color: #d97706 !important; } /* 헌금 - 앰버 */
-.notice { color: #2563eb !important; } /* 광고 - 파랑 */
-.benediction { color: #9333ea !important; } /* 축도 - 보라 */
-.custom { color: #4b5563 !important; } /* 직접입력 - 회색 */
+.call {
+  color: #4f46e5 !important;
+} /* 예배로 부름 - 인디고 */
+.hymn {
+  color: #db2777 !important;
+} /* 찬송 - 핑크 */
+.creed {
+  color: #059669 !important;
+} /* 신앙고백 - 초록 */
+.prayer {
+  color: #7c3aed !important;
+} /* 기도 - 보라 */
+.scripture {
+  color: #b45309 !important;
+} /* 성경봉독 - 주황 */
+.choir {
+  color: #0891b2 !important;
+} /* 찬양대 - 청록 */
+.sermon {
+  color: #dc2626 !important;
+} /* 설교 - 빨강 */
+.offering {
+  color: #d97706 !important;
+} /* 헌금 - 앰버 */
+.notice {
+  color: #2563eb !important;
+} /* 광고 - 파랑 */
+.benediction {
+  color: #9333ea !important;
+} /* 축도 - 보라 */
+.custom {
+  color: #4b5563 !important;
+} /* 직접입력 - 회색 */
