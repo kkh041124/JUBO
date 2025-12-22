@@ -29,6 +29,9 @@ import {
   GripVertical,
   FolderOpen,
   Minus,
+  Image,
+  Upload,
+  X,
 } from "lucide-react";
 import {
   DndContext,
@@ -50,7 +53,6 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import useJuboStore from "../stores/useJuboStore";
 import AModal from "../components/AModal/AModal.jsx";
-
 const SortableOrderItem = ({ order, index, editOrder, deleteOrder }) => {
   const {
     attributes,
@@ -151,6 +153,8 @@ const SortableOrderItem = ({ order, index, editOrder, deleteOrder }) => {
 };
 
 const EditorPage = () => {
+  const Img1 = "../../public/logo1.svg";
+  const Img2 = "../../public/logo2.svg";
   const {
     jubo,
     updateField,
@@ -164,11 +168,31 @@ const EditorPage = () => {
     reOrder,
     setHeaderInfo,
     updateFontSize,
+    image,
+    setLogo,
+    setLogoSize,
+    setLogoPosition,
   } = useJuboStore();
 
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("info");
   const [activeHeaderTab, setActiveHeaderTab] = useState("text");
+  const [activeDesignTab, setActiveDesignTab] = useState("upload");
+  const [activeBackImgTab, setActiveBackImgTab] = useState("solid_color");
+  const ReadImg = (e) => {
+    const file = e.target.files[0];
+
+    if (!file) return;
+
+    const reader = new FileReader();
+
+    reader.onload = () => {
+      setLogo(reader.result, file.name);
+    };
+
+    reader.readAsDataURL(file);
+  };
+
   const sensors = useSensors(
     useSensor(PointerSensor, {
       activationConstraint: {
@@ -405,7 +429,7 @@ const EditorPage = () => {
                         type="text"
                         className={styles.textInput}
                         placeholder="슬로건 입력"
-                        value={jubo.designInfo.headerInfo.slogan}
+                        value={jubo.designInfo.textInfo.slogan}
                         onChange={(e) =>
                           setHeaderInfo("slogan", e.target.value)
                         }
@@ -416,8 +440,7 @@ const EditorPage = () => {
                             updateFontSize(
                               "slogan",
                               Number(
-                                jubo.designInfo.headerInfo.fontsize.sloganfont -
-                                  1
+                                jubo.designInfo.textInfo.fontsize.sloganfont - 1
                               )
                             )
                           }
@@ -426,7 +449,7 @@ const EditorPage = () => {
                         </button>
                         <input
                           type="number"
-                          value={jubo.designInfo.headerInfo.fontsize.sloganfont}
+                          value={jubo.designInfo.textInfo.fontsize.sloganfont}
                           onChange={(e) =>
                             updateFontSize("sloganfont", e.target.value)
                           }
@@ -437,8 +460,7 @@ const EditorPage = () => {
                             updateFontSize(
                               "slogan",
                               Number(
-                                jubo.designInfo.headerInfo.fontsize.sloganfont +
-                                  1
+                                jubo.designInfo.textInfo.fontsize.sloganfont + 1
                               )
                             )
                           }
@@ -455,7 +477,7 @@ const EditorPage = () => {
                         type="text"
                         className={styles.textInput}
                         placeholder="제목 입력"
-                        value={jubo.designInfo.headerInfo.title}
+                        value={jubo.designInfo.textInfo.title}
                         onChange={(e) => setHeaderInfo("title", e.target.value)}
                       />
                       <div className={styles.spacingControl}>
@@ -464,8 +486,7 @@ const EditorPage = () => {
                             updateFontSize(
                               "title",
                               Number(
-                                jubo.designInfo.headerInfo.fontsize.titlefont -
-                                  1
+                                jubo.designInfo.textInfo.fontsize.titlefont - 1
                               )
                             )
                           }
@@ -474,7 +495,7 @@ const EditorPage = () => {
                         </button>
                         <input
                           type="number"
-                          value={jubo.designInfo.headerInfo.fontsize.titlefont}
+                          value={jubo.designInfo.textInfo.fontsize.titlefont}
                           onChange={(e) =>
                             updateFontSize("titlefont", e.target.value)
                           }
@@ -485,8 +506,7 @@ const EditorPage = () => {
                             updateFontSize(
                               "title",
                               Number(
-                                jubo.designInfo.headerInfo.fontsize.titlefont +
-                                  1
+                                jubo.designInfo.textInfo.fontsize.titlefont + 1
                               )
                             )
                           }
@@ -503,7 +523,7 @@ const EditorPage = () => {
                         type="text"
                         className={styles.textInput}
                         placeholder="부제목 입력"
-                        value={jubo.designInfo.headerInfo.subtitle}
+                        value={jubo.designInfo.textInfo.subtitle}
                         onChange={(e) =>
                           setHeaderInfo("subtitle", e.target.value)
                         }
@@ -514,8 +534,8 @@ const EditorPage = () => {
                             updateFontSize(
                               "subtitle",
                               Number(
-                                jubo.designInfo.headerInfo.fontsize
-                                  .subtitlefont - 1
+                                jubo.designInfo.textInfo.fontsize.subtitlefont -
+                                  1
                               )
                             )
                           }
@@ -524,9 +544,7 @@ const EditorPage = () => {
                         </button>
                         <input
                           type="number"
-                          value={
-                            jubo.designInfo.headerInfo.fontsize.subtitlefont
-                          }
+                          value={jubo.designInfo.textInfo.fontsize.subtitlefont}
                           onChange={(e) =>
                             updateFontSize("subtitlefont", e.target.value)
                           }
@@ -537,8 +555,8 @@ const EditorPage = () => {
                             updateFontSize(
                               "subtitle",
                               Number(
-                                jubo.designInfo.headerInfo.fontsize
-                                  .subtitlefont + 1
+                                jubo.designInfo.textInfo.fontsize.subtitlefont +
+                                  1
                               )
                             )
                           }
@@ -552,7 +570,237 @@ const EditorPage = () => {
               ) : null}
               {activeHeaderTab === "design" ? (
                 <div className={styles.headerDesignSettings}>
-                  <p>디자인 설정 내용</p>
+                  <div className={styles.inputGroup}>
+                    <h3>교회 로고</h3>
+                    <div className={styles.logoSection}>
+                      {jubo.designInfo.logoInfo.logo ? (
+                        <>
+                          <div className={styles.logoPreviewSection}>
+                            <div className={styles.logoPreviewWrapper}>
+                              <img
+                                src={jubo.designInfo.logoInfo.logo}
+                                alt="Uploaded Logo"
+                                className={styles.logoPreview}
+                              />
+                              <button
+                                className={styles.removeLogoButton}
+                                onClick={() => setLogo(null, null)}
+                              >
+                                <X className={styles.iconSmall} />
+                              </button>
+                            </div>
+                            <label className={styles.logoFileName}>
+                              <Upload className={styles.iconSmall} />
+                              <span>이미지 변경</span>
+                              <input
+                                type="file"
+                                onChange={ReadImg}
+                                className={styles.hiddenInput}
+                                accept="image/*"
+                              />
+                            </label>
+                          </div>
+                          <div className={styles.logoControls}>
+                            <div className={styles.logoPositionControl}>
+                              <h3>로고 위치</h3>
+                              <select
+                                value={jubo.designInfo.logoInfo.logoPosition}
+                                onChange={(e) =>
+                                  setLogoPosition(e.target.value)
+                                }
+                              >
+                                <option value="left">왼쪽</option>
+                                <option value="center">가운데</option>
+                                <option value="right">오른쪽</option>
+                              </select>
+                            </div>
+
+                            <div className={styles.logoSizeControl}>
+                              <h3>로고 크기</h3>
+                              <div className={styles.spacingControl}>
+                                <button
+                                  onClick={() =>
+                                    setLogoSize(
+                                      jubo.designInfo.logoInfo.logoSize - 1
+                                    )
+                                  }
+                                >
+                                  <Minus className={styles.iconSmall} />
+                                </button>
+                                <input
+                                  type="number"
+                                  value={jubo.designInfo.logoInfo.logoSize}
+                                  onChange={(e) =>
+                                    setLogoSize(Number(e.target.value))
+                                  }
+                                />
+                                <button
+                                  onClick={() =>
+                                    setLogoSize(
+                                      jubo.designInfo.logoInfo.logoSize + 1
+                                    )
+                                  }
+                                >
+                                  <Plus className={styles.iconSmall} />
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        </>
+                      ) : (
+                        <>
+                          <div className={styles.headerDesignTab}>
+                            <button
+                              className={`${styles.headerTabButton} ${
+                                activeDesignTab === "upload"
+                                  ? styles.activeDesignTab
+                                  : ""
+                              }`}
+                              onClick={() => setActiveDesignTab("upload")}
+                            >
+                              업로드
+                            </button>
+                            <button
+                              className={`${styles.headerTabButton} ${
+                                activeDesignTab === "sample"
+                                  ? styles.activeDesignTab
+                                  : ""
+                              }`}
+                              onClick={() => setActiveDesignTab("sample")}
+                            >
+                              샘플
+                            </button>
+                          </div>
+
+                          {activeDesignTab === "upload" && (
+                            <div className={styles.uploadSection}>
+                              <label className={styles.uploadButton}>
+                                <input
+                                  type="file"
+                                  onChange={ReadImg}
+                                  className={styles.hiddenInput}
+                                  accept="image/*"
+                                />
+                                <div className={styles.uploadContent}>
+                                  <Image className={styles.iconSmall} />
+                                  <span className={styles.primaryText}>
+                                    로고 이미지 업로드
+                                  </span>
+                                  <span className={styles.secondaryText}>
+                                    클릭하거나 드래그하여 업로드
+                                  </span>
+                                </div>
+                              </label>
+                            </div>
+                          )}
+
+                          {activeDesignTab === "sample" && (
+                            <div className={styles.sampleSection}>
+                              <p className={styles.sampleTitle}>
+                                샘플 이미지를 선택하세요
+                              </p>
+                              <div className={styles.sampleContainer}>
+                                <div
+                                  className={`${styles.sampleWrapper} ${
+                                    image === Img1 ? styles.selected : ""
+                                  }`}
+                                  onClick={() => setLogo(Img1, "Sample 1")}
+                                >
+                                  <img
+                                    src={Img1}
+                                    alt="Sample 1"
+                                    className={styles.sampleImage}
+                                  />
+                                </div>
+                                <div
+                                  className={`${styles.sampleWrapper} ${
+                                    image === Img2 ? styles.selected : ""
+                                  }`}
+                                  onClick={() => setLogo(Img2, "Sample 2")}
+                                >
+                                  <img
+                                    src={Img2}
+                                    alt="Sample 2"
+                                    className={styles.sampleImage}
+                                  />
+                                </div>
+                              </div>
+                            </div>
+                          )}
+                        </>
+                      )}
+                    </div>
+                  </div>
+                  <div className={styles.inputGroup}>
+                    <h3>해더 배경</h3>
+                    <div className={styles.headerDesignTab}>
+                      <button
+                        className={`${styles.headerTabButton} ${
+                          activeDesignTab === "solid_color"
+                            ? styles.activeDesignTab
+                            : ""
+                        }`}
+                        onClick={() => setActiveDesignTab("solid_color")}
+                      >
+                        단색
+                      </button>
+                      <button
+                        className={`${styles.headerTabButton} ${
+                          activeDesignTab === "gradient_color"
+                            ? styles.activeDesignTab
+                            : ""
+                        }`}
+                        onClick={() => setActiveDesignTab("gradient_color")}
+                      >
+                        그라데이션
+                      </button>
+                      <button
+                        className={`${styles.headerTabButton} ${
+                          activeDesignTab === "img_upload"
+                            ? styles.activeDesignTab
+                            : ""
+                        }`}
+                        onClick={() => setActiveDesignTab("img_upload")}
+                      >
+                        이미지
+                      </button>
+                    </div>
+                    {activeDesignTab === "solid_color" ? (
+                      <div className={styles.colorPicker}>
+                        <input type="color" />
+                        <div>
+                          <p>배경 색상</p>
+                          <span>헤더의 배경 색상을 선택합니다.</span>
+                        </div>
+                      </div>
+                    ) : null}
+                    {activeDesignTab === "gradient_color" ? (
+                      <div className={styles.gradientPicker}>
+                        <div className={styles.colorPicker}>
+                          <input type="color" />
+                          <div>
+                            <p>시작 색상</p>
+                            <span>그라데이션의 시작 색상을 선택합니다.</span>
+                          </div>
+                        </div>
+                        <div className={styles.colorPicker}>
+                          <input type="color" />
+                          <div>
+                            <p>끝 색상</p>
+                            <span>그라데이션의 끝 색상을 선택합니다.</span>
+                          </div>
+                        </div>
+                        <div className={styles.directionSelector}>
+                          <p>그라데이션 방향</p>
+                          <select>
+                            <option value="to right">왼쪽에서 오른쪽</option>
+                            <option value="to bottom">위에서 아래</option>
+                            <option value="to bottom right">대각선</option>
+                          </select>
+                        </div>
+                      </div>
+                    ) : null}
+                  </div>
                 </div>
               ) : null}
             </div>
@@ -699,11 +947,11 @@ const EditorPage = () => {
           </div>
           <div className={styles.previewContent}>
             <p>{jubo.churchInfo.churchName}</p>
-            <p>{jubo.designInfo.headerInfo.slogan}</p>
-            <p>{jubo.designInfo.headerInfo.title}</p>
-            <p>{jubo.designInfo.headerInfo.subtitle}</p>
+            <p>{jubo.designInfo.textInfo.slogan}</p>
+            <p>{jubo.designInfo.textInfo.title}</p>
+            <p>{jubo.designInfo.textInfo.subtitle}</p>
             <span>
-              현재 크기: {jubo.designInfo.headerInfo.fontsize.titlefont}px
+              현재 크기: {jubo.designInfo.textInfo.fontsize.titlefont}px
             </span>{" "}
           </div>
         </div>

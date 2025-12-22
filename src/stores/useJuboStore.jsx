@@ -14,7 +14,7 @@ const useJuboStore = create((set, get) => ({
       bibleVerse: "",
     },
     designInfo: {
-      headerInfo: {
+      textInfo: {
         slogan: "",
         title: "",
         subtitle: "",
@@ -23,6 +23,12 @@ const useJuboStore = create((set, get) => ({
           titlefont: 36,
           subtitlefont: 18,
         },
+      },
+      logoInfo: {
+        logo: null,
+        logoName: "",
+        logoSize: 40,
+        logoPosition: "left",
       },
     },
     news: [],
@@ -69,8 +75,8 @@ const useJuboStore = create((set, get) => ({
         ...state.jubo,
         designInfo: {
           ...state.jubo.designInfo,
-          headerInfo: {
-            ...state.jubo.designInfo.headerInfo,
+          textInfo: {
+            ...state.jubo.designInfo.textInfo,
             [type]: content,
           },
         },
@@ -82,16 +88,78 @@ const useJuboStore = create((set, get) => ({
         ...state.jubo,
         designInfo: {
           ...state.jubo.designInfo,
-          headerInfo: {
-            ...state.jubo.designInfo.headerInfo,
+          textInfo: {
+            ...state.jubo.designInfo.textInfo,
             fontsize: {
-              ...state.jubo.designInfo.headerInfo.fontsize,
+              ...state.jubo.designInfo.textInfo.fontsize,
               [`${type}font`]: newSize,
             },
           },
         },
       },
     })),
+  setLogo: (image, name) =>
+    set((state) => ({
+      jubo: {
+        ...state.jubo,
+        designInfo: {
+          ...state.jubo.designInfo,
+          logoInfo: {
+            ...state.jubo.designInfo.logoInfo,
+            logo: image,
+            logoName: name,
+          },
+        },
+      },
+    })),
+  setLogoPosition: (position) =>
+    set((state) => ({
+      jubo: {
+        ...state.jubo,
+        designInfo: {
+          ...state.jubo.designInfo,
+          logoInfo: {
+            ...state.jubo.designInfo.logoInfo,
+            logoPosition: position,
+          },
+        },
+      },
+    })),
+
+  removeLogo: () =>
+    set((state) => ({
+      designInfo: {
+        ...state.designInfo,
+        logoInfo: {
+          ...state.designInfo.logoInfo,
+          logo: null,
+          logoName: null,
+        },
+      },
+    })),
+  setLogoSize: (size) =>
+    set((state) => {
+      let validatedSize = size;
+
+      if (size < 40) {
+        validatedSize = 40;
+      } else if (size > 120) {
+        validatedSize = 120;
+      }
+
+      return {
+        jubo: {
+          ...state.jubo,
+          designInfo: {
+            ...state.jubo.designInfo,
+            logoInfo: {
+              ...state.jubo.designInfo.logoInfo,
+              logoSize: validatedSize,
+            },
+          },
+        },
+      };
+    }),
   openModal: (tabType) =>
     set({ isModalOpen: true, editingId: null, modalTab: tabType }),
   closeModal: () =>
