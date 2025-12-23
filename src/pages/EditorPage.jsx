@@ -32,6 +32,16 @@ import {
   Image,
   Upload,
   X,
+  /* 그라데이션용 */
+  MoveDown,
+  MoveLeft,
+  MoveRight,
+  MoveUp,
+  MoveUpLeft,
+  MoveUpRight,
+  MoveDownLeft,
+  MoveDownRight,
+  Move,
 } from "lucide-react";
 import {
   DndContext,
@@ -53,6 +63,12 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import useJuboStore from "../stores/useJuboStore";
 import AModal from "../components/AModal/AModal.jsx";
+import logo1 from "../assets/logo1.svg";
+import logo2 from "../assets/logo2.svg";
+import img1 from "../assets/sampleImg1.jpg";
+import img2 from "../assets/sampleImg2.jpg";
+import img3 from "../assets/sampleImg3.jpg";
+import img4 from "../assets/sampleImg4.jpg";
 const SortableOrderItem = ({ order, index, editOrder, deleteOrder }) => {
   const {
     attributes,
@@ -153,8 +169,6 @@ const SortableOrderItem = ({ order, index, editOrder, deleteOrder }) => {
 };
 
 const EditorPage = () => {
-  const Img1 = "../../public/logo1.svg";
-  const Img2 = "../../public/logo2.svg";
   const {
     jubo,
     updateField,
@@ -169,16 +183,26 @@ const EditorPage = () => {
     setHeaderInfo,
     updateFontSize,
     image,
+    logoPosition,
     setLogo,
     setLogoSize,
     setLogoPosition,
+    backgroundColor,
+    imgopacity,
+    setImgOpacity,
+    setBackGroundColor,
+    setGradientColorFirst,
+    setGradientColorSecond,
+    setGradientDirection,
+    setBackGroundImage,
   } = useJuboStore();
 
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("info");
   const [activeHeaderTab, setActiveHeaderTab] = useState("text");
-  const [activeDesignTab, setActiveDesignTab] = useState("upload");
-  const [activeBackImgTab, setActiveBackImgTab] = useState("solid_color");
+  const [activeLogoTab, setActiveLogoTab] = useState("upload");
+  const [activeBackType, setActiveBackType] = useState("solid");
+  const [activeBackImgTab, setActiveBackImgTab] = useState("upload");
   const ReadImg = (e) => {
     const file = e.target.files[0];
 
@@ -188,6 +212,20 @@ const EditorPage = () => {
 
     reader.onload = () => {
       setLogo(reader.result, file.name);
+    };
+
+    reader.readAsDataURL(file);
+  };
+
+  const ReadBgImg = (e) => {
+    const file = e.target.files[0];
+
+    if (!file) return;
+
+    const reader = new FileReader();
+
+    reader.onload = () => {
+      setBackGroundImage(reader.result, file.name);
     };
 
     reader.readAsDataURL(file);
@@ -210,6 +248,18 @@ const EditorPage = () => {
       reOrder(active.id, over.id);
     }
   };
+  const POSITION_MAP = {
+    "to left": { label: "좌측", icon: MoveLeft },
+    "to right": { label: "우측", icon: MoveRight },
+    "to top": { label: "상단", icon: MoveUp },
+    "to bottom": { label: "하단", icon: MoveDown },
+    "to left top": { label: "좌상단", icon: MoveUpLeft },
+    "to right top": { label: "우상단", icon: MoveUpRight },
+    "to left bottom": { label: "좌하단", icon: MoveDownLeft },
+    "to right bottom": { label: "우하단", icon: MoveDownRight },
+  };
+  const gradientdirection = jubo.designInfo.backgroundInfo.gradientdirection;
+  const SelectedIcon = POSITION_MAP[gradientdirection]?.icon;
 
   return (
     <div className={styles.editorpageContainer}>
@@ -609,9 +659,9 @@ const EditorPage = () => {
                                   setLogoPosition(e.target.value)
                                 }
                               >
-                                <option value="left">왼쪽</option>
-                                <option value="center">가운데</option>
-                                <option value="right">오른쪽</option>
+                                <option value="left">좌측</option>
+                                <option value="center">중앙</option>
+                                <option value="right">우측</option>
                               </select>
                             </div>
 
@@ -652,27 +702,27 @@ const EditorPage = () => {
                           <div className={styles.headerDesignTab}>
                             <button
                               className={`${styles.headerTabButton} ${
-                                activeDesignTab === "upload"
+                                activeLogoTab === "upload"
                                   ? styles.activeDesignTab
                                   : ""
                               }`}
-                              onClick={() => setActiveDesignTab("upload")}
+                              onClick={() => setActiveLogoTab("upload")}
                             >
                               업로드
                             </button>
                             <button
                               className={`${styles.headerTabButton} ${
-                                activeDesignTab === "sample"
+                                activeLogoTab === "sample"
                                   ? styles.activeDesignTab
                                   : ""
                               }`}
-                              onClick={() => setActiveDesignTab("sample")}
+                              onClick={() => setActiveLogoTab("sample")}
                             >
                               샘플
                             </button>
                           </div>
 
-                          {activeDesignTab === "upload" && (
+                          {activeLogoTab === "upload" && (
                             <div className={styles.uploadSection}>
                               <label className={styles.uploadButton}>
                                 <input
@@ -694,7 +744,7 @@ const EditorPage = () => {
                             </div>
                           )}
 
-                          {activeDesignTab === "sample" && (
+                          {activeLogoTab === "sample" && (
                             <div className={styles.sampleSection}>
                               <p className={styles.sampleTitle}>
                                 샘플 이미지를 선택하세요
@@ -702,24 +752,28 @@ const EditorPage = () => {
                               <div className={styles.sampleContainer}>
                                 <div
                                   className={`${styles.sampleWrapper} ${
-                                    image === Img1 ? styles.selected : ""
+                                    jubo.designInfo.logoInfo.logo === logo1
+                                      ? styles.selected
+                                      : ""
                                   }`}
-                                  onClick={() => setLogo(Img1, "Sample 1")}
+                                  onClick={() => setLogo(logo1, "Sample 1")}
                                 >
                                   <img
-                                    src={Img1}
+                                    src={logo1}
                                     alt="Sample 1"
                                     className={styles.sampleImage}
                                   />
                                 </div>
                                 <div
                                   className={`${styles.sampleWrapper} ${
-                                    image === Img2 ? styles.selected : ""
+                                    jubo.designInfo.logoInfo.logo === logo2
+                                      ? styles.selected
+                                      : ""
                                   }`}
-                                  onClick={() => setLogo(Img2, "Sample 2")}
+                                  onClick={() => setLogo(logo2, "Sample 2")}
                                 >
                                   <img
-                                    src={Img2}
+                                    src={logo2}
                                     alt="Sample 2"
                                     className={styles.sampleImage}
                                   />
@@ -731,75 +785,345 @@ const EditorPage = () => {
                       )}
                     </div>
                   </div>
+                  {/* 헤더 배경 설정 영역 */}
                   <div className={styles.inputGroup}>
-                    <h3>해더 배경</h3>
-                    <div className={styles.headerDesignTab}>
-                      <button
-                        className={`${styles.headerTabButton} ${
-                          activeDesignTab === "solid_color"
-                            ? styles.activeDesignTab
-                            : ""
-                        }`}
-                        onClick={() => setActiveDesignTab("solid_color")}
-                      >
-                        단색
-                      </button>
-                      <button
-                        className={`${styles.headerTabButton} ${
-                          activeDesignTab === "gradient_color"
-                            ? styles.activeDesignTab
-                            : ""
-                        }`}
-                        onClick={() => setActiveDesignTab("gradient_color")}
-                      >
-                        그라데이션
-                      </button>
-                      <button
-                        className={`${styles.headerTabButton} ${
-                          activeDesignTab === "img_upload"
-                            ? styles.activeDesignTab
-                            : ""
-                        }`}
-                        onClick={() => setActiveDesignTab("img_upload")}
-                      >
-                        이미지
-                      </button>
+                    <h3>헤더 배경</h3>
+                    <div className={styles.headerBackgroundSection}>
+                      <div className={styles.headerDesignTab}>
+                        <button
+                          className={`${styles.headerTabButton} ${
+                            activeBackType === "solid"
+                              ? styles.activeDesignTab
+                              : ""
+                          }`}
+                          onClick={() => setActiveBackType("solid")}
+                        >
+                          단색
+                        </button>
+                        <button
+                          className={`${styles.headerTabButton} ${
+                            activeBackType === "gradient"
+                              ? styles.activeDesignTab
+                              : ""
+                          }`}
+                          onClick={() => setActiveBackType("gradient")}
+                        >
+                          그라데이션
+                        </button>
+                        <button
+                          className={`${styles.headerTabButton} ${
+                            activeBackType === "image"
+                              ? styles.activeDesignTab
+                              : ""
+                          }`}
+                          onClick={() => setActiveBackType("image")}
+                        >
+                          이미지
+                        </button>
+                      </div>
+
+                      {activeBackType === "solid" && (
+                        <div className={styles.solidColorPicker}>
+                          <input
+                            type="color"
+                            value={
+                              jubo.designInfo.backgroundInfo.backgroundColor
+                            }
+                            onChange={(e) => setBackGroundColor(e.target.value)}
+                          />
+                          <div>
+                            <p>배경 색상</p>
+                            {jubo.designInfo.backgroundInfo.backgroundColor ? (
+                              <span>
+                                {jubo.designInfo.backgroundInfo.backgroundColor}
+                              </span>
+                            ) : (
+                              <span>헤더의 배경 색상을 선택합니다.</span>
+                            )}
+                          </div>
+                        </div>
+                      )}
+
+                      {activeBackType === "gradient" && (
+                        <div className={styles.gradientPicker}>
+                          <div className={styles.gradientColorItem}>
+                            <input
+                              type="color"
+                              value={
+                                jubo.designInfo.backgroundInfo
+                                  .gradientcolorfirst
+                              }
+                              onChange={(e) =>
+                                setGradientColorFirst(e.target.value)
+                              }
+                            />
+                            <div>
+                              <p>시작 색상</p>
+                              <span>그라데이션의 시작 지점 색상입니다.</span>
+                            </div>
+                          </div>
+
+                          <div className={styles.gradientColorItem}>
+                            <input
+                              type="color"
+                              value={
+                                jubo.designInfo.backgroundInfo
+                                  .gradientcolorsecond
+                              }
+                              onChange={(e) =>
+                                setGradientColorSecond(e.target.value)
+                              }
+                            />
+                            <div>
+                              <p>끝 색상</p>
+                              <span>
+                                그라데이션이 끝나는 지점의 색상입니다.
+                              </span>
+                            </div>
+                          </div>
+
+                          <div className={styles.directionSelector}>
+                            <p>방향</p>
+                            <div className={styles.selectWrapper}>
+                              <div className={styles.iconBox}>
+                                {SelectedIcon ? (
+                                  <SelectedIcon size={18} />
+                                ) : (
+                                  <div className={styles.noIcon} />
+                                )}
+                              </div>
+                              <select
+                                value={
+                                  jubo.designInfo.backgroundInfo
+                                    .gradientdirection
+                                }
+                                onChange={(e) =>
+                                  setGradientDirection(e.target.value)
+                                }
+                              >
+                                {Object.entries(POSITION_MAP).map(
+                                  ([value, { label }]) => (
+                                    <option key={value} value={value}>
+                                      {label}
+                                    </option>
+                                  )
+                                )}
+                              </select>
+                            </div>
+                          </div>
+                        </div>
+                      )}
+                      {activeBackType === "image" && (
+                        <div className={styles.imageUploadSection}>
+                          <div className={styles.imageSection}>
+                            {jubo.designInfo.backgroundInfo.backgroundImage ? (
+                              <>
+                                <div className={styles.imgPreviewSection}>
+                                  <div className={styles.imgPreviewWrapper}>
+                                    <img
+                                      src={
+                                        jubo.designInfo.backgroundInfo
+                                          .backgroundImage
+                                      }
+                                      alt="Uploaded image"
+                                      className={styles.imgPreview}
+                                    />
+                                    <button
+                                      className={styles.removeImgButton}
+                                      onClick={() =>
+                                        setBackGroundImage(null, null)
+                                      }
+                                    >
+                                      <X className={styles.iconSmall} />
+                                    </button>
+                                  </div>
+                                  <label className={styles.imgFileName}>
+                                    <Upload className={styles.iconSmall} />
+                                    <span>이미지 변경</span>
+                                    <input
+                                      type="file"
+                                      onChange={ReadBgImg}
+                                      className={styles.hiddenInput}
+                                      accept="image/*"
+                                    />
+                                  </label>
+                                </div>
+                                <div className={styles.imgControls}>
+                                  <div className={styles.imgOpacityControl}>
+                                    <h3>투명도 크기</h3>
+                                    <div className={styles.spacingControl}>
+                                      <span>
+                                        {
+                                          jubo.designInfo.backgroundInfo
+                                            .imgopacity
+                                        }
+                                        %
+                                      </span>
+                                      <input
+                                        type="range"
+                                        min="0"
+                                        max="100"
+                                        value={
+                                          jubo.designInfo.backgroundInfo
+                                            .imgopacity
+                                        }
+                                        onChange={(e) =>
+                                          setImgOpacity(e.target.value)
+                                        }
+                                        style={{
+                                          backgroundSize: `${jubo.designInfo.backgroundInfo.imgopacity}% 100%`,
+                                        }}
+                                      />
+                                    </div>
+                                  </div>
+                                </div>
+                              </>
+                            ) : (
+                              <>
+                                <div className={styles.headerDesignTab}>
+                                  <button
+                                    className={`${styles.headerTabButton} ${
+                                      activeBackImgTab === "upload"
+                                        ? styles.activeDesignTab
+                                        : ""
+                                    }`}
+                                    onClick={() =>
+                                      setActiveBackImgTab("upload")
+                                    }
+                                  >
+                                    업로드
+                                  </button>
+                                  <button
+                                    className={`${styles.headerTabButton} ${
+                                      activeBackImgTab === "sample"
+                                        ? styles.activeDesignTab
+                                        : ""
+                                    }`}
+                                    onClick={() =>
+                                      setActiveBackImgTab("sample")
+                                    }
+                                  >
+                                    샘플
+                                  </button>
+                                </div>
+
+                                {activeBackImgTab === "upload" && (
+                                  <div className={styles.uploadSection}>
+                                    <label className={styles.uploadButton}>
+                                      <input
+                                        type="file"
+                                        onChange={ReadBgImg}
+                                        className={styles.hiddenInput}
+                                        accept="image/*"
+                                      />
+                                      <div className={styles.uploadContent}>
+                                        <Image className={styles.iconSmall} />
+                                        <span className={styles.primaryText}>
+                                          배경 이미지 업로드
+                                        </span>
+                                        <span className={styles.secondaryText}>
+                                          클릭하거나 드래그하여 업로드
+                                        </span>
+                                      </div>
+                                    </label>
+                                  </div>
+                                )}
+
+                                {activeBackImgTab === "sample" && (
+                                  <div className={styles.sampleSection}>
+                                    <p className={styles.sampleTitle}>
+                                      샘플 이미지를 선택하세요
+                                    </p>
+                                    {/* header 전용 그리드 */}
+                                    <div className={styles.headerSampleGrid}>
+                                      <div
+                                        className={`${
+                                          styles.headerSampleItem
+                                        } ${
+                                          jubo.designInfo.backgroundInfo
+                                            .backgroundImage === img1
+                                            ? styles.selected
+                                            : ""
+                                        }`}
+                                        onClick={() =>
+                                          setBackGroundImage(img1, "Sample 1")
+                                        }
+                                      >
+                                        <img
+                                          src={img1}
+                                          alt="Sample 1"
+                                          className={styles.headerSampleImage}
+                                        />
+                                      </div>
+
+                                      <div
+                                        className={`${
+                                          styles.headerSampleItem
+                                        } ${
+                                          jubo.designInfo.backgroundInfo
+                                            .backgroundImage === img2
+                                            ? styles.selected
+                                            : ""
+                                        }`}
+                                        onClick={() =>
+                                          setBackGroundImage(img2, "Sample 2")
+                                        }
+                                      >
+                                        <img
+                                          src={img2}
+                                          alt="Sample 2"
+                                          className={styles.headerSampleImage}
+                                        />
+                                      </div>
+
+                                      <div
+                                        className={`${
+                                          styles.headerSampleItem
+                                        } ${
+                                          jubo.designInfo.backgroundInfo
+                                            .backgroundImage === img3
+                                            ? styles.selected
+                                            : ""
+                                        }`}
+                                        onClick={() =>
+                                          setBackGroundImage(img3, "Sample 3")
+                                        }
+                                      >
+                                        <img
+                                          src={img3}
+                                          alt="Sample 3"
+                                          className={styles.headerSampleImage}
+                                        />
+                                      </div>
+
+                                      <div
+                                        className={`${
+                                          styles.headerSampleItem
+                                        } ${
+                                          jubo.designInfo.backgroundInfo
+                                            .backgroundImage === img4
+                                            ? styles.selected
+                                            : ""
+                                        }`}
+                                        onClick={() =>
+                                          setBackGroundImage(img4, "Sample 4")
+                                        }
+                                      >
+                                        <img
+                                          src={img4}
+                                          alt="Sample 4"
+                                          className={styles.headerSampleImage}
+                                        />
+                                      </div>
+                                    </div>
+                                  </div>
+                                )}
+                              </>
+                            )}
+                          </div>
+                        </div>
+                      )}
                     </div>
-                    {activeDesignTab === "solid_color" ? (
-                      <div className={styles.colorPicker}>
-                        <input type="color" />
-                        <div>
-                          <p>배경 색상</p>
-                          <span>헤더의 배경 색상을 선택합니다.</span>
-                        </div>
-                      </div>
-                    ) : null}
-                    {activeDesignTab === "gradient_color" ? (
-                      <div className={styles.gradientPicker}>
-                        <div className={styles.colorPicker}>
-                          <input type="color" />
-                          <div>
-                            <p>시작 색상</p>
-                            <span>그라데이션의 시작 색상을 선택합니다.</span>
-                          </div>
-                        </div>
-                        <div className={styles.colorPicker}>
-                          <input type="color" />
-                          <div>
-                            <p>끝 색상</p>
-                            <span>그라데이션의 끝 색상을 선택합니다.</span>
-                          </div>
-                        </div>
-                        <div className={styles.directionSelector}>
-                          <p>그라데이션 방향</p>
-                          <select>
-                            <option value="to right">왼쪽에서 오른쪽</option>
-                            <option value="to bottom">위에서 아래</option>
-                            <option value="to bottom right">대각선</option>
-                          </select>
-                        </div>
-                      </div>
-                    ) : null}
                   </div>
                 </div>
               ) : null}
@@ -951,7 +1275,8 @@ const EditorPage = () => {
             <p>{jubo.designInfo.textInfo.title}</p>
             <p>{jubo.designInfo.textInfo.subtitle}</p>
             <span>
-              현재 크기: {jubo.designInfo.textInfo.fontsize.titlefont}px
+              그라데이션 방향:{" "}
+              {POSITION_MAP[gradientdirection]?.label || "미설정"}
             </span>{" "}
           </div>
         </div>

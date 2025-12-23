@@ -30,6 +30,15 @@ const useJuboStore = create((set, get) => ({
         logoSize: 40,
         logoPosition: "left",
       },
+      backgroundInfo: {
+        backgroundImage: null,
+        backgroundName: null,
+        backgroundColor: "#ffffff",
+        gradientcolorfirst: "#ffffff",
+        gradientcolorsecond: "#000000",
+        gradientdirection: "to left",
+        imgopacity: 0,
+      },
     },
     news: [],
     order: [],
@@ -126,17 +135,6 @@ const useJuboStore = create((set, get) => ({
       },
     })),
 
-  removeLogo: () =>
-    set((state) => ({
-      designInfo: {
-        ...state.designInfo,
-        logoInfo: {
-          ...state.designInfo.logoInfo,
-          logo: null,
-          logoName: null,
-        },
-      },
-    })),
   setLogoSize: (size) =>
     set((state) => {
       let validatedSize = size;
@@ -160,6 +158,85 @@ const useJuboStore = create((set, get) => ({
         },
       };
     }),
+  setBackGroundImage: (image, name) =>
+    set((state) => ({
+      jubo: {
+        ...state.jubo,
+        designInfo: {
+          ...state.jubo.designInfo,
+          backgroundInfo: {
+            ...state.jubo.designInfo.backgroundInfo,
+            backgroundImage: image,
+            backgroundName: name,
+          },
+        },
+      },
+    })),
+  setBackGroundColor: (color) =>
+    set((state) => ({
+      jubo: {
+        ...state.jubo,
+        designInfo: {
+          ...state.jubo.designInfo,
+          backgroundInfo: {
+            ...state.jubo.designInfo.backgroundInfo,
+            backgroundColor: color,
+          },
+        },
+      },
+    })),
+  setImgOpacity: (opacity) =>
+    set((state) => ({
+      jubo: {
+        ...state.jubo,
+        designInfo: {
+          ...state.jubo.designInfo,
+          backgroundInfo: {
+            ...state.jubo.designInfo.backgroundInfo,
+            imgopacity: opacity,
+          },
+        },
+      },
+    })),
+  setGradientColorFirst: (color) =>
+    set((state) => ({
+      jubo: {
+        ...state.jubo,
+        designInfo: {
+          ...state.jubo.designInfo,
+          backgroundInfo: {
+            ...state.jubo.designInfo.backgroundInfo,
+            gradientcolorfirst: color,
+          },
+        },
+      },
+    })),
+  setGradientColorSecond: (color) =>
+    set((state) => ({
+      jubo: {
+        ...state.jubo,
+        designInfo: {
+          ...state.jubo.designInfo,
+          backgroundInfo: {
+            ...state.jubo.designInfo.backgroundInfo,
+            gradientcolorsecond: color,
+          },
+        },
+      },
+    })),
+  setGradientDirection: (direction) =>
+    set((state) => ({
+      jubo: {
+        ...state.jubo,
+        designInfo: {
+          ...state.jubo.designInfo,
+          backgroundInfo: {
+            ...state.jubo.designInfo.backgroundInfo,
+            gradientdirection: direction,
+          },
+        },
+      },
+    })),
   openModal: (tabType) =>
     set({ isModalOpen: true, editingId: null, modalTab: tabType }),
   closeModal: () =>
