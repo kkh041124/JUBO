@@ -1635,26 +1635,4 @@ h3 {
   background-color: #e0f2fe;
   color: #0284c7 !important;
 }
-/*예배 순서*/
-.orderContent {
-  flex-grow: 1;
-  padding: 1.5rem 2rem;
-}
-.orderContent .section {
-  border-bottom: none;
-  padding: 0 0 1.5rem 0;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.orderContent .section h3 {
-  margin-bottom: 0;
-}
-.orderListContainer {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
 

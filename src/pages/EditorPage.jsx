@@ -16,17 +16,6 @@ import {
   NotebookPen,
   Trash2,
   SquarePen,
-  User,
-  Music,
-  BookHeart,
-  Heart,
-  BookOpen,
-  Music4,
-  Mic,
-  Gift,
-  Sparkles,
-  MoreHorizontal,
-  GripVertical,
   FolderOpen,
   Minus,
   Image,
@@ -71,6 +60,7 @@ import img3 from "../assets/sampleImg3.jpg";
 import img4 from "../assets/sampleImg4.jpg";
 import SortableOrderItem from "../components/Items/SortableOrderItem/SortableOrderItem.jsx"
 import BasicInfoTab from "../components/Tabs/BasicInfoTab/BasicInfoTab.jsx";
+import OrderTab from "../components/Tabs/OrderTab/OrderTab.jsx";
 
 const EditorPage = () => {
   const {
@@ -135,23 +125,6 @@ const EditorPage = () => {
     reader.readAsDataURL(file);
   };
 
-  const sensors = useSensors(
-    useSensor(PointerSensor, {
-      activationConstraint: {
-        distance: 8,
-      },
-    }),
-    useSensor(KeyboardSensor, {
-      coordinateGetter: sortableKeyboardCoordinates,
-    })
-  );
-
-  const handleDragEnd = (event) => {
-    const { active, over } = event;
-    if (active.id !== over.id) {
-      reOrder(active.id, over.id);
-    }
-  };
   const POSITION_MAP = {
     "to left": { label: "좌측", icon: MoveLeft },
     "to right": { label: "우측", icon: MoveRight },
@@ -942,46 +915,7 @@ const EditorPage = () => {
           ) : null}
 
           {activeTab === "order" ? (
-            <div className={styles.orderContent}>
-              <div className={styles.section}>
-                <h3>예배 순서</h3>
-                <button
-                  onClick={() => openModal("order")}
-                  className={styles.addNewsButton}
-                >
-                  <Plus className={styles.iconSmall} />
-                  <p>예배 추가</p>
-                </button>
-              </div>
-              <div className={styles.orderWrapper}>
-                <div className={styles.orderListContainer}>
-                  {jubo.order.length === 0 ? (
-                    <p>추가된 예배 순서가 없습니다.</p>
-                  ) : (
-                    <DndContext
-                      sensors={sensors}
-                      collisionDetection={closestCenter}
-                      onDragEnd={handleDragEnd}
-                    >
-                      <SortableContext
-                        items={jubo.order.map((order) => order.id)}
-                        strategy={verticalListSortingStrategy}
-                      >
-                        {jubo.order.map((order, index) => (
-                          <SortableOrderItem
-                            key={order.id}
-                            order={order}
-                            index={index}
-                            editOrder={editOrder}
-                            deleteOrder={deleteOrder}
-                          />
-                        ))}
-                      </SortableContext>
-                    </DndContext>
-                  )}
-                </div>
-              </div>
-            </div>
+            <OrderTab />
           ) : null}
 
           {activeTab === "news" ? (
