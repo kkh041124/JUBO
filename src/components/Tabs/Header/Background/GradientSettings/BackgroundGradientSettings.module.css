@@ -1,0 +1,119 @@
+/* --- [그라데이션 전체 박스] --- */
+.gradientPicker {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1rem;
+  background-color: #f9fafb;
+  border-radius: 0.75rem;
+  border: 1px solid #e5e7eb;
+}
+
+/* 그라데이션 항목 (그리드 정렬) */
+.gradientColorItem {
+  display: grid;
+  grid-template-columns: 80px 1fr;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 0.5rem 0;
+}
+
+/* 컬러 입력창: 원형 스타일 */
+.gradientColorItem input[type="color"] {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 2.25rem;
+  height: 2.25rem;
+  border: 2px solid #ffffff;
+  border-radius: 50%;
+  cursor: pointer;
+  background: none;
+  padding: 0;
+  overflow: hidden;
+  box-shadow: 0 0 0 1px #d1d5db;
+  justify-self: center;
+}
+
+/* 컬러칩 내부 영역 (브라우저 기본 스타일 제거) */
+.gradientColorItem input[type="color"]::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+.gradientColorItem input[type="color"]::-webkit-color-swatch {
+  border: none;
+  border-radius: 50%;
+}
+.gradientColorItem input[type="color"]::-moz-color-swatch {
+  border: none;
+  border-radius: 50%;
+}
+
+/* 텍스트 설명부 */
+.gradientColorItem div {
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+}
+
+.gradientColorItem p {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: #374151;
+  margin: 0;
+}
+
+.gradientColorItem span {
+  font-size: 0.75rem;
+  color: #9ca3af;
+  line-height: 1.4;
+}
+/* --- [그라데이션 방향 선택] --- */
+.directionSelector {
+  display: grid;
+  grid-template-columns: 80px 1fr; /* 위 항목과 정렬 일치 */
+  align-items: center;
+  gap: 1rem;
+  margin-top: 0.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid #e5e7eb;
+}
+
+.directionSelector p {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #4b5563;
+  margin: 0;
+}
+
+.selectWrapper {
+  display: flex;
+  align-items: center;
+  background-color: #ffffff;
+  border: 1px solid #d1d5db;
+  border-radius: 0.5rem;
+  height: 2.25rem;
+  overflow: hidden;
+}
+
+.iconBox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem; /* 높이와 맞춰 정사각형 유지 */
+  height: 100%;
+  background-color: #f3f4f6;
+  border-right: 1px solid #d1d5db;
+  color: #6b7280;
+}
+
+.directionSelector select {
+  flex: 1;
+  border: none;
+  background: transparent;
+  padding: 0 0.5rem;
+  font-size: 0.8125rem;
+  color: #1f2937;
+  outline: none;
+  cursor: pointer;
+}
+
+

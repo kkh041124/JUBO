@@ -1,0 +1,106 @@
+.headerTextSettings {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding: 1rem 0;
+}
+.iconSmall {
+  width: 0.875rem;
+  height: 0.875rem;
+}
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.inputGroup h3 {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #4b5563;
+  margin: 0;
+}
+
+.controlRow {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.textInput {
+  flex: 1;
+  padding: 0.7rem 1rem;
+  border: 1px solid #eef0f4;
+  border-radius: 8px;
+  background-color: #f7f9fc;
+  font-size: 0.95rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.textInput:focus {
+  border-color: #4f39f6;
+  background-color: #fff;
+}
+
+.spacingControl {
+  display: flex;
+  align-items: center;
+  background-color: #f1f3f7;
+  border-radius: 8px;
+  padding: 0.2rem;
+}
+
+.spacingControl button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border: none;
+  background: transparent;
+  color: black;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: background 0.2s;
+}
+
+.spacingControl button:hover {
+  background-color: #fff;
+  color: #1a1a1a;
+}
+
+.spacingControl input {
+  width: 35px;
+  border: none;
+  background: transparent;
+  text-align: center;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  outline: none;
+}
+.spacingControl input::-webkit-outer-spin-button,
+.spacingControl input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.spacingControl span {
+  font-size: 0.75rem;
+  color: black;
+  margin-right: 0.25rem;
+  font-weight: 500;
+}
+
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

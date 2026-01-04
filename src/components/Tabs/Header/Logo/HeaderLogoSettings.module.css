@@ -1,0 +1,416 @@
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.iconSmall {
+  width: 0.875rem;
+  height: 0.875rem;
+}
+.inputGroup h3 {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #4b5563;
+  margin: 0;
+}
+/* 로고 섹션 레이아웃 */
+.logoSection {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  background-color: #ffffff;
+  border: 1px solid #eef0f4;
+  border-radius: 12px;
+  padding: 1.25rem;
+}
+
+/* 로고 미리보기 영역 */
+.logoPreviewSection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+  padding: 1.5rem;
+  background-color: #f8fafc;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+}
+
+.logoPreviewWrapper {
+  position: relative;
+  width: 160px;
+  height: 160px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #cbd5e0;
+}
+
+.logoPreview {
+  max-width: 90%;
+  max-height: 90%;
+  object-fit: contain;
+}
+.removeLogoButton {
+  position: absolute;
+  top: 0;
+  right: 0;
+
+  width: 28px;
+  height: 28px;
+
+  padding: 0;
+  line-height: 0;
+
+  background-color: #ef4444;
+  color: white;
+  border: none;
+  border-radius: 50%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+
+  opacity: 0;
+  visibility: hidden;
+
+  transform: translate(50%, -50%) scale(0.9);
+
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.logoPreviewWrapper:hover .removeLogoButton {
+  opacity: 1;
+  visibility: visible;
+  transform: translate(50%, -50%) scale(1);
+}
+
+.removeLogoButton:hover {
+  background-color: #dc2626;
+  transform: translate(50%, -50%) scale(1.1);
+}
+
+.removeLogoButton .iconSmall {
+  width: 16px;
+  height: 16px;
+  color: white;
+  padding-top: 0.5rem;
+}
+
+.logoFileName {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1.2rem;
+  background-color: #ffffff;
+  border: 1px solid #cbd5e0;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #4a5568;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.logoFileName:hover {
+  background-color: #edf2f7;
+  border-color: #a0aec0;
+}
+
+.hiddenInput {
+  display: none;
+}
+.logoControls {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  padding: 1.25rem;
+  background-color: #ffffff;
+  border-radius: 1rem;
+  border: 1px solid #e5e7eb;
+}
+
+.logoPositionControl,
+.logoSizeControl {
+  display: grid;
+  grid-template-columns: 80px 1fr;
+  align-items: center;
+  gap: 1rem;
+}
+
+.logoControls h3 {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: #6b7280;
+  margin: 0;
+  white-space: nowrap;
+}
+
+.logoPositionControl select {
+  width: 100%;
+  height: 2.5rem;
+  padding: 0 0.75rem;
+  border-radius: 0.75rem;
+  border: 1px solid #d1d5db;
+  background-color: #f9fafb;
+  font-size: 0.875rem;
+  color: #1f2937;
+  outline: none;
+  cursor: pointer;
+  appearance: none;
+  text-align: center;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%236b7280'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  background-size: 1rem;
+}
+
+.logoPositionControl select:focus {
+  border-color: #2563eb;
+  background-color: #ffffff;
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.1);
+}
+
+.spacingControl {
+  display: flex;
+  align-items: center;
+  background-color: #ffffff;
+  border: 1px solid #d1d5db;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  height: 2.5rem;
+  transition: border-color 0.2s;
+}
+
+.spacingControl:focus-within {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.1);
+}
+
+.spacingControl button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 100%;
+  background: #f9fafb;
+  border: none;
+  color: #4b5563;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.spacingControl button:hover {
+  background-color: #f3f4f6;
+}
+
+.spacingControl input {
+  flex: 1;
+  width: 100%;
+  height: 100%;
+  border: none;
+  border-left: 1px solid #d1d5db;
+  border-right: 1px solid #d1d5db;
+  background-color: #ffffff;
+  text-align: center;
+  font-weight: 600;
+  font-size: 0.875rem;
+  color: #111827;
+  outline: none;
+}
+
+.spacingControl input::-webkit-outer-spin-button,
+.spacingControl input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.spacingControl input[type="number"] {
+  -moz-appearance: textfield;
+}
+/* 활성화된 탭 스타일 (잘못된 선택자 수정됨) */
+.activeDesignTab {
+  background-color: #ffffff !important;
+  color: #4f39f6 !important;
+  font-weight: 600;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+}
+/* --- 디자인 탭 메뉴 (업로드 / 샘플 전환) --- */
+.headerDesignTab {
+  display: flex;
+  align-items: center;
+  background-color: #f1f3f7;
+  padding: 0.3rem;
+  border-radius: 10px;
+  gap: 0.2rem;
+}
+
+.headerTabButton {
+  flex: 1; /* 버튼이 동일한 너비를 가짐 */
+  background-color: transparent;
+  border: none;
+  padding: 0.6rem 0;
+  color: #64748b;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border-radius: 7px;
+}
+
+.headerTabButton:hover {
+  color: #1e293b;
+}
+.uploadSection,
+.sampleSection {
+  padding: 0.5rem 0;
+  animation: fadeIn 0.2s ease-in;
+}
+
+.uploadSection input[type="file"] {
+  width: 100%;
+  font-size: 0.85rem;
+  color: #64748b;
+}
+.uploadButton {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  border: 2px dashed #e2e8f0;
+  border-radius: 8px;
+  background-color: #f7f9fc;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  gap: 0.5rem;
+}
+
+.uploadButton:hover {
+  background-color: #edf2f7;
+  border-color: #cbd5e0;
+}
+
+.hiddenInput {
+  display: none;
+}
+
+.uploadContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.iconSmall {
+  width: 24px;
+  height: 24px;
+  margin-bottom: 0.5rem;
+  color: #718096;
+}
+
+.primaryText {
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: #2d3748;
+}
+
+.secondaryText {
+  font-size: 0.8rem;
+  color: #a0aec0;
+}
+/* 파일 업로드 버튼 커스텀 스타일링 (필요 시) */
+.uploadSection input[type="file"]::file-selector-button {
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  border: 1px solid #e2e8f0;
+  background-color: #fff;
+  cursor: pointer;
+  margin-right: 1rem;
+  transition: all 0.2s;
+}
+
+.uploadSection input[type="file"]::file-selector-button:hover {
+  background-color: #f1f5f9;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.sampleSection {
+  margin-top: 0.5rem;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.sampleTitle {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #2d3748;
+  margin-bottom: 1rem;
+}
+
+.sampleContainer {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: flex-start;
+}
+
+.sampleWrapper {
+  flex: 1;
+  max-width: 150px;
+  aspect-ratio: 1 / 1;
+  border: 3px solid #e2e8f0;
+  border-radius: 12px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  background-color: #fff;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sampleWrapper:hover {
+  transform: translateY(-4px);
+  border-color: #cbd5e0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.sampleWrapper.selected {
+  border-color: #3182ce;
+  box-shadow: 0 0 0 2px rgba(66, 153, 225, 0.4);
+}
+
+.sampleImage {
+  width: 50%;
+  height: 50%;
+  object-fit: contain;
+  padding: 10px;
+}
+
+/* 2열 그리드 컨테이너 */
+.headerSampleGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* 2개씩 배치 */
+  gap: 0.75rem;
+  width: 100%;
+  margin-top: 0.5rem;
+}

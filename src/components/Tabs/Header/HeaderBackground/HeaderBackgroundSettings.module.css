@@ -1,0 +1,48 @@
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.inputGroup h3 {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #4b5563;
+  margin: 0;
+}
+.headerBackgroundSection {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  background-color: #ffffff;
+  border: 1px solid #eef0f4;
+  border-radius: 12px;
+  padding: 1.25rem;
+  animation: fadeIn 0.3s ease-out;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
+}
+.headerDesignTab {
+  display: flex;
+  align-items: center;
+  background-color: #f1f3f7;
+  padding: 0.3rem;
+  border-radius: 10px;
+  gap: 0.2rem;
+}
+
+.headerTabButton {
+  flex: 1; /* 버튼이 동일한 너비를 가짐 */
+  background-color: transparent;
+  border: none;
+  padding: 0.6rem 0;
+  color: #64748b;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border-radius: 7px;
+}
+
+.headerTabButton:hover {
+  color: #1e293b;
+}
