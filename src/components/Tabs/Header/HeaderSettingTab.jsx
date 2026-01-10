@@ -1,10 +1,9 @@
 // src/components/Editor/Tabs/HeaderSettingsTab.jsx
-import React, { useState } from "react";
-import styles from "../../../pages/EditorPage.module.css";
+import styles from "./HeaderSettingTab.module.css"
 import HeaderTextSettings from "./HeaderText/HeaderTextSetting";
 import HeaderLogoSettings from "./Logo/HeaderLogoSettings";
 import HeaderBackgroundSettings from "./HeaderBackground/HeaderBackgroundSettings";
-
+import { useState } from "react";
 const HeaderSettingsTab = () => {
   const [activeHeaderTab, setActiveHeaderTab] = useState("text");
 

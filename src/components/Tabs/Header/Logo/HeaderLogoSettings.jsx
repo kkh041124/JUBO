@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import { Upload, X, Minus, Plus, Image } from "lucide-react";
 import useJuboStore from "../../../../stores/useJuboStore";
-import styles from "../../../../pages/EditorPage.module.css";
+import styles from "./HeaderLogoSettings.module.css";
 
-// 이미지 경로 확인 필요
 import logo1 from "../../../../assets/logo1.svg";
 import logo2 from "../../../../assets/logo2.svg";
 

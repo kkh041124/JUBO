@@ -4,7 +4,7 @@ import {
   MoveUpLeft, MoveUpRight, MoveDownLeft, MoveDownRight,
 } from "lucide-react";
 import useJuboStore from "../../../../../stores/useJuboStore";
-import styles from "../../../../../pages/EditorPage.module.css";
+import styles from "./BackgroundGradientSettings.module.css";
 
 const POSITION_MAP = {
   "to left": { label: "좌측", icon: MoveLeft },

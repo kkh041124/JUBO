@@ -1,6 +1,6 @@
 import { Minus, Plus } from "lucide-react";
 import useJuboStore from "../../../../stores/useJuboStore";
-import styles from "../../../../pages/EditorPage.module.css";
+import styles from "./HeaderTextSetting.module.css";
 
 const HeaderTextSettings = () => {
   const { jubo, setHeaderInfo, updateFontSize } = useJuboStore();

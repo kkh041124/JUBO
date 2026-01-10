@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import { Upload, X, Image } from "lucide-react";
 import useJuboStore from "../../../../../stores/useJuboStore";
-import styles from "../../../../../pages/EditorPage.module.css";
+import styles from "./BackgroundImageSettings.module.css";
 
-// 이미지 경로 확인 (상황에 맞게 수정)
 import img1 from "../../../../../assets/sampleImg1.jpg";
 import img2 from "../../../../../assets/sampleImg2.jpg";
 import img3 from "../../../../../assets/sampleImg3.jpg";

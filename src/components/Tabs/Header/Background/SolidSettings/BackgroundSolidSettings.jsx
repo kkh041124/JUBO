@@ -1,6 +1,6 @@
 import React from "react";
 import useJuboStore from "../../../../../stores/useJuboStore";
-import styles from "../../../../../pages/EditorPage.module.css";
+import styles from "./BackgroundSolidSettings.module.css";
 
 const BackgroundSolidSettings = () => {
   const { jubo, setBackGroundColor } = useJuboStore();

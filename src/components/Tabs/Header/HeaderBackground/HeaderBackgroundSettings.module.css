@@ -46,3 +46,10 @@
 .headerTabButton:hover {
   color: #1e293b;
 }
+/* 활성화된 탭 스타일 (잘못된 선택자 수정됨) */
+.activeDesignTab {
+  background-color: #ffffff !important;
+  color: #4f39f6 !important;
+  font-weight: 600;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+}
