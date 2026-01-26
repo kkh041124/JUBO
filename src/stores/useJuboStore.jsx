@@ -12,6 +12,7 @@ const useJuboStore = create((set, get) => ({
       worshipTime: "",
       serviceDate: "",
       bibleVerse: "",
+      bibleVerseContent: "",
     },
     designInfo: {
       textInfo: {
@@ -30,6 +31,11 @@ const useJuboStore = create((set, get) => ({
         logoSize: 40,
         logoPosition: "left",
       },
+      iconInfo: {
+        icon: null,
+        iconName: "",
+        iconSize: 80,
+      },
       backgroundInfo: {
         backgroundImage: null,
         backgroundName: null,
@@ -42,8 +48,9 @@ const useJuboStore = create((set, get) => ({
     },
     news: [],
     order: [],
-    selectedTemplate: "",
   },
+
+  selectedTemplate: "",
 
   updateField: (section, key, value) =>
     set((state) => ({
@@ -77,7 +84,9 @@ const useJuboStore = create((set, get) => ({
   setOrderCategory: (v) => set({ ordercategory: v }),
   setOrderTitle: (v) => set({ orderTitle: v }),
   setOrderContent: (v) => set({ orderContent: v }),
-  setSelectedTemplate: (v) => set({ selectedTemplate: v }),
+
+  setSelectedTemplate: (template) => set({ selectedTemplate: template }),
+
   setHeaderInfo: (type, content) =>
     set((state) => ({
       jubo: {
@@ -153,6 +162,43 @@ const useJuboStore = create((set, get) => ({
             logoInfo: {
               ...state.jubo.designInfo.logoInfo,
               logoSize: validatedSize,
+            },
+          },
+        },
+      };
+    }),
+  setIcon: (image, name) =>
+    set((state) => ({
+      jubo: {
+        ...state.jubo,
+        designInfo: {
+          ...state.jubo.designInfo,
+          iconInfo: {
+            ...state.jubo.designInfo.iconInfo,
+            icon: image,
+            iconName: name,
+          },
+        },
+      },
+    })),
+  setIconSize: (size) =>
+    set((state) => {
+      let validatedSize = size;
+
+      if (size < 40) {
+        validatedSize = 40;
+      } else if (size > 150) {
+        validatedSize = 150;
+      }
+
+      return {
+        jubo: {
+          ...state.jubo,
+          designInfo: {
+            ...state.jubo.designInfo,
+            iconInfo: {
+              ...state.jubo.designInfo.iconInfo,
+              iconSize: validatedSize,
             },
           },
         },
@@ -258,7 +304,7 @@ const useJuboStore = create((set, get) => ({
       newNewsList = jubo.news.map((item) =>
         item.id === editingId
           ? { ...item, category, date, title, content }
-          : item
+          : item,
       );
     } else {
       const newNews = {
@@ -309,7 +355,7 @@ const useJuboStore = create((set, get) => ({
       newOrderList = jubo.order.map((item) =>
         item.id === editingId
           ? { ...item, ordercategory, orderTitle, orderContent }
-          : item
+          : item,
       );
     } else {
       const newOrder = {

@@ -198,7 +198,7 @@
 }
 
 .activeTab::after {
-  content: '';
+  content: "";
   position: absolute;
   bottom: -1px;
   left: 0;
@@ -212,7 +212,6 @@
   min-height: 220px;
   background-color: #f9f9f9;
 }
-
 
 /* ──────────────── 템플릿 선택 카드 ──────────────── */
 .container {
@@ -243,13 +242,13 @@
   align-items: center;
   justify-content: center;
   text-align: center;
-  
+
   height: 100%;
   min-height: 140px;
   padding: 1.5rem;
-  
+
   position: relative; /* 뱃지 기준점 */
-  
+
   background-color: #ffffff;
   border: 1px solid #e5e7eb;
   border-radius: 12px;
@@ -293,18 +292,24 @@
   font-weight: 800;
   padding: 4px 8px;
   border-radius: 12px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   animation: popIn 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 @keyframes popIn {
-  from { transform: scale(0.5); opacity: 0; }
-  to { transform: scale(1); opacity: 1; }
+  from {
+    transform: scale(0.5);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
 
 .templateButton:hover .templateOption:not(.activeTemplate) {
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
   background-color: #f9fafb;
 }
 

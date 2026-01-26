@@ -6,22 +6,30 @@ import useJuboStore from "../../stores/useJuboStore";
 const AModal = () => {
   const {
     modalTab,
-    category, setCategory,
-    date, setDate,
-    title, setTitle,
-    content, setContent,
+    category,
+    setCategory,
+    date,
+    setDate,
+    title,
+    setTitle,
+    content,
+    setContent,
     saveNews,
     closeModal,
     editingId,
 
     // 예배 순서 관련 State
-    ordercategory, setOrderCategory,
-    orderTitle, setOrderTitle,
-    orderContent, setOrderContent,
+    ordercategory,
+    setOrderCategory,
+    orderTitle,
+    setOrderTitle,
+    orderContent,
+    setOrderContent,
     saveOrder,
 
     // 디자인 설정 관련 State
-    selectedTemplate, setSelectedTemplate 
+    selectedTemplate,
+    setSelectedTemplate,
   } = useJuboStore();
 
   const [activeTab, setActiveTab] = useState("template");
@@ -55,9 +63,14 @@ const AModal = () => {
   }, [saveNews, saveOrder, closeModal, modalTab]);
 
   const templateClass = [
-    { title: "🎨 따뜻한", description: "성도들에게 편안함을 주는 부드러운 디자인" },
-    { title: "⛪ 경건한", description: "예배의 품격을 높이는 전통적인 디자인" },
-    { title: "✨ 깔끔한", description: "현대적이고 가독성이 좋은 세련된 디자인" },
+    {
+      title: "📋 기본 템플릿",
+      description: "전통적인 교회 주보 스타일",
+    },
+    {
+      title: "✨ 모던 템플릿",
+      description: "세련되고 현대적인 디자인",
+    },
   ];
 
   return (
@@ -234,17 +247,19 @@ const AModal = () => {
                 <div className={styles.container}>
                   {templateClass.map((template, index) => {
                     const isSelected = selectedTemplate === template.title;
-                    
+
                     // ★ 핵심 변경: 복잡한 테마 클래스 로직 삭제 -> activeTemplate 통일
                     const themeStyle = isSelected ? styles.activeTemplate : "";
 
                     return (
-                      <button 
-                        key={index} 
+                      <button
+                        key={index}
                         className={styles.templateButton}
                         onClick={() => setSelectedTemplate(template.title)}
                       >
-                        <div className={`${styles.templateOption} ${themeStyle}`}>
+                        <div
+                          className={`${styles.templateOption} ${themeStyle}`}
+                        >
                           <h3>{template.title}</h3>
                           <p>{template.description}</p>
                           {isSelected && (
@@ -260,7 +275,7 @@ const AModal = () => {
               {activeTab === "design" && (
                 <div>색상 팔레트 설정 화면입니다.</div>
               )}
-              
+
               {activeTab === "font" && (
                 <div>폰트 크기 및 서체 설정 화면입니다.</div>
               )}

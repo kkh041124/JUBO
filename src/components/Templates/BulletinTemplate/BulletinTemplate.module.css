@@ -1,0 +1,439 @@
+.container {
+  min-height: 100vh;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  transition: background-color 0.3s ease;
+  font-family:
+    "Noto Sans KR",
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+  background-color: #f9fafc;
+}
+
+.mainContent {
+  width: 100%;
+  max-width: 48rem;
+  background: linear-gradient(135deg, #fbfaf6 0%, #f5f3f0 100%);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  position: relative;
+  border-radius: 2px;
+}
+
+/* 헤더 섹션 */
+.headerSection {
+  background: linear-gradient(135deg, #4a6fa5 0%, #34517b 100%);
+  height: 12rem;
+  position: relative;
+  padding: 1.5rem;
+  color: rgba(255, 255, 255, 0.9);
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.headerText {
+  flex: 1;
+}
+
+.headerTopInfo {
+  font-size: 0.625rem;
+  line-height: 1.2;
+  opacity: 0.9;
+}
+
+.headerTopInfo p {
+  margin: 0;
+  margin-bottom: 0.25rem;
+}
+
+.headerTopInfo p:first-child {
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.headerLogo {
+  position: absolute;
+  right: 1.5rem;
+  top: 1.5rem;
+  width: 8rem;
+  height: 6rem;
+  opacity: 0.9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.headerLogo img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.headerLogoPlaceholder {
+  position: absolute;
+  right: 1.5rem;
+  top: 1.5rem;
+  width: 8rem;
+  height: 6rem;
+  opacity: 0.9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.churchIcon {
+  width: 100%;
+  height: 100%;
+  color: white;
+}
+
+/* 타이틀 카드 */
+.titleCard {
+  position: relative;
+  margin-top: -3rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1.25rem 2rem;
+  background: #f9f8f4;
+  border-radius: 1.5rem 0.5rem 0.5rem 0.5rem;
+  border-top: 3px solid #4a6fa5;
+  margin-left: 2rem;
+  margin-bottom: 2rem;
+}
+
+.titleIcon {
+  color: #4a6fa5;
+}
+
+.starIcon {
+  width: 2.5rem;
+  height: 2.5rem;
+}
+
+.churchName {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin: 0;
+  color: #1f2937;
+  letter-spacing: 0.05em;
+  font-family: "Noto Serif KR", serif;
+}
+
+/* 예배 정보 헤더 */
+.worshipInfoHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 2rem;
+  border-bottom: 2px solid rgba(74, 111, 165, 0.2);
+  padding: 0 2rem;
+  padding-bottom: 0.5rem;
+}
+
+.issueInfo {
+  font-family: "Noto Serif KR", serif;
+  color: #1f2937;
+  opacity: 0.8;
+}
+
+.issueNumber {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: bold;
+}
+
+.worshipTitle {
+  text-align: right;
+}
+
+.mainTitle {
+  font-size: 1.875rem;
+  font-weight: bold;
+  margin: 0;
+  color: #1f2937;
+  letter-spacing: -0.02em;
+  font-family: "Noto Serif KR", serif;
+}
+
+.englishTitle {
+  font-size: 0.625rem;
+  letter-spacing: 0.3em;
+  color: #6b7280;
+  text-transform: uppercase;
+  display: block;
+  font-size: 0.75rem;
+}
+
+/* 성경 구절 섹션 */
+.verseSection {
+  margin-bottom: 2.5rem;
+  padding-left: 1rem;
+  border-left: 4px solid rgba(74, 111, 165, 0.4);
+  margin-left: 2rem;
+  font-style: italic;
+  padding-right: 2rem;
+}
+
+.versText {
+  font-family: "Noto Serif KR", serif;
+  color: #1f2937;
+  font-size: 1.125rem;
+  line-height: 1.6;
+  margin: 0;
+  white-space: pre-line;
+}
+
+.verseRef {
+  font-size: 0.875rem;
+  font-style: normal;
+  margin-left: 0.5rem;
+  opacity: 0.7;
+}
+
+/* 예배 순서 섹션 */
+.worshipOrderSection {
+  padding: 0 2rem;
+  margin-bottom: 3rem;
+}
+
+.orderList {
+  space-y: 0.75rem;
+}
+
+.orderItem {
+  display: flex;
+  align-items: center;
+  font-size: 1.125rem;
+  line-height: 1;
+  margin-bottom: 1rem;
+  font-family: "Noto Serif KR", serif;
+  color: #1f2937;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.orderCategory {
+  font-weight: bold;
+  flex-shrink: 0;
+  width: 5rem;
+}
+
+.orderTitle {
+  flex-shrink: 0;
+  font-size: 0.875rem;
+  padding: 0 0.5rem;
+}
+
+.orderContent {
+  font-weight: bold;
+  width: 6rem;
+  flex-shrink: 0;
+  text-align: right;
+  font-size: 0.875rem;
+}
+
+.dottedLine {
+  flex-grow: 1;
+  border-bottom: 2px dotted #d1d5db;
+  margin-bottom: 0.375rem;
+  opacity: 0.6;
+}
+
+/* 예배 안내 섹션 */
+.worshipGuideSection {
+  background: rgba(74, 111, 165, 0.05);
+  border: 1px solid rgba(74, 111, 165, 0.1);
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+}
+
+.guideTitle {
+  text-align: center;
+  font-weight: bold;
+  font-size: 1.25rem;
+  color: #4a6fa5;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.guideTitle::before,
+.guideTitle::after {
+  content: "";
+  display: inline-block;
+  width: 2rem;
+  height: 1px;
+  background: rgba(74, 111, 165, 0.4);
+}
+
+.guideGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+
+@media (max-width: 768px) {
+  .guideGrid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+}
+
+.guideColumn {
+  space-y: 0.75rem;
+}
+
+.guideItem {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px dashed #d1d5db;
+  padding-bottom: 0.25rem;
+  font-size: 0.875rem;
+  font-family: "Noto Serif KR", serif;
+  color: #1f2937;
+  margin-bottom: 0.75rem;
+}
+
+.guideLabel {
+  font-weight: bold;
+}
+
+.guideTime {
+  color: #6b7280;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 0.875rem;
+}
+
+/* 소식 섹션 */
+.newsSection {
+  padding: 0 2rem 3rem;
+}
+
+.sectionTitle {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #4a6fa5;
+  margin: 0 0 1.5rem;
+  text-align: center;
+  font-family: "Noto Serif KR", serif;
+  border-bottom: 2px solid #4a6fa5;
+  padding-bottom: 0.75rem;
+}
+
+.newsItem {
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.newsItem:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.newsHeader {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 0.5rem;
+  font-size: 0.875rem;
+}
+
+.newsCategory {
+  font-weight: 600;
+  color: #4a6fa5;
+}
+
+.newsDate {
+  color: #6b7280;
+  font-size: 0.75rem;
+}
+
+.newsTitle {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin: 0.5rem 0;
+  color: #1f2937;
+  font-family: "Noto Serif KR", serif;
+}
+
+.newsContent {
+  font-size: 0.875rem;
+  color: #374151;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* 하단 바 */
+.bottomBar {
+  height: 0.5rem;
+  background: #4a6fa5;
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+  .mainContent {
+    max-width: 100%;
+  }
+
+  .headerSection {
+    height: 10rem;
+    padding: 1rem;
+  }
+
+  .headerLogo,
+  .headerLogoPlaceholder {
+    width: 6rem;
+    height: 5rem;
+    right: 1rem;
+    top: 1rem;
+  }
+
+  .titleCard {
+    margin-left: 1rem;
+    padding: 1rem 1.5rem;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .churchName {
+    font-size: 1.25rem;
+  }
+
+  .mainTitle {
+    font-size: 1.5rem;
+  }
+
+  .worshipOrderSection,
+  .verseSection,
+  .worshipInfoHeader,
+  .worshipGuideSection,
+  .newsSection {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .orderItem {
+    font-size: 1rem;
+  }
+
+  .orderCategory {
+    width: 4rem;
+  }
+
+  .orderContent {
+    width: 5rem;
+  }
+}

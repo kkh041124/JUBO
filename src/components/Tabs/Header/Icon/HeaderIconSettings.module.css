@@ -1,0 +1,208 @@
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 2px solid #f0f0f0;
+}
+
+.inputGroup:last-child {
+  border-bottom: none;
+  padding-bottom: 0.5rem;
+}
+
+.inputGroup h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #333;
+  margin: 0;
+}
+
+.iconSection {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.iconPreviewSection {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.iconPreviewWrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: #f9fafc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.iconPreview {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  padding: 1rem;
+}
+
+.removeIconButton {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  background-color: #ef4444;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.removeIconButton:hover {
+  background-color: #dc2626;
+}
+
+.iconFileName {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  background-color: #f0f9ff;
+  border: 2px solid #0ea5e9;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-weight: 500;
+  color: #0284c7;
+}
+
+.iconFileName:hover {
+  background-color: #e0f2fe;
+  border-color: #0284c7;
+}
+
+.hiddenInput {
+  display: none;
+}
+
+.iconSmall {
+  width: 1.2rem;
+  height: 1.2rem;
+}
+
+.iconControls {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.iconSizeControl {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.iconSizeControl h3 {
+  font-size: 1rem;
+  margin: 0;
+  color: #555;
+}
+
+.spacingControl {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  border: 1px solid #d0d0d0;
+  border-radius: 6px;
+  padding: 0.5rem;
+  background-color: #fafafa;
+}
+
+.spacingControl button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border: 1px solid #d0d0d0;
+  background-color: white;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: #333;
+}
+
+.spacingControl button:hover {
+  background-color: #e8e8e8;
+  border-color: #999;
+}
+
+.spacingControl input {
+  flex: 1;
+  padding: 0.5rem;
+  border: 1px solid #d0d0d0;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+.spacingControl input:focus {
+  outline: none;
+  border-color: #0284c7;
+  box-shadow: 0 0 0 2px rgba(2, 132, 199, 0.1);
+}
+
+.spacingControl span {
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.uploadSection {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.uploadButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  border: 2px dashed #d0d0d0;
+  border-radius: 8px;
+  background-color: #f9fafc;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.uploadButton:hover {
+  border-color: #0284c7;
+  background-color: #f0f9ff;
+}
+
+.uploadContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  text-align: center;
+}
+
+.primaryText {
+  font-weight: 600;
+  color: #333;
+}
+
+.secondaryText {
+  font-size: 0.9rem;
+  color: #666;
+}

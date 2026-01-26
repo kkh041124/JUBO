@@ -1,10 +1,11 @@
 // src/components/Editor/Tabs/HeaderSettingsTab.jsx
-import styles from "./HeaderSettingTab.module.css"
+import styles from "./HeaderSettingTab.module.css";
 import HeaderTextSettings from "./HeaderText/HeaderTextSetting";
 import HeaderLogoSettings from "./Logo/HeaderLogoSettings";
+import HeaderIconSettings from "./Icon/HeaderIconSettings";
 import HeaderBackgroundSettings from "./HeaderBackground/HeaderBackgroundSettings";
 import { useState } from "react";
-const HeaderSettingsTab = () => {
+const HeaderSettingsTab = ({ ReadIconImg }) => {
   const [activeHeaderTab, setActiveHeaderTab] = useState("text");
 
   return (
@@ -12,7 +13,7 @@ const HeaderSettingsTab = () => {
       <div className={styles.section}>
         <h3>헤더 설정</h3>
       </div>
-      
+
       {/* 탭 전환 버튼 */}
       <div className={styles.headerTab}>
         <button
@@ -39,6 +40,7 @@ const HeaderSettingsTab = () => {
       ) : (
         <div className={styles.headerDesignSettings}>
           <HeaderLogoSettings />
+          <HeaderIconSettings ReadIconImg={ReadIconImg} />
           <HeaderBackgroundSettings />
         </div>
       )}

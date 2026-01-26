@@ -1,0 +1,713 @@
+/* 메인 컨테이너 */
+.mainContainer {
+  min-height: 100vh;
+  background-color: #f3f4f6;
+  padding: 3rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+  transition:
+    background-color 0.5s ease,
+    color 0.5s ease;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+.mainContainer.dark {
+  background-color: #000;
+  color: #e5e7eb;
+}
+
+/* 섹션 공통 */
+.sectionCard {
+  max-width: 42rem;
+  margin: 0 auto;
+  background-color: #fdfbf5;
+  color: #333333;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+  border-radius: 2.5rem;
+  padding: 1.5rem;
+  position: relative;
+  overflow: hidden;
+  animation: slideUp 0.5s ease-out forwards;
+}
+
+.sectionCard.dark {
+  background-color: #1a1c1e;
+  color: #e0e0e0;
+}
+
+@media (min-width: 768px) {
+  .sectionCard {
+    padding: 2.5rem;
+  }
+}
+
+.sectionCard.withDelay {
+  animation-delay: 0.2s;
+}
+
+/* ========== SECTION 1: WORSHIP TEMPLATE ========== */
+.header {
+  position: relative;
+  width: 100%;
+  margin-bottom: 1.5rem;
+}
+
+.headerTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+  gap: 1rem;
+}
+
+.headerLeft {
+  display: flex;
+  flex-direction: column;
+}
+
+.vision {
+  color: #7fa988;
+  font-weight: 700;
+  font-size: 0.875rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.motto {
+  color: #7fa988;
+  font-weight: 500;
+  font-size: 1.125rem;
+  margin-top: 0.25rem;
+}
+
+.headerRight {
+  display: flex;
+  align-items: center;
+  color: #7fa988;
+  gap: 0.5rem;
+}
+
+.headerTitle {
+  font-family: Georgia, serif;
+  font-weight: 700;
+  font-size: 1.5rem;
+  letter-spacing: -0.025em;
+  margin: 0;
+}
+
+.backgroundSection {
+  position: relative;
+  width: 100%;
+  height: 16rem;
+  border-radius: 1.5rem;
+  overflow: hidden;
+  margin-bottom: -2rem;
+  z-index: 0;
+  background-color: #d1d5db;
+}
+
+@media (min-width: 768px) {
+  .backgroundSection {
+    height: 20rem;
+  }
+}
+
+.backgroundImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.8;
+}
+
+.backgroundImage.dark {
+  opacity: 0.6;
+}
+
+.backgroundGradient {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, transparent 60%, #fdfbf5 100%);
+}
+
+.backgroundGradient.dark {
+  background: linear-gradient(to bottom, transparent 60%, #1a1c1e 100%);
+}
+
+.titleSection {
+  position: relative;
+  z-index: 10;
+  padding-left: 1.5rem;
+}
+
+.mainTitle {
+  font-family: Georgia, serif;
+  font-style: italic;
+  font-size: 3.5rem;
+  color: #7fa988;
+  margin: 0;
+  letter-spacing: -0.02em;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.1));
+}
+
+@media (min-width: 768px) {
+  .mainTitle {
+    font-size: 4.5rem;
+  }
+}
+
+/* 예배 순서 섹션 */
+.worshipSection {
+  border: 2px solid #7fa988;
+  border-radius: 1.5rem;
+  overflow: hidden;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  background-color: white;
+  margin-bottom: 2rem;
+}
+
+.worshipSection.dark {
+  background-color: #2d2f33;
+  border-color: #6a9172;
+}
+
+.sectionHeader {
+  background-color: #7fa988;
+  padding: 1rem 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: white;
+}
+
+.sectionHeader h2 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin: 0;
+  letter-spacing: 0.05em;
+}
+
+.sectionHeaderTime {
+  font-size: 0.875rem;
+  font-weight: 500;
+  opacity: 0.9;
+}
+
+@media (min-width: 768px) {
+  .sectionHeader h2 {
+    font-size: 1.5rem;
+  }
+
+  .sectionHeaderTime {
+    font-size: 1rem;
+  }
+}
+
+.worshipContent {
+  padding: 1.5rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  font-size: 0.875rem;
+}
+
+@media (min-width: 768px) {
+  .worshipContent {
+    padding: 2rem 2rem;
+    font-size: 1rem;
+  }
+}
+
+.orderRow {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+.orderTitle {
+  color: #7fa988;
+  font-weight: 700;
+  white-space: nowrap;
+  min-width: 100px;
+}
+
+.dottedLine {
+  flex-grow: 1;
+  border-bottom: 2px dotted #d1d5db;
+  margin: 0 0.75rem 0.35rem 0.75rem;
+  opacity: 0.4;
+}
+
+.dottedLine.dark {
+  border-color: #4b5563;
+}
+
+.orderContent {
+  font-weight: 500;
+  text-align: right;
+  white-space: nowrap;
+  min-width: 100px;
+}
+
+.orderContent.dark {
+  color: #e5e7eb;
+}
+
+.infoBox {
+  text-align: center;
+  font-size: 0.75rem;
+  color: #888888;
+  margin: -0.75rem 0 0.5rem 0;
+}
+
+.infoBox.dark {
+  color: #aaaaaa;
+}
+
+.infoSubtext {
+  color: #888888;
+  margin-top: -1rem;
+  margin-bottom: 0.5rem;
+  font-size: 0.75rem;
+}
+
+.infoSubtext.dark {
+  color: #aaaaaa;
+}
+
+.lectureInfo {
+  text-align: center;
+  margin-top: 0.75rem;
+  padding: 1rem;
+  background-color: #f9fafb;
+  border-radius: 0.75rem;
+}
+
+.lectureInfo.dark {
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+.lectureInfo p {
+  font-size: 0.75rem;
+  color: #888888;
+  margin: 0.25rem 0;
+}
+
+.lectureInfo.dark p {
+  color: #aaaaaa;
+}
+
+.lectureTitle {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: #1f2937;
+  margin: 0.5rem 0 0 0;
+}
+
+.lectureTitle.dark {
+  color: white;
+}
+
+/* 설교 본문 섹션 */
+.scriptureSection {
+  border: 2px solid #7fa988;
+  border-radius: 1.5rem;
+  overflow: hidden;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  background-color: white;
+  margin-bottom: 3rem;
+}
+
+.scriptureSection.dark {
+  background-color: #2d2f33;
+  border-color: #6a9172;
+}
+
+.scriptureHeader {
+  background-color: #7fa988;
+  padding: 0.75rem 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: white;
+}
+
+.scriptureHeader h2 {
+  font-size: 1rem;
+  font-weight: 700;
+  margin: 0;
+  letter-spacing: 0.05em;
+}
+
+@media (min-width: 768px) {
+  .scriptureHeader h2 {
+    font-size: 1.125rem;
+  }
+}
+
+.scriptureReference {
+  font-weight: 500;
+  font-size: 0.875rem;
+  opacity: 0.9;
+}
+
+@media (min-width: 768px) {
+  .scriptureReference {
+    font-size: 1rem;
+  }
+}
+
+.scriptureContent {
+  padding: 1.5rem 2rem;
+}
+
+@media (min-width: 768px) {
+  .scriptureContent {
+    padding: 2rem 2rem;
+  }
+}
+
+.scriptureText {
+  color: #374151;
+  line-height: 1.75;
+  text-align: justify;
+  font-size: 1rem;
+  font-family: Georgia, serif;
+}
+
+.scriptureText.dark {
+  color: #d1d5db;
+}
+
+.verseNumber {
+  color: #7fa988;
+  font-weight: 700;
+  font-size: 0.875rem;
+  vertical-align: super;
+  margin-right: 0.25rem;
+}
+
+/* 푸터 */
+.footer {
+  text-align: center;
+  font-size: 0.75rem;
+  color: #888888;
+  padding-bottom: 1rem;
+}
+
+.footer.dark {
+  color: #aaaaaa;
+}
+
+/* ========== SECTION 2: MODERN NEWS TEMPLATE ========== */
+.newsCard {
+  max-width: 48rem;
+  margin: 0 auto;
+  background-color: white;
+  color: #1f2937;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+  border-radius: 1rem;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  animation: slideUp 0.5s ease-out forwards;
+}
+
+.newsCard.dark {
+  background-color: #27272a;
+  color: #e5e7eb;
+}
+
+.newsCard.withDelay {
+  animation-delay: 0.2s;
+}
+
+.newsHeader {
+  background: linear-gradient(135deg, #0056b3 0%, #003d82 100%);
+  color: white;
+  padding: 1.5rem;
+  position: relative;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+@media (min-width: 640px) {
+  .newsHeader {
+    padding: 2rem;
+  }
+}
+
+.newsHeaderBg {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 16rem;
+  height: 16rem;
+  background-color: white;
+  opacity: 0.1;
+  border-radius: 50%;
+  filter: blur(60px);
+  margin-right: -4rem;
+  margin-top: -4rem;
+}
+
+.newsHeaderContent {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem;
+  position: relative;
+  z-index: 10;
+  height: 6rem;
+}
+
+.newsHeaderLeft {
+  display: flex;
+  flex-direction: column;
+}
+
+.newsHeaderTitle {
+  font-size: 2.25rem;
+  font-weight: 900;
+  margin: 0;
+  letter-spacing: -0.02em;
+}
+
+.newsHeaderSubtitle {
+  font-size: 0.875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  opacity: 0.5;
+  margin-top: 0.5rem;
+}
+
+.newsHeaderIcon {
+  font-size: 4rem;
+  transform: rotate(-15deg);
+  opacity: 0.9;
+  flex-shrink: 0;
+}
+
+.newsMain {
+  flex-grow: 1;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+  overflow-y: auto;
+}
+
+@media (min-width: 640px) {
+  .newsMain {
+    padding: 2.5rem;
+  }
+}
+
+.newsItem {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.newsItemTitle {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: #0056b3;
+  margin: 0;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+
+.newsItemTitle.dark {
+  color: #60a5fa;
+}
+
+.newsNumber {
+  display: inline-block;
+  min-width: 1.5rem;
+  font-family: Georgia, serif;
+  font-style: italic;
+}
+
+.newsItemContent {
+  padding-left: 1.5rem;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: #4b5563;
+}
+
+.newsItemContent.dark {
+  color: #d1d5db;
+}
+
+.newsItemContent p {
+  margin: 0.5rem 0;
+}
+
+.newsItemContent.first {
+  margin-top: 0;
+}
+
+.inlineSpan {
+  font-weight: 500;
+  color: #1f2937;
+}
+
+.inlineSpan.dark {
+  color: #f3f4f6;
+}
+
+.subList {
+  padding-left: 1rem;
+  border-left: 2px solid #e5e7eb;
+  margin: 0.5rem 0 0.5rem 1rem;
+}
+
+.subList.dark {
+  border-color: #4b5563;
+}
+
+.subList p {
+  margin: 0.25rem 0;
+  font-size: 0.875rem;
+  color: #6b7280;
+}
+
+.subList.dark p {
+  color: #9ca3af;
+}
+
+.alertBox {
+  background-color: #fef2f2;
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+  border: 1px solid #fee2e2;
+  margin-top: 0.5rem;
+}
+
+.alertBox.dark {
+  background-color: rgba(127, 29, 29, 0.1);
+  border-color: rgba(239, 68, 68, 0.3);
+}
+
+.alertText {
+  font-size: 0.75rem;
+  color: #dc2626;
+  font-weight: 500;
+  margin-top: 0.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.alertText.dark {
+  color: #f87171;
+}
+
+.infoHighlight {
+  background-color: #eff6ff;
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+  border: 1px solid #bfdbfe;
+  margin-top: 0.5rem;
+}
+
+.infoHighlight.dark {
+  background-color: rgba(30, 58, 138, 0.2);
+  border-color: rgba(96, 165, 250, 0.3);
+}
+
+.infoHighlight p {
+  font-size: 0.875rem;
+  color: #0056b3;
+  margin: 0.25rem 0;
+}
+
+.infoHighlight.dark p {
+  color: #93c5fd;
+}
+
+.taglineBox {
+  background-color: white;
+  padding: 1rem;
+  border-radius: 0.75rem;
+  border: 1px solid #e5e7eb;
+  margin-top: 1rem;
+}
+
+.taglineBox.dark {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-color: #4b5563;
+}
+
+.gridContainer {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+
+@media (min-width: 768px) {
+  .gridContainer {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.gridItem {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.gridItemTitle {
+  font-weight: 700;
+  color: #0056b3;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.gridItemTitle.dark {
+  color: #60a5fa;
+}
+
+.gridItemText {
+  font-size: 0.875rem;
+  color: #4b5563;
+  line-height: 1.5;
+}
+
+.gridItemText.dark {
+  color: #9ca3af;
+}
+
+.newsBrFooter {
+  padding: 1.5rem;
+  text-align: center;
+  font-size: 0.75rem;
+  color: #9ca3af;
+  background-color: #f9fafb;
+  border-top: 1px solid #e5e7eb;
+  flex-shrink: 0;
+}
+
+.newsBrFooter.dark {
+  background-color: rgba(0, 0, 0, 0.2);
+  color: #6b7280;
+  border-top-color: #3f3f46;
+}
+
+/* 애니메이션 */
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

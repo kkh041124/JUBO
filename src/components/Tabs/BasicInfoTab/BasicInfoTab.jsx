@@ -73,16 +73,31 @@ const BasicInfoTab = () => {
 
       <div className={styles.section}>
         <h3>주요 성경 구절</h3>
-        <div className={styles.inputGroup}>
-          <p>성경 구절</p>
-          <input
-            type="text"
-            placeholder="예: 시편 23:1"
-            value={jubo.worshipInfo.bibleVerse}
-            onChange={(e) =>
-              updateField("worshipInfo", "bibleVerse", e.target.value)
-            }
-          />
+        <div className={styles.inputColumn}>
+          <div className={styles.inputGroup}>
+            <p>성경 내용</p>
+            <textarea
+              type="text"
+              placeholder="예: 주님은 나의 목자이시니, 내가 부족한 것을 잃지 않으신다"
+              value={jubo.worshipInfo.bibleVerseContent}
+              onChange={(e) =>
+                updateField("worshipInfo", "bibleVerseContent", e.target.value)
+              }
+            />
+          </div>
+          <div className={styles.inputGroup}>
+            <p>
+              성경 구절
+              <input
+                type="text"
+                placeholder="시편 23:1-4"
+                value={jubo.worshipInfo.bibleVerse}
+                onChange={(e) =>
+                  updateField("worshipInfo", "bibleVerse", e.target.value)
+                }
+              />
+            </p>
+          </div>
         </div>
       </div>
     </div>
