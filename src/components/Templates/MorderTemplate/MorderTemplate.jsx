@@ -8,10 +8,14 @@ import {
   Heart,
   Gift,
 } from "lucide-react";
+import useJuboStore from "../../../stores/useJuboStore";
 import styles from "./MorderTemplate.module.css";
 
 const MorderTemplate = () => {
   const [isDark, setIsDark] = useState(false);
+  const { jubo } = useJuboStore();
+  const { designInfo, churchInfo, worshipInfo, order, news } = jubo;
+  const { backgroundInfo, textInfo } = designInfo;
 
   // 다크모드 자동 감지
   useEffect(() => {
@@ -21,6 +25,25 @@ const MorderTemplate = () => {
     setIsDark(prefersDark);
   }, []);
 
+  const getBackgroundStyle = () => {
+    switch (backgroundInfo.backgroundType) {
+      case "solid":
+        return { backgroundColor: backgroundInfo.backgroundColor };
+      case "gradient":
+        return {
+          background: `linear-gradient(${backgroundInfo.gradientdirection}, ${backgroundInfo.gradientcolorfirst}, ${backgroundInfo.gradientcolorsecond})`,
+        };
+      case "image":
+        return {
+          backgroundImage: `url(${backgroundInfo.backgroundImage})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        };
+      default:
+        return { backgroundColor: backgroundInfo.backgroundColor };
+    }
+  };
+  const date = new Date()
   return (
     <div className={`${styles.mainContainer} ${isDark ? styles.dark : ""}`}>
       {/* SECTION 1: WORSHIP TEMPLATE */}
@@ -28,26 +51,30 @@ const MorderTemplate = () => {
         <header className={styles.header}>
           <div className={styles.headerTop}>
             <div className={styles.headerLeft}>
-              <span className={styles.vision}>Vision 2025</span>
-              <span className={styles.motto}>Reach Higher</span>
+              <span className={styles.vision}>{textInfo.vision || "Vision 2025"}</span>
+              <span className={styles.motto}>{textInfo.motto || "Reach Higher"}</span>
             </div>
             <div className={styles.headerRight}>
-              <span className={styles.headerTitle}>APOSTLES</span>
+              <span className={styles.headerTitle}>{textInfo.headerTitle || "APOSTLES"}</span>
               <Church />
             </div>
           </div>
-          <div className={styles.backgroundSection}>
-            <img
-              alt="Background"
-              className={`${styles.backgroundImage} ${isDark ? styles.dark : ""}`}
-              src="https://images.unsplash.com/photo-1519817650390-64a93db51149?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80"
-            />
-            <div
-              className={`${styles.backgroundGradient} ${isDark ? styles.dark : ""}`}
-            ></div>
+          <div className={styles.backgroundSection} style={getBackgroundStyle()}>
+            {backgroundInfo.backgroundType !== "image" && (
+              <>
+                <img
+                  alt="Background"
+                  className={`${styles.backgroundImage} ${isDark ? styles.dark : ""}`}
+                  src="https://images.unsplash.com/photo-1519817650390-64a93db51149?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80"
+                />
+                <div
+                  className={`${styles.backgroundGradient} ${isDark ? styles.dark : ""}`}
+                ></div>
+              </>
+            )}
           </div>
           <div className={styles.titleSection}>
-            <h1 className={styles.mainTitle}>Paul</h1>
+            <h1 className={styles.mainTitle}>{churchInfo.churchName || "Paul"}</h1>
           </div>
         </header>
 
@@ -56,97 +83,29 @@ const MorderTemplate = () => {
         >
           <div className={styles.sectionHeader}>
             <h2>예배 순서</h2>
-            <span className={styles.sectionHeaderTime}>2025. 11. 30</span>
+            <span className={styles.sectionHeaderTime}>{worshipInfo.serviceDate || date.toLocaleDateString()}</span>
           </div>
           <div className={styles.worshipContent}>
-            <OrderRow
-              title="예배를 위한 기도"
-              content="다함께"
-              isDark={isDark}
-            />
-            <OrderRow title="찬양" content="다함께" isDark={isDark} />
-
-            <div className={`${styles.infoBox} ${isDark ? styles.dark : ""}`}>
-              <p>김현진 간사</p>
-              <p style={{ fontStyle: "italic" }}>In the Lord</p>
-            </div>
-
-            <OrderRow
-              title="대표기도"
-              content={
-                <div style={{ textAlign: "right" }}>
-                  <span style={{ display: "block", fontWeight: 500 }}>
-                    기신자팀 김병완 셀장
-                  </span>
-                  <span
-                    style={{
-                      display: "block",
-                      fontSize: "0.75rem",
-                      color: "#888888",
-                    }}
-                  >
-                    다음주: 신정식 집사
-                  </span>
-                </div>
-              }
-              isDark={isDark}
-            />
-
-            <OrderRow title="봉헌" content="다함께" isDark={isDark} />
-
-            <div style={{ paddingTop: "0.5rem" }}>
-              <OrderRow title="설교" content="김대상 목사" isDark={isDark} />
-              <div
-                className={`${styles.lectureInfo} ${isDark ? styles.dark : ""}`}
-              >
-                <p>빌립보서 3:13-14</p>
-                <p>하나님의 사람들(5)</p>
-                <h3
-                  className={`${styles.lectureTitle} ${isDark ? styles.dark : ""}`}
-                >
-                  바울: 푯대를 향하여 달려간 사람
-                </h3>
-              </div>
-            </div>
-
-            <OrderRow title="결단찬양&기도" content="다함께" isDark={isDark} />
-            <div
-              className={`${styles.infoSubtext} ${isDark ? styles.dark : ""}`}
-            >
-              나는 오늘도 가네
-            </div>
-
-            <OrderRow title="축도" content="김대상 목사" isDark={isDark} />
-
-            <OrderRow
-              title="결혼자 인사"
-              content={
-                <span
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "0.25rem",
-                  }}
-                >
-                  한상우 <Heart size={12} style={{ color: "#f472b6" }} /> 안은정
-                </span>
-              }
-              isDark={isDark}
-            />
-
-            <OrderRow
-              title="사임 인사"
-              content="김호수 목사, 김용음 목사, 김가은 간사"
-              isDark={isDark}
-            />
-            <OrderRow title="광고" content="이성욱 목사" isDark={isDark} />
-            <OrderRow title="파송" content="다함께" isDark={isDark} />
-
-            <div
-              className={`${styles.infoSubtext} ${isDark ? styles.dark : ""}`}
-            >
-              유월절 어린 양의 피로
-            </div>
+            {order && order.length > 0 ? (
+              order.map((item, index) => (
+                <OrderRow
+                  key={item.id}
+                  title={item.orderTitle || item.ordercategory}
+                  content={item.orderContent || "다함께"}
+                  isDark={isDark}
+                />
+              ))
+            ) : (
+              <>
+                <OrderRow
+                  title="예배를 위한 기도"
+                  content="다함께"
+                  isDark={isDark}
+                />
+                <OrderRow title="찬양" content="다함께" isDark={isDark} />
+                <OrderRow title="설교" content="김대상 목사" isDark={isDark} />
+              </>
+            )}
           </div>
         </section>
 
@@ -156,18 +115,13 @@ const MorderTemplate = () => {
           <div className={styles.scriptureHeader}>
             <h2>설교 본문</h2>
             <span>|</span>
-            <span className={styles.scriptureReference}>빌립보서 3:13-14</span>
+            <span className={styles.scriptureReference}>{worshipInfo.bibleVerse || "빌립보서 3:13-14"}</span>
           </div>
           <div className={styles.scriptureContent}>
             <p
               className={`${styles.scriptureText} ${isDark ? styles.dark : ""}`}
             >
-              <span className={styles.verseNumber}>13</span>
-              형제들아 나는 아직 내가 잡은 줄로 여기지 아니하고 오직 한 일 즉
-              뒤에 있는 것은 잊어버리고 앞에 있는 것을 잡으려고
-              <span className={styles.verseNumber}>14</span>
-              푯대를 향하여 그리스도 예수 안에서 하나님이 위에서 부르신 부름의
-              상을 위하여 달려가노라
+              {worshipInfo.bibleVerseContent || "형제들아 나는 아직 내가 잡은 줄로 여기지 아니하고 오직 한 일 즉 뒤에 있는 것은 잊어버리고 앞에 있는 것을 잡으려고 푯대를 향하여 그리스도 예수 안에서 하나님이 위에서 부르신 부름의 상을 위하여 달려가노라"}
             </p>
           </div>
         </section>
@@ -195,7 +149,17 @@ const MorderTemplate = () => {
         </header>
 
         <main className={styles.newsMain}>
-          <NewsItem index="1" title="Mission Week" isDark={isDark}>
+          {news && news.length > 0 ? (
+            news.map((item, index) => (
+              <NewsItem key={item.id} index={(index + 1).toString()} title={item.title} isDark={isDark}>
+                <p>{item.content}</p>
+                <p style={{ fontSize: "0.875rem", color: "#666", marginTop: "0.5rem" }}>
+                  {item.date}
+                </p>
+              </NewsItem>
+            ))
+          ) : (
+            <NewsItem index="1" title="Mission Week" isDark={isDark}>
             <p>
               <span className={styles.inlineSpan}>기간:</span> 12월 5일(금) -
               7일(주일)
@@ -232,157 +196,7 @@ const MorderTemplate = () => {
               ※ 선교컨퍼런스, 단기선교 파송식, 선교헌신작정 등
             </p>
           </NewsItem>
-
-          <NewsItem index="2" title="For You 초청예배" isDark={isDark}>
-            <p style={{ marginBottom: "0.5rem" }}>
-              태신자 초청예배가 12월 28일(주일)에 있습니다. 믿지 않는 지인을
-              초청해 주세요.
-            </p>
-            <div
-              className={`${styles.infoHighlight} ${isDark ? styles.dark : ""}`}
-            >
-              <div
-                style={{
-                  display: "flex",
-                  gap: "0.5rem",
-                  marginBottom: "0.5rem",
-                }}
-              >
-                <span style={{ marginTop: "0.25rem" }}>
-                  <Calendar size={14} />
-                </span>
-                <div style={{ fontSize: "0.875rem" }}>
-                  12월 14일, 21일에 '새가족 등록처'에서{" "}
-                  <span style={{ fontWeight: "bold" }}>방문카드</span> 배부
-                </div>
-              </div>
-              <div
-                style={{
-                  display: "flex",
-                  gap: "0.5rem",
-                  color: "#dc2626",
-                  fontWeight: 500,
-                }}
-              >
-                <span style={{ marginTop: "0.25rem" }}>
-                  <ArrowRight size={14} />
-                </span>
-                <div style={{ fontSize: "0.875rem" }}>
-                  홈페이지 신청 태신자만 식사지원 가능!
-                </div>
-              </div>
-            </div>
-            <p
-              style={{
-                fontWeight: "bold",
-                marginTop: "0.5rem",
-                textAlign: "right",
-                fontSize: "0.875rem",
-              }}
-            >
-              모집 마감: 12월 14일(주일) 23:59
-            </p>
-          </NewsItem>
-
-          <NewsItem index="3" title="선교사 성탄 선물 보내기" isDark={isDark}>
-            <p>
-              <span className={styles.inlineSpan}>대상:</span> 파송, 공동파송 및
-              협력 선교사
-            </p>
-            <div
-              className={`${styles.taglineBox} ${isDark ? styles.dark : ""}`}
-            >
-              <p style={{ marginTop: 0 }}>
-                <span style={{ fontWeight: "bold", color: "#0056b3" }}>
-                  오프라인:
-                </span>{" "}
-                헌금 봉투에 '선교사 성탄 선물' 기재
-              </p>
-              <p>
-                <span style={{ fontWeight: "bold", color: "#0056b3" }}>
-                  온라인:
-                </span>{" "}
-                농협 301-0098-4361-11 (이승재88성탄)
-              </p>
-            </div>
-            <p style={{ marginTop: "0.5rem" }}>
-              <span className={styles.inlineSpan}>금액:</span> 소포당 15만원
-              (자율 동참)
-            </p>
-            <p
-              style={{
-                fontWeight: "bold",
-                marginTop: "0.5rem",
-                textAlign: "right",
-                fontSize: "0.875rem",
-              }}
-            >
-              마감: 11월 30일 Today
-            </p>
-          </NewsItem>
-
-          <NewsItem index="4" title="둠치둠치 김치나눔" isDark={isDark}>
-            <p style={{ fontSize: "0.875rem", marginBottom: "0.5rem" }}>
-              김장 김치에 사랑을 담아 이웃에게 전달합니다.
-            </p>
-            <ul
-              style={{
-                listStyleType: "disc",
-                paddingLeft: "1.25rem",
-                margin: 0,
-                fontSize: "0.875rem",
-              }}
-            >
-              <li>
-                <span className={styles.inlineSpan}>일시:</span> 12월 13일(토)
-                12:00 - 15:00
-              </li>
-              <li>
-                <span className={styles.inlineSpan}>장소:</span> 사랑의
-                연탄나눔운동 대구본부
-              </li>
-              <li>
-                <span className={styles.inlineSpan}>인원:</span> 30명 (편한
-                복장)
-              </li>
-              <li>
-                <span className={styles.inlineSpan}>후원:</span> 500만원 (김치
-                120-140박스)
-              </li>
-            </ul>
-          </NewsItem>
-
-          <div className={styles.gridContainer}>
-            <div className={styles.gridItem}>
-              <h3
-                className={`${styles.gridItemTitle} ${isDark ? styles.dark : ""}`}
-                style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}
-              >
-                <User size={18} /> 사역자 사임
-              </h3>
-              <p
-                className={`${styles.gridItemText} ${isDark ? styles.dark : ""}`}
-              >
-                김호수 목사, 김용음 목사, 김가은 간사님께서 사임하십니다. 앞길을
-                위해 기도해주세요.
-              </p>
-            </div>
-            <div className={styles.gridItem}>
-              <h3
-                className={`${styles.gridItemTitle} ${isDark ? styles.dark : ""}`}
-                style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}
-              >
-                <Gift size={18} /> 사랑방 편성
-              </h3>
-              <p
-                className={`${styles.gridItemText} ${isDark ? styles.dark : ""}`}
-              >
-                1차 발표: 12월 14일 / 최종: 28일
-                <br />
-                홈페이지 공지사항 참조
-              </p>
-            </div>
-          </div>
+          )}
         </main>
         <footer
           className={`${styles.newsBrFooter} ${isDark ? styles.dark : ""}`}

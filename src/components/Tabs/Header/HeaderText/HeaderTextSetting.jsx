@@ -3,7 +3,18 @@ import useJuboStore from "../../../../stores/useJuboStore";
 import styles from "./HeaderTextSetting.module.css";
 
 const HeaderTextSettings = () => {
-  const { jubo, setHeaderInfo, updateFontSize } = useJuboStore();
+  const { jubo, setHeaderInfo, updateFontSize, selectedTemplate } = useJuboStore();
+
+  const getTemplateType = () => {
+    if (selectedTemplate === "📋 기본 템플릿" || selectedTemplate === "BulletinTemplate") {
+      return "BulletinTemplate";
+    } else if (selectedTemplate === "✨ 모던 템플릿" || selectedTemplate === "MorderTemplate") {
+      return "MorderTemplate";
+    }
+    return "";
+  };
+
+  const templateType = getTemplateType();
 
   // 반복되는 UI를 렌더링하는 헬퍼 함수
   const renderControl = (label, key, fontKey) => (
@@ -51,9 +62,30 @@ const HeaderTextSettings = () => {
 
   return (
     <div className={styles.headerTextSettings}>
-      {renderControl("슬로건", "slogan", "sloganfont")}
-      {renderControl("제목", "title", "titlefont")}
-      {renderControl("부제목", "subtitle", "subtitlefont")}
+      {templateType === "BulletinTemplate" && (
+        <>
+          {renderControl("슬로건", "slogan", "sloganfont")}
+          {renderControl("제목", "title", "titlefont")}
+          {renderControl("부제목", "subtitle", "subtitlefont")}
+        </>
+      )}
+      {templateType === "MorderTemplate" && (
+        <>
+          {renderControl("비전", "vision", "sloganfont")}
+          {renderControl("모토", "motto", "titlefont")}
+          {renderControl("헤더 타이틀", "headerTitle", "subtitlefont")}
+        </>
+      )}
+      {(!templateType || templateType === "") && (
+        <>
+          {renderControl("슬로건", "slogan", "sloganfont")}
+          {renderControl("제목", "title", "titlefont")}
+          {renderControl("부제목", "subtitle", "subtitlefont")}
+          {renderControl("비전", "vision", "sloganfont")}
+          {renderControl("모토", "motto", "titlefont")}
+          {renderControl("헤더 타이틀", "headerTitle", "subtitlefont")}
+        </>
+      )}
     </div>
   );
 };

@@ -6,9 +6,17 @@ import styles from "./HeaderBackgroundSettings.module.css";
 import BackgroundSolidSettings from "../Background/SolidSettings/BackgroundSolidSettings";
 import BackgroundGradientSettings from "../Background/GradientSettings/BackgroundGradientSettings";
 import BackgroundImageSettings from "../Background/ImageSettings/BackgroundImageSettings";
+import useJuboStore from "../../../../stores/useJuboStore";
 
 const HeaderBackgroundSettings = () => {
-  const [activeBackType, setActiveBackType] = useState("solid");
+  const { jubo, setBackgroundType } = useJuboStore();
+  const { backgroundType } = jubo.designInfo.backgroundInfo;
+  const [activeBackType, setActiveBackType] = useState(backgroundType || "solid");
+
+  const handleTabChange = (type) => {
+    setActiveBackType(type);
+    setBackgroundType(type);
+  };
 
   return (
     <div className={styles.inputGroup}>
@@ -20,7 +28,7 @@ const HeaderBackgroundSettings = () => {
             className={`${styles.headerTabButton} ${
               activeBackType === "solid" ? styles.activeDesignTab : ""
             }`}
-            onClick={() => setActiveBackType("solid")}
+            onClick={() => handleTabChange("solid")}
           >
             단색
           </button>
@@ -28,7 +36,7 @@ const HeaderBackgroundSettings = () => {
             className={`${styles.headerTabButton} ${
               activeBackType === "gradient" ? styles.activeDesignTab : ""
             }`}
-            onClick={() => setActiveBackType("gradient")}
+            onClick={() => handleTabChange("gradient")}
           >
             그라데이션
           </button>
@@ -36,7 +44,7 @@ const HeaderBackgroundSettings = () => {
             className={`${styles.headerTabButton} ${
               activeBackType === "image" ? styles.activeDesignTab : ""
             }`}
-            onClick={() => setActiveBackType("image")}
+            onClick={() => handleTabChange("image")}
           >
             이미지
           </button>

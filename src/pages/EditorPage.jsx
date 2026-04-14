@@ -13,7 +13,7 @@ import {
 } from "lucide-react";
 import styles from "../pages/EditorPage.module.css";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import useJuboStore from "../stores/useJuboStore";
 import AModal from "../components/AModal/AModal.jsx";
 import BasicInfoTab from "../components/Tabs/BasicInfoTab/BasicInfoTab.jsx";
@@ -31,6 +31,9 @@ const EditorPage = () => {
     closeModal,
     setIcon,
     selectedTemplate,
+    setSelectedTemplate,
+    saveToLocalStorage,
+    loadFromLocalStorage,
   } = useJuboStore();
 
   const navigate = useNavigate();
@@ -50,6 +53,14 @@ const EditorPage = () => {
   };
 
   const [activeTab, setActiveTab] = useState("info");
+
+  useEffect(() => {
+    if (!selectedTemplate) {
+      setSelectedTemplate("📋 기본 템플릿");
+    }
+    // 페이지 로드 시 저장된 데이터 자동 로드 (선택사항)
+    // loadFromLocalStorage();
+  }, [selectedTemplate, setSelectedTemplate]);
   return (
     <div className={styles.editorpageContainer}>
       <div className={styles.editorpageHeader}>
@@ -71,11 +82,17 @@ const EditorPage = () => {
         </div>
 
         <div className={styles.iconGroup}>
-          <button className={`${styles.iconButton} ${styles.lightButton}`}>
+          <button
+            className={`${styles.iconButton} ${styles.lightButton}`}
+            onClick={() => loadFromLocalStorage()}
+          >
             <FolderOpen className={styles.icon} />
             <span>불러오기</span>
           </button>
-          <button className={`${styles.iconButton} ${styles.lightButton}`}>
+          <button
+            className={`${styles.iconButton} ${styles.lightButton}`}
+            onClick={() => saveToLocalStorage()}
+          >
             <Save className={styles.icon} />
             <span>저장</span>
           </button>

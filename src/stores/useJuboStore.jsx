@@ -19,6 +19,9 @@ const useJuboStore = create((set, get) => ({
         slogan: "",
         title: "",
         subtitle: "",
+        vision: "Vision 2025",
+        motto: "Reach Higher",
+        headerTitle: "APOSTLES",
         fontsize: {
           sloganfont: 24,
           titlefont: 36,
@@ -39,11 +42,12 @@ const useJuboStore = create((set, get) => ({
       backgroundInfo: {
         backgroundImage: null,
         backgroundName: null,
-        backgroundColor: "#ffffff",
+        backgroundColor: "#4a6fa5",
         gradientcolorfirst: "#ffffff",
         gradientcolorsecond: "#000000",
         gradientdirection: "to left",
         imgopacity: 0,
+        backgroundType: "solid",
       },
     },
     news: [],
@@ -283,6 +287,19 @@ const useJuboStore = create((set, get) => ({
         },
       },
     })),
+  setBackgroundType: (type) =>
+    set((state) => ({
+      jubo: {
+        ...state.jubo,
+        designInfo: {
+          ...state.jubo.designInfo,
+          backgroundInfo: {
+            ...state.jubo.designInfo.backgroundInfo,
+            backgroundType: type,
+          },
+        },
+      },
+    })),
   openModal: (tabType) =>
     set({ isModalOpen: true, editingId: null, modalTab: tabType }),
   closeModal: () =>
@@ -407,6 +424,43 @@ const useJuboStore = create((set, get) => ({
         },
       };
     });
+  },
+
+  // 로컬스토리지에 전체 데이터 저장
+  saveToLocalStorage: () => {
+    const { jubo, selectedTemplate } = get();
+    const dataToSave = {
+      jubo,
+      selectedTemplate,
+      savedAt: new Date().toISOString(),
+    };
+    try {
+      localStorage.setItem("juboData", JSON.stringify(dataToSave));
+      alert("저장되었습니다!");
+      return true;
+    } catch (error) {
+      console.error("저장 실패:", error);
+      alert("저장에 실패했습니다.");
+      return false;
+    }
+  },
+
+  // 로컬스토리지에서 데이터 로드
+  loadFromLocalStorage: () => {
+    try {
+      const savedData = localStorage.getItem("juboData");
+      if (savedData) {
+        const { jubo, selectedTemplate } = JSON.parse(savedData);
+        set({
+          jubo,
+          selectedTemplate,
+        });
+        return true;
+      }
+    } catch (error) {
+      console.error("로드 실패:", error);
+      return false;
+    }
   },
 }));
 

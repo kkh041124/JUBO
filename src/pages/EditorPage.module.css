@@ -163,6 +163,8 @@
   cursor: pointer;
   transition: all 0.2s ease;
   border-bottom: 2px solid transparent;
+  flex: 1;
+  justify-content: center;
 }
 
 .headerBar button:hover {

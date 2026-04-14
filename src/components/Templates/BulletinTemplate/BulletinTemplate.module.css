@@ -26,7 +26,6 @@
 
 /* 헤더 섹션 */
 .headerSection {
-  background: linear-gradient(135deg, #4a6fa5 0%, #34517b 100%);
   height: 12rem;
   position: relative;
   padding: 1.5rem;

@@ -7,12 +7,31 @@ const BulletinTemplate = () => {
   const { churchInfo, worshipInfo, designInfo, news, order } = jubo;
 
   const { textInfo, logoInfo, backgroundInfo, iconInfo } = designInfo;
+  const date = new Date();
+  const getBackgroundStyle = () => {
+    switch (backgroundInfo.backgroundType) {
+      case "solid":
+        return { backgroundColor: backgroundInfo.backgroundColor };
+      case "gradient":
+        return {
+          background: `linear-gradient(${backgroundInfo.gradientdirection}, ${backgroundInfo.gradientcolorfirst}, ${backgroundInfo.gradientcolorsecond})`,
+        };
+      case "image":
+        return {
+          backgroundImage: `url(${backgroundInfo.backgroundImage})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        };
+      default:
+        return { backgroundColor: backgroundInfo.backgroundColor };
+    }
+  };
 
   return (
     <div className={styles.container}>
       <main className={styles.mainContent}>
         {/* 헤더 섹션 */}
-        <div className={styles.headerSection}>
+        <div className={styles.headerSection} style={getBackgroundStyle()}>
           <div className={styles.headerText}>
             <div className={styles.headerTopInfo}>
               <p className={styles.churchTitle}>
@@ -105,7 +124,7 @@ const BulletinTemplate = () => {
               {worshipInfo.serviceDate
                 ? worshipInfo.serviceDate.split(".")[1]
                 : "2"}
-              호 {worshipInfo.serviceDate || "2026. 1. 11."}
+              호 {worshipInfo.serviceDate || date.toLocaleDateString()}
             </span>
           </div>
           <div className={styles.worshipTitle}>
