@@ -37,8 +37,8 @@ const BulletinTemplate = () => {
               <p className={styles.churchTitle}>
                 {churchInfo.churchName || "ROK AIR FORCE CHURCH"}
               </p>
-              <p>A (36842) 경북 예천군 유천면 매실로 357 사서함 322-1</p>
-              <p>P (내선) 2260, 2262 / 053-650-4682</p>
+              <p>A {churchInfo.churchLocation || "(36842) 경북 예천군 유천면 매실로 357 사서함 322-1"}</p>
+              <p>P {churchInfo.phone || "(내선) 2260, 2262 / 053-650-4682"}</p>
             </div>
           </div>
 

@@ -31,6 +31,30 @@ const BasicInfoTab = () => {
             />
           </div>
         </div>
+        <div className={styles.inputRow}>
+          <div className={styles.inputGroup}>
+            <p>교회 위치</p>
+            <input
+              type="text"
+              placeholder="예:(우편번호) 주소"
+              value={jubo.churchInfo.churchLocation}
+              onChange={(e) =>
+                updateField("churchInfo", "churchLocation", e.target.value)
+              }
+            />
+          </div>
+          <div className={styles.inputGroup}>
+            <p>전화번호</p>
+            <input
+              type="text"
+              placeholder="예: 02-123-4567"
+              value={jubo.churchInfo.phone}
+              onChange={(e) =>
+                updateField("churchInfo", "phone", e.target.value)
+              }
+            />
+          </div>
+        </div>
       </div>
 
       <div className={styles.section}>
