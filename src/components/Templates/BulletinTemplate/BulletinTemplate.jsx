@@ -6,7 +6,7 @@ const BulletinTemplate = () => {
   const { jubo } = useJuboStore();
   const { churchInfo, worshipInfo, designInfo, news, order } = jubo;
 
-  const { textInfo, logoInfo, backgroundInfo, iconInfo } = designInfo;
+  const { textInfo, logoInfo, backgroundInfo } = designInfo;
   const date = new Date();
   const getBackgroundStyle = () => {
     switch (backgroundInfo.backgroundType) {
@@ -27,12 +27,34 @@ const BulletinTemplate = () => {
     }
   };
 
+  const getLogoPositionStyle = () => {
+    const position = logoInfo.logo ? (logoInfo.logoPosition || "right") : "right";
+    if (position === "left") {
+      return { left: "1.5rem", right: "auto" };
+    } else if (position === "center") {
+      return { left: "50%", transform: "translateX(-50%)", right: "auto" };
+    } else {
+      return { right: "1.5rem", left: "auto" };
+    }
+  };
+
+  const getHeaderTextStyle = () => {
+    const position = logoInfo.logo ? (logoInfo.logoPosition || "right") : "right";
+    if (position === "left") {
+      return { paddingLeft: "9rem", paddingRight: "0", textAlign: "right", maxWidth: "100%" };
+    } else if (position === "center") {
+      return { paddingLeft: "0", paddingRight: "0", textAlign: "left", maxWidth: "45%" };
+    } else {
+      return { paddingRight: "9rem", paddingLeft: "0", textAlign: "left", maxWidth: "100%" };
+    }
+  };
+
   return (
     <div className={styles.container}>
       <main className={styles.mainContent}>
         {/* 헤더 섹션 */}
         <div className={styles.headerSection} style={getBackgroundStyle()}>
-          <div className={styles.headerText}>
+          <div className={styles.headerText} style={getHeaderTextStyle()}>
             <div className={styles.headerTopInfo}>
               <p className={styles.churchTitle}>
                 {churchInfo.churchName || "ROK AIR FORCE CHURCH"}
@@ -40,10 +62,23 @@ const BulletinTemplate = () => {
               <p>A {churchInfo.churchLocation || "(36842) 경북 예천군 유천면 매실로 357 사서함 322-1"}</p>
               <p>P {churchInfo.phone || "(내선) 2260, 2262 / 053-650-4682"}</p>
             </div>
+            
+            {(textInfo.slogan || textInfo.title || textInfo.subtitle) && (
+              <div 
+                className={styles.headerTitles} 
+                style={{ 
+                  alignItems: (logoInfo.logo && logoInfo.logoPosition === "left") ? "flex-end" : "flex-start" 
+                }}
+              >
+                {textInfo.slogan && <p className={styles.headerSlogan}>{textInfo.slogan}</p>}
+                {textInfo.title && <h1 className={styles.headerMainTitle}>{textInfo.title}</h1>}
+                {textInfo.subtitle && <p className={styles.headerSubtitle}>{textInfo.subtitle}</p>}
+              </div>
+            )}
           </div>
 
           {logoInfo.logo && (
-            <div className={styles.headerLogo}>
+            <div className={styles.headerLogo} style={getLogoPositionStyle()}>
               <img
                 src={logoInfo.logo}
                 alt="교회 로고"
@@ -56,35 +91,24 @@ const BulletinTemplate = () => {
           )}
 
           {!logoInfo.logo && (
-            <div className={styles.headerLogoPlaceholder}>
-              {iconInfo.icon ? (
-                <img
-                  src={iconInfo.icon}
-                  alt="교회 아이콘"
-                  style={{
-                    width: `${iconInfo.iconSize}px`,
-                    height: "auto",
-                  }}
-                />
-              ) : (
-                <svg
-                  className={styles.churchIcon}
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  viewBox="0 0 200 120"
-                >
-                  <rect height="60" rx="2" width="40" x="20" y="10"></rect>
-                  <path d="M40 25 v30 M25 35 h30" strokeWidth="3"></path>
-                  <rect height="60" width="100" x="50" y="40"></rect>
-                  <rect height="30" width="60" x="70" y="55"></rect>
-                  <line x1="90" x2="90" y1="55" y2="85"></line>
-                  <line x1="110" x2="110" y1="55" y2="85"></line>
-                  <line x1="70" x2="130" y1="70" y2="70"></line>
-                  <line x1="10" x2="160" y1="105" y2="105"></line>
-                  <line x1="15" x2="155" y1="100" y2="100"></line>
-                </svg>
-              )}
+            <div className={styles.headerLogoPlaceholder} style={getLogoPositionStyle()}>
+              <svg
+                className={styles.churchIcon}
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                viewBox="0 0 200 120"
+              >
+                <rect height="60" rx="2" width="40" x="20" y="10"></rect>
+                <path d="M40 25 v30 M25 35 h30" strokeWidth="3"></path>
+                <rect height="60" width="100" x="50" y="40"></rect>
+                <rect height="30" width="60" x="70" y="55"></rect>
+                <line x1="90" x2="90" y1="55" y2="85"></line>
+                <line x1="110" x2="110" y1="55" y2="85"></line>
+                <line x1="70" x2="130" y1="70" y2="70"></line>
+                <line x1="10" x2="160" y1="105" y2="105"></line>
+                <line x1="15" x2="155" y1="100" y2="100"></line>
+              </svg>
             </div>
           )}
         </div>

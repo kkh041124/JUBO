@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Upload, X, Minus, Plus, Image } from "lucide-react";
 import useJuboStore from "../../../../stores/useJuboStore";
 import styles from "./HeaderLogoSettings.module.css";
+import { compressImage } from "../../../../utils/imageOptimizer.js";
 
 import logo1 from "../../../../assets/logo1.svg";
 import logo2 from "../../../../assets/logo2.svg";
@@ -10,14 +11,20 @@ const HeaderLogoSettings = () => {
   const { jubo, setLogo, setLogoPosition, setLogoSize } = useJuboStore();
   const [activeLogoTab, setActiveLogoTab] = useState("upload");
 
-  const ReadImg = (e) => {
+  const ReadImg = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
-    const reader = new FileReader();
-    reader.onload = () => {
-      setLogo(reader.result, file.name);
-    };
-    reader.readAsDataURL(file);
+    try {
+      const compressedData = await compressImage(file);
+      setLogo(compressedData, file.name);
+    } catch (err) {
+      console.error("로고 이미지 압축 실패:", err);
+      const reader = new FileReader();
+      reader.onload = () => {
+        setLogo(reader.result, file.name);
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
   return (

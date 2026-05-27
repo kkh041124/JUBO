@@ -436,3 +436,38 @@
     width: 5rem;
   }
 }
+
+/* 헤더 텍스트 타이틀 영역 */
+.headerTitles {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  width: 100%;
+}
+
+.headerSlogan {
+  font-size: 0.75rem;
+  opacity: 0.8;
+  letter-spacing: 0.05em;
+  font-weight: 500;
+  margin: 0 !important;
+}
+
+.headerMainTitle {
+  font-size: 1.5rem !important;
+  font-weight: 800;
+  color: #ffffff;
+  margin: 0 !important;
+  letter-spacing: -0.01em;
+  font-family: "Noto Serif KR", serif;
+  line-height: 1.2;
+}
+
+.headerSubtitle {
+  font-size: 0.85rem;
+  opacity: 0.85;
+  margin: 0 !important;
+  font-weight: 500;
+  line-height: 1.2;
+}

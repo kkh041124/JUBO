@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
-import { X, Layers, Palette, Type } from "lucide-react";
+import { X } from "lucide-react";
 import styles from "./AModal.module.css";
 import useJuboStore from "../../stores/useJuboStore";
 
 const AModal = () => {
   const {
+    jubo,
     modalTab,
     category,
     setCategory,
@@ -32,7 +33,7 @@ const AModal = () => {
     setSelectedTemplate,
   } = useJuboStore();
 
-  const [activeTab, setActiveTab] = useState("template");
+  // activeTab 상태 제거됨
 
   // 자동 완성 로직
   useEffect(() => {
@@ -202,7 +203,6 @@ const AModal = () => {
 
       {/* ──────────────── 디자인 탭 ──────────────── */}
       {modalTab === "design" && (
-        // ★ 핵심 변경: design 탭일 때는 넓은 모달 클래스 적용
         <div className={styles.wideModalContainer}>
           <div className={styles.modalHeader}>
             <div className={styles.designHeader}>
@@ -211,74 +211,35 @@ const AModal = () => {
                 <X className={styles.smallIcon} />
               </button>
             </div>
-            <span>주보의 템플릿, 색상, 폰트 등을 설정할 수 있습니다.</span>
+            <span>주보의 템플릿을 설정할 수 있습니다.</span>
           </div>
 
           <div className={styles.designContent}>
-            {/* 탭 리스트: CSS에서 flex:1을 주어 1:1:1 비율로 자동 조정됨 */}
-            <div className={styles.tabList}>
-              <button
-                className={`${styles.tabButton} ${activeTab === "template" ? styles.activeTab : ""}`}
-                onClick={() => setActiveTab("template")}
-              >
-                <Layers className={styles.mediumIcon} />
-                템플릿
-              </button>
-
-              <button
-                className={`${styles.tabButton} ${activeTab === "design" ? styles.activeTab : ""}`}
-                onClick={() => setActiveTab("design")}
-              >
-                <Palette className={styles.mediumIcon} />
-                색상
-              </button>
-
-              <button
-                className={`${styles.tabButton} ${activeTab === "font" ? styles.activeTab : ""}`}
-                onClick={() => setActiveTab("font")}
-              >
-                <Type className={styles.mediumIcon} />
-                폰트
-              </button>
-            </div>
-
             <div className={styles.tabPanel}>
-              {activeTab === "template" && (
-                <div className={styles.container}>
-                  {templateClass.map((template, index) => {
-                    const isSelected = selectedTemplate === template.title;
+              <div className={styles.container}>
+                {templateClass.map((template, index) => {
+                  const isSelected = selectedTemplate === template.title;
+                  const themeStyle = isSelected ? styles.activeTemplate : "";
 
-                    // ★ 핵심 변경: 복잡한 테마 클래스 로직 삭제 -> activeTemplate 통일
-                    const themeStyle = isSelected ? styles.activeTemplate : "";
-
-                    return (
-                      <button
-                        key={index}
-                        className={styles.templateButton}
-                        onClick={() => setSelectedTemplate(template.title)}
+                  return (
+                    <button
+                      key={index}
+                      className={styles.templateButton}
+                      onClick={() => setSelectedTemplate(template.title)}
+                    >
+                      <div
+                        className={`${styles.templateOption} ${themeStyle}`}
                       >
-                        <div
-                          className={`${styles.templateOption} ${themeStyle}`}
-                        >
-                          <h3>{template.title}</h3>
-                          <p>{template.description}</p>
-                          {isSelected && (
-                            <span className={styles.selectedBadge}>선택됨</span>
-                          )}
-                        </div>
-                      </button>
-                    );
-                  })}
-                </div>
-              )}
-
-              {activeTab === "design" && (
-                <div>색상 팔레트 설정 화면입니다.</div>
-              )}
-
-              {activeTab === "font" && (
-                <div>폰트 크기 및 서체 설정 화면입니다.</div>
-              )}
+                        <h3>{template.title}</h3>
+                        <p>{template.description}</p>
+                        {isSelected && (
+                          <span className={styles.selectedBadge}>선택됨</span>
+                        )}
+                      </div>
+                    </button>
+                  );
+                })}
+              </div>
             </div>
           </div>
 

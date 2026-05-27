@@ -1,6 +1,7 @@
 import { FileText, Palette, Download, Share2 } from "lucide-react";
 import styles from "./HomePage.module.css";
 import { useNavigate } from "react-router-dom";
+import useJuboStore from "../stores/useJuboStore";
 const features = [
   {
     icon: FileText,
@@ -26,6 +27,7 @@ const features = [
 
 const HomePage = () => {
   const navigate = useNavigate();
+  const { resetJubo } = useJuboStore();
 
   return (
     <div className={styles.homepageContainer}>
@@ -49,13 +51,16 @@ const HomePage = () => {
           <div className={styles.buttonRow}>
             <button
               className={styles.addBtn}
-              onClick={() => navigate("/editor")}
+              onClick={() => {
+                resetJubo();
+                navigate("/editor");
+              }}
             >
               새 주보 만들기
             </button>
             <button
               className={styles.editBtn}
-              onClick={() => navigate("/test")}
+              onClick={() => navigate("/editor?load=true")}
             >
               이어서 편집하기
             </button>
@@ -78,7 +83,15 @@ const HomePage = () => {
         <div className={styles.homepageGetStarted}>
           <h2>지금 바로 시작하세요</h2>
           <p>몇 분만에 전문적인 디지털 주보를 만들 수 있습니다</p>
-          <button className={styles.startBtn}>주보 만들러 가기</button>
+          <button
+            className={styles.startBtn}
+            onClick={() => {
+              resetJubo();
+              navigate("/editor");
+            }}
+          >
+            주보 만들러 가기
+          </button>
         </div>
       </div>
     </div>

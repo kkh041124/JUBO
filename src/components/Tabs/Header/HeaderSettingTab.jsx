@@ -2,20 +2,19 @@
 import styles from "./HeaderSettingTab.module.css";
 import HeaderTextSettings from "./HeaderText/HeaderTextSetting";
 import HeaderLogoSettings from "./Logo/HeaderLogoSettings";
-import HeaderIconSettings from "./Icon/HeaderIconSettings";
 import HeaderBackgroundSettings from "./HeaderBackground/HeaderBackgroundSettings";
 import { useState } from "react";
 import useJuboStore from "../../../stores/useJuboStore";
 
-const HeaderSettingsTab = ({ ReadIconImg }) => {
+const HeaderSettingsTab = () => {
   const [activeHeaderTab, setActiveHeaderTab] = useState("text");
   const { selectedTemplate } = useJuboStore();
 
   const getTemplateType = () => {
     if (selectedTemplate === "📋 기본 템플릿" || selectedTemplate === "BulletinTemplate") {
       return "BulletinTemplate";
-    } else if (selectedTemplate === "✨ 모던 템플릿" || selectedTemplate === "MorderTemplate") {
-      return "MorderTemplate";
+    } else if (selectedTemplate === "✨ 모던 템플릿" || selectedTemplate === "ModernTemplate") {
+      return "ModernTemplate";
     }
     return "";
   };
@@ -52,7 +51,7 @@ const HeaderSettingsTab = ({ ReadIconImg }) => {
           </button>
         </>
       );
-    } else if (templateType === "MorderTemplate") {
+    } else if (templateType === "ModernTemplate") {
       return (
         <>
           <button
@@ -108,13 +107,12 @@ const HeaderSettingsTab = ({ ReadIconImg }) => {
           return (
             <div className={styles.headerDesignSettings}>
               <HeaderLogoSettings />
-              <HeaderIconSettings ReadIconImg={ReadIconImg} />
             </div>
           );
         default:
           return <HeaderTextSettings />;
       }
-    } else if (templateType === "MorderTemplate") {
+    } else if (templateType === "ModernTemplate") {
       return activeHeaderTab === "text" ? (
         <HeaderTextSettings />
       ) : (
@@ -126,7 +124,6 @@ const HeaderSettingsTab = ({ ReadIconImg }) => {
       ) : (
         <div className={styles.headerDesignSettings}>
           <HeaderLogoSettings />
-          <HeaderIconSettings ReadIconImg={ReadIconImg} />
           <HeaderBackgroundSettings />
         </div>
       );

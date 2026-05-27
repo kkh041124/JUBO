@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Upload, X, Image } from "lucide-react";
 import useJuboStore from "../../../../../stores/useJuboStore";
 import styles from "./BackgroundImageSettings.module.css";
+import { compressImage } from "../../../../../utils/imageOptimizer.js";
 
 import img1 from "../../../../../assets/sampleImg1.jpg";
 import img2 from "../../../../../assets/sampleImg2.jpg";
@@ -13,14 +14,20 @@ const BackgroundImageSettings = () => {
   const [activeBackImgTab, setActiveBackImgTab] = useState("upload");
   const { backgroundImage, imgopacity } = jubo.designInfo.backgroundInfo;
 
-  const ReadBgImg = (e) => {
+  const ReadBgImg = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
-    const reader = new FileReader();
-    reader.onload = () => {
-      setBackGroundImage(reader.result, file.name);
-    };
-    reader.readAsDataURL(file);
+    try {
+      const compressedData = await compressImage(file);
+      setBackGroundImage(compressedData, file.name);
+    } catch (err) {
+      console.error("배경 이미지 압축 실패:", err);
+      const reader = new FileReader();
+      reader.onload = () => {
+        setBackGroundImage(reader.result, file.name);
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
   return (

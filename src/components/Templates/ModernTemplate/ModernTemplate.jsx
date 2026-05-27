@@ -9,9 +9,9 @@ import {
   Gift,
 } from "lucide-react";
 import useJuboStore from "../../../stores/useJuboStore";
-import styles from "./MorderTemplate.module.css";
+import styles from "./ModernTemplate.module.css";
 
-const MorderTemplate = () => {
+const ModernTemplate = () => {
   const [isDark, setIsDark] = useState(false);
   const { jubo } = useJuboStore();
   const { designInfo, churchInfo, worshipInfo, order, news } = jubo;
@@ -229,4 +229,4 @@ const NewsItem = ({ index, title, children, isDark }) => (
   </section>
 );
 
-export default MorderTemplate;
+export default ModernTemplate;

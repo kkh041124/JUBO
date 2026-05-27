@@ -12,16 +12,17 @@ import {
   MessageSquare,
 } from "lucide-react";
 import styles from "../pages/EditorPage.module.css";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import useJuboStore from "../stores/useJuboStore";
+import { compressImage } from "../utils/imageOptimizer.js";
 import AModal from "../components/AModal/AModal.jsx";
 import BasicInfoTab from "../components/Tabs/BasicInfoTab/BasicInfoTab.jsx";
 import OrderTab from "../components/Tabs/OrderTab/OrderTab.jsx";
 import NewsTab from "../components/Tabs/NewsTab/NewsTab.jsx";
 import HeaderSettingsTab from "../components/Tabs/Header/HeaderSettingTab.jsx";
 import BulletinTemplate from "../components/Templates/BulletinTemplate/BulletinTemplate.jsx";
-import MorderTemplate from "../components/Templates/MorderTemplate/MorderTemplate.jsx";
+import ModernTemplate from "../components/Templates/ModernTemplate/ModernTemplate.jsx";
 
 const EditorPage = () => {
   const {
@@ -29,7 +30,6 @@ const EditorPage = () => {
     isModalOpen,
     openModal,
     closeModal,
-    setIcon,
     selectedTemplate,
     setSelectedTemplate,
     saveToLocalStorage,
@@ -37,20 +37,9 @@ const EditorPage = () => {
   } = useJuboStore();
 
   const navigate = useNavigate();
+  const location = useLocation();
 
-  const ReadIconImg = (e) => {
-    const file = e.target.files[0];
 
-    if (!file) return;
-
-    const reader = new FileReader();
-
-    reader.onload = () => {
-      setIcon(reader.result, file.name);
-    };
-
-    reader.readAsDataURL(file);
-  };
 
   const [activeTab, setActiveTab] = useState("info");
 
@@ -58,9 +47,12 @@ const EditorPage = () => {
     if (!selectedTemplate) {
       setSelectedTemplate("📋 기본 템플릿");
     }
-    // 페이지 로드 시 저장된 데이터 자동 로드 (선택사항)
-    // loadFromLocalStorage();
-  }, [selectedTemplate, setSelectedTemplate]);
+    
+    const params = new URLSearchParams(location.search);
+    if (params.get("load") === "true") {
+      loadFromLocalStorage();
+    }
+  }, [selectedTemplate, setSelectedTemplate, location.search, loadFromLocalStorage]);
   return (
     <div className={styles.editorpageContainer}>
       <div className={styles.editorpageHeader}>
@@ -160,7 +152,7 @@ const EditorPage = () => {
             {activeTab === "info" ? <BasicInfoTab /> : null}
 
             {activeTab === "header" ? (
-              <HeaderSettingsTab ReadIconImg={ReadIconImg} />
+              <HeaderSettingsTab />
             ) : null}
 
             {activeTab === "order" ? <OrderTab /> : null}
@@ -178,7 +170,7 @@ const EditorPage = () => {
             {selectedTemplate === "📋 기본 템플릿" || !selectedTemplate ? (
               <BulletinTemplate />
             ) : selectedTemplate === "✨ 모던 템플릿" ? (
-              <MorderTemplate />
+              <ModernTemplate />
             ) : (
               <BulletinTemplate />
             )}

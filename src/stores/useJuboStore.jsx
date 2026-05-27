@@ -1,58 +1,53 @@
 import { create } from "zustand";
 import { arrayMove } from "@dnd-kit/sortable";
 
-const useJuboStore = create((set, get) => ({
-  jubo: {
-    churchInfo: {
-      churchName: "",
-      ministerName: "",
-    },
-    worshipInfo: {
-      worshipName: "",
-      worshipTime: "",
-      serviceDate: "",
-      bibleVerse: "",
-      bibleVerseContent: "",
-    },
-    designInfo: {
-      textInfo: {
-        slogan: "",
-        title: "",
-        subtitle: "",
-        vision: "Vision 2025",
-        motto: "Reach Higher",
-        headerTitle: "APOSTLES",
-        fontsize: {
-          sloganfont: 24,
-          titlefont: 36,
-          subtitlefont: 18,
-        },
-      },
-      logoInfo: {
-        logo: null,
-        logoName: "",
-        logoSize: 40,
-        logoPosition: "left",
-      },
-      iconInfo: {
-        icon: null,
-        iconName: "",
-        iconSize: 80,
-      },
-      backgroundInfo: {
-        backgroundImage: null,
-        backgroundName: null,
-        backgroundColor: "#4a6fa5",
-        gradientcolorfirst: "#ffffff",
-        gradientcolorsecond: "#000000",
-        gradientdirection: "to left",
-        imgopacity: 0,
-        backgroundType: "solid",
-      },
-    },
-    news: [],
-    order: [],
+const initialJuboState = {
+  churchInfo: {
+    churchName: "",
+    ministerName: "",
+    churchLocation: "",
+    phone: "",
   },
+  worshipInfo: {
+    worshipName: "",
+    worshipTime: "",
+    serviceDate: "",
+    bibleVerse: "",
+    bibleVerseContent: "",
+  },
+  designInfo: {
+    textInfo: {
+      slogan: "",
+      title: "",
+      subtitle: "",
+      vision: "Vision 2025",
+      motto: "Reach Higher",
+      headerTitle: "APOSTLES",
+    },
+    logoInfo: {
+      logo: null,
+      logoName: "",
+      logoSize: 40,
+      logoPosition: "left",
+    },
+    backgroundInfo: {
+      backgroundImage: null,
+      backgroundName: null,
+      backgroundColor: "#4a6fa5",
+      gradientcolorfirst: "#ffffff",
+      gradientcolorsecond: "#000000",
+      gradientdirection: "to left",
+      imgopacity: 0,
+      backgroundType: "solid",
+    },
+  },
+  news: [],
+  order: [],
+};
+
+const useJuboStore = create((set, get) => ({
+  jubo: initialJuboState,
+  resetJubo: () => set({ jubo: initialJuboState, selectedTemplate: "📋 기본 템플릿" }),
 
   selectedTemplate: "",
 
@@ -104,22 +99,7 @@ const useJuboStore = create((set, get) => ({
         },
       },
     })),
-  updateFontSize: (type, newSize) =>
-    set((state) => ({
-      jubo: {
-        ...state.jubo,
-        designInfo: {
-          ...state.jubo.designInfo,
-          textInfo: {
-            ...state.jubo.designInfo.textInfo,
-            fontsize: {
-              ...state.jubo.designInfo.textInfo.fontsize,
-              [`${type}font`]: newSize,
-            },
-          },
-        },
-      },
-    })),
+
   setLogo: (image, name) =>
     set((state) => ({
       jubo: {
@@ -171,43 +151,7 @@ const useJuboStore = create((set, get) => ({
         },
       };
     }),
-  setIcon: (image, name) =>
-    set((state) => ({
-      jubo: {
-        ...state.jubo,
-        designInfo: {
-          ...state.jubo.designInfo,
-          iconInfo: {
-            ...state.jubo.designInfo.iconInfo,
-            icon: image,
-            iconName: name,
-          },
-        },
-      },
-    })),
-  setIconSize: (size) =>
-    set((state) => {
-      let validatedSize = size;
 
-      if (size < 40) {
-        validatedSize = 40;
-      } else if (size > 150) {
-        validatedSize = 150;
-      }
-
-      return {
-        jubo: {
-          ...state.jubo,
-          designInfo: {
-            ...state.jubo.designInfo,
-            iconInfo: {
-              ...state.jubo.designInfo.iconInfo,
-              iconSize: validatedSize,
-            },
-          },
-        },
-      };
-    }),
   setBackGroundImage: (image, name) =>
     set((state) => ({
       jubo: {
